@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Topic\TopicController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,17 +14,19 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
-Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
-Route::post('/admin/login', [AdminController::class, 'check_login']);
+Route::get('/', [AdminController::class, 'login'])->name('admin.login');
+Route::post('/', [AdminController::class, 'check_login']);
 
 
 Route::group(['prefix' => 'admin' , 'middleware'=>'auth'], function(){
    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
    Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+
+   Route::resource('topic',TopicController::class);
  });
 

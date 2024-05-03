@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <base href="/">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>@yield('title')</title>
@@ -117,7 +118,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="{{ route('topic.index') }}">
               <i class="fa fa-solid fa-file-lines"></i> <span> Đề tài/Đề án</span>
 
             </a>
@@ -239,56 +240,12 @@
 
 
 
-            <!-- <div class="card">
-              <div class="card-header">
-                <div class="row">
-                  <div class="col col-md-6"><b>Student Data</b></div>
-                  <div class="col col-md-6">
-                    <a href="" class="btn btn-success btn-sm float-end">Add</a>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body">
-                <table class="table table-bordered">
-                  <tr>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Gender</th>
-                    <th>Action</th>
-                  </tr>
-
-
-                  <tr>
-                    <td><img src="" width="75" /></td>
-                    <td>dfghdfghd</td>
-                    <td>dfghdfghdfgh</td>
-                    <td>dgfhdfghdfg</td>
-                    <td>
-                      <form method="post" action="">
-
-                        <a href="" class="btn btn-primary btn-sm">View</a>
-                        <a href="}" class="btn btn-warning btn-sm">Edit</a>
-                        <input type="submit" class="btn btn-danger btn-sm" value="Delete" />
-                      </form>
-
-                    </td>
-                  </tr>
-
-
-                  <tr>
-                    <td colspan="5" class="text-center">No Data Found</td>
-                  </tr>
-
-                </table>
-
-              </div>
-            </div> -->
+           
 
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
-            Footer
+           
           </div>
           <!-- /.box-footer-->
         </div>
