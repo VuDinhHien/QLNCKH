@@ -2,7 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+
 use App\Http\Controllers\Topic\TopicController;
+use App\Http\Controllers\Magazine\MagazineController;
+use App\Http\Controllers\Scientist\ScientistController;
+
+use App\Http\Controllers\CouncilController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,5 +35,11 @@ Route::group(['prefix' => 'admin' , 'middleware'=>'auth'], function(){
    Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
    Route::resource('topic',TopicController::class);
+   Route::resource('magazine',MagazineController::class);
+   Route::resource('scientist',ScientistController::class);
+   
+   Route::resource('council', CouncilController::class);
+  
+
  });
 

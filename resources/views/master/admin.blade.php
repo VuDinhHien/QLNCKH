@@ -16,8 +16,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
+  
   <link rel="stylesheet" href="assets/dist/css/skins/_all-skins.min.css">
   <!-- font awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -52,7 +51,7 @@
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <!-- <img src="assets/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">  -->
+                
                 
                 <i class="fa fa-solid fa-power-off"></i>
                 <span class="hidden-xs">{{ auth()->user()->name }}</span>
@@ -84,28 +83,10 @@
         </div>
 
 
-        <!-- /.search form -->
-        <!-- sidebar menu: : style can be found in sidebar.less -->
-        <ul class="sidebar-menu">
-          <!-- <li class="header">MAIN NAVIGATION</li> -->
-
-
-
-
-
-
-          <!-- <li class="treeview">
-            <a href="#">
-              <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="assets/index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-              <li><a href="assets/index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
-            </ul>
-          </li> -->
-
+        
+        <ul class="sidebar-menu">  
           <li>
-            <a href="#">
+            <a href="{{ route('scientist.index') }}">
               <i class="fa fa-solid fa-id-card"></i> <span> Nhà Khoa Học</span>
 
             </a>
@@ -130,7 +111,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="{{ route('magazine.index') }}">
               <i class="fa fa-solid fa-newspaper"></i> <span>Bài báo khoa học</span>
 
             </a>
@@ -172,7 +153,7 @@
               <i class=" fa fa-solid fa-gear"></i> <span> Danh Mục</span> <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-              <li><a href=""><i class="fa fa-solid fa-user-tie"></i></i> Chức vụ hội đồng</a></li>
+              <li><a href="{{ route('council.index') }}"><i class="fa fa-solid fa-user-tie"></i></i> Chức vụ hội đồng</a></li>
               <li><a href=""><i class="fa fa-solid fa-message"></i> Cấp đề tài</a></li>
               <li><a href=""><i class="fa fa-solid fa-layer-group"></i> Cấp hội đồng</a></li>
               <li><a href=""><i class="fa fa-solid fa-building"></i> Cơ quan</a></li>
@@ -206,9 +187,9 @@
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
       <section class="content-header">
-        <h1>
+        <!-- <h1>
           @yield('title')
-        </h1>
+        </h1> -->
 
       </section>
 
