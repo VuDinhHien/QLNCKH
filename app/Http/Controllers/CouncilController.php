@@ -78,7 +78,7 @@ class CouncilController extends Controller
      */
     public function update(Request $request, Council $council)
     {
-        //
+        
         $request->validate([
             'position_name'          =>  'required',
             'only_position'         =>  'required',
@@ -87,7 +87,7 @@ class CouncilController extends Controller
 
        
 
-        $council =  Council::find($request->hidden_id);
+        $council = Council::find($request->hidden_id);
 
         $council->position_name = $request->position_name;
         $council->only_position = $request->only_position;
@@ -96,7 +96,9 @@ class CouncilController extends Controller
 
         $council->save();
 
-        return redirect()->route('council.index')->with('success', 'Student Data has been updated successfully');
+        return redirect()->route('council.index');
+        
+        
 
     }
 

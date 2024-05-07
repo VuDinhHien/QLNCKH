@@ -8,7 +8,7 @@ use App\Http\Controllers\Magazine\MagazineController;
 use App\Http\Controllers\Scientist\ScientistController;
 
 use App\Http\Controllers\CouncilController;
-
+use App\Http\Controllers\LvtopicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,8 +38,8 @@ Route::group(['prefix' => 'admin' , 'middleware'=>'auth'], function(){
    Route::resource('magazine',MagazineController::class);
    Route::resource('scientist',ScientistController::class);
    
-   Route::resource('council', CouncilController::class);
-  
+   Route::resource('council',CouncilController::class);
+   Route::resource('lvtopic',LvtopicController::class);
 
  });
 

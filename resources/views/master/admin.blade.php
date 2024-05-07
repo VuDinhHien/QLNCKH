@@ -154,7 +154,7 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="{{ route('council.index') }}"><i class="fa fa-solid fa-user-tie"></i></i> Chức vụ hội đồng</a></li>
-              <li><a href=""><i class="fa fa-solid fa-message"></i> Cấp đề tài</a></li>
+              <li><a href="{{ route('lvtopic.index') }}"><i class="fa fa-solid fa-message"></i> Cấp đề tài</a></li>
               <li><a href=""><i class="fa fa-solid fa-layer-group"></i> Cấp hội đồng</a></li>
               <li><a href=""><i class="fa fa-solid fa-building"></i> Cơ quan</a></li>
               <li><a href=""><i class="fa fa-solid fa-file"></i> Tên tạp chí KHHĐGS</a></li>
