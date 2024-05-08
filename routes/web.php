@@ -9,6 +9,12 @@ use App\Http\Controllers\Scientist\ScientistController;
 
 use App\Http\Controllers\CouncilController;
 use App\Http\Controllers\LvtopicController;
+use App\Http\Controllers\MoneyController;
+use App\Http\Controllers\PaperController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProposeController;
+use App\Http\Controllers\SeminarController;
+use App\Http\Controllers\TrainingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +27,7 @@ use App\Http\Controllers\LvtopicController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+
 
 
 Route::get('/', [AdminController::class, 'login'])->name('admin.login');
@@ -40,6 +44,13 @@ Route::group(['prefix' => 'admin' , 'middleware'=>'auth'], function(){
    
    Route::resource('council',CouncilController::class);
    Route::resource('lvtopic',LvtopicController::class);
+   Route::resource('paper',PaperController::class);
+   Route::resource('seminar',SeminarController::class);
+   Route::resource('propose',ProposeController::class);
+   Route::resource('money',MoneyController::class);
+   Route::resource('product',ProductController::class);
+   Route::resource('training',TrainingController::class);
+
 
  });
 

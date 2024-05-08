@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/AdminLTE.min.css">
-  
+
   <link rel="stylesheet" href="assets/dist/css/skins/_all-skins.min.css">
   <!-- font awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -51,8 +51,8 @@
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                
-                
+
+
                 <i class="fa fa-solid fa-power-off"></i>
                 <span class="hidden-xs">{{ auth()->user()->name }}</span>
               </a>
@@ -74,8 +74,8 @@
 
         <div class="user-panel">
           <div class="pull-left image">
-          <img src="assets/dist/img/logo/logo-small.png" class="user-image" alt="User Image">
-          </div> 
+            <img src="assets/dist/img/logo/logo-small.png" class="user-image" alt="User Image">
+          </div>
           <div class="pull-left info">
             <p>{{ auth()->user()->name }}</p>
             <a href="{{ route('admin.logout') }}"><i class="fa fa-circle text-success"></i> Logout</a>
@@ -83,8 +83,8 @@
         </div>
 
 
-        
-        <ul class="sidebar-menu">  
+
+        <ul class="sidebar-menu">
           <li>
             <a href="{{ route('scientist.index') }}">
               <i class="fa fa-solid fa-id-card"></i> <span> Nhà Khoa Học</span>
@@ -157,20 +157,19 @@
               <li><a href="{{ route('lvtopic.index') }}"><i class="fa fa-solid fa-message"></i> Cấp đề tài</a></li>
               <li><a href=""><i class="fa fa-solid fa-layer-group"></i> Cấp hội đồng</a></li>
               <li><a href=""><i class="fa fa-solid fa-building"></i> Cơ quan</a></li>
-              <li><a href=""><i class="fa fa-solid fa-file"></i> Tên tạp chí KHHĐGS</a></li>
+              <li><a href="{{ route('paper.index') }}"><i class="fa fa-solid fa-file"></i> Tên tạp chí KHHĐGS</a></li>
               <li><a href=""><i class="fa fa-solid fa-file-contract"></i> Loại hợp đông</a></li>
               <li><a href=""><i class="fa fa-solid fa-users"></i> Loại hội đồng</a></li>
-              <li><a href=""><i class="fa fa-solid fa-warehouse"></i> Loại hội thảo</a></li>
-              <li><a href=""><i class="fa fa-solid fa-list-check"></i> Loại đề xuất</a></li>
-              <li><a href=""><i class="fa fa-solid fa-receipt"></i> Cấp đề tài</a></li>
+              <li><a href="{{ route('seminar.index') }}"><i class="fa fa-solid fa-warehouse"></i> Loại hội thảo</a></li>
+              <li><a href="{{ route('propose.index') }}"><i class="fa fa-solid fa-list-check"></i> Loại đề xuất</a></li>
               <li><a href=""><i class="fa fa-solid fa-tag"></i> Lĩnh vực nghiên cứu</a></li>
               <li><a href=""><i class="fa fa-solid fa-note-sticky"></i> Lĩnh vực đề tài</a></li>
-              <li><a href=""><i class="fa fa-solid fa-certificate"></i> Loại sản phẩm</a></li>
-              <li><a href=""><i class="fa fa-solid fa-money-check-dollar"></i> Nguồn kinh phí</a></li>
+              <li><a href="{{ route('product.index') }}"><i class="fa fa-solid fa-certificate"></i> Loại sản phẩm</a></li>
+              <li><a href="{{ route('money.index') }}"><i class="fa fa-solid fa-money-check-dollar"></i> Nguồn kinh phí</a></li>
               <li><a href=""><i class="fa fa-solid fa-chart-pie"></i> Loại hạng mục</a></li>
               <li><a href=""><i class="fa fa-solid fa-circle-half-stroke"></i> Trạng thái đề xuất</a></li>
               <li><a href=""><i class="fa fa-solid fa-snowflake"></i> Tiêu chí điểm</a></li>
-              <li><a href=""><i class="fa fa-solid fa-building-columns"></i> Trình độ đào tạo</a></li>
+              <li><a href="{{ route('training.index') }}"><i class="fa fa-solid fa-building-columns"></i> Trình độ đào tạo</a></li>
 
             </ul>
           </li>
@@ -221,12 +220,12 @@
 
 
 
-           
+
 
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
-           
+
           </div>
           <!-- /.box-footer-->
         </div>
