@@ -108,6 +108,9 @@
     </div>
 </div>
 
+<script>
+document.getElementsByName('only_position')[0].value = "{{ $council->only_position }}";
+</script>
 
 
 

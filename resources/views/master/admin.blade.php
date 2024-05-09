@@ -155,15 +155,15 @@
             <ul class="treeview-menu">
               <li><a href="{{ route('council.index') }}"><i class="fa fa-solid fa-user-tie"></i></i> Chức vụ hội đồng</a></li>
               <li><a href="{{ route('lvtopic.index') }}"><i class="fa fa-solid fa-message"></i> Cấp đề tài</a></li>
-              <li><a href=""><i class="fa fa-solid fa-layer-group"></i> Cấp hội đồng</a></li>
+              <li><a href="{{ route('lvcouncil.index') }}"><i class="fa fa-solid fa-layer-group"></i> Cấp hội đồng</a></li>
               <li><a href=""><i class="fa fa-solid fa-building"></i> Cơ quan</a></li>
               <li><a href="{{ route('paper.index') }}"><i class="fa fa-solid fa-file"></i> Tên tạp chí KHHĐGS</a></li>
               <li><a href=""><i class="fa fa-solid fa-file-contract"></i> Loại hợp đông</a></li>
               <li><a href=""><i class="fa fa-solid fa-users"></i> Loại hội đồng</a></li>
               <li><a href="{{ route('seminar.index') }}"><i class="fa fa-solid fa-warehouse"></i> Loại hội thảo</a></li>
               <li><a href="{{ route('propose.index') }}"><i class="fa fa-solid fa-list-check"></i> Loại đề xuất</a></li>
-              <li><a href=""><i class="fa fa-solid fa-tag"></i> Lĩnh vực nghiên cứu</a></li>
-              <li><a href=""><i class="fa fa-solid fa-note-sticky"></i> Lĩnh vực đề tài</a></li>
+              <li><a href="{{ route('arsearch.index') }}"><i class="fa fa-solid fa-tag"></i> Lĩnh vực nghiên cứu</a></li>
+              <li><a href="{{ route('artopic.index') }}"><i class="fa fa-solid fa-note-sticky"></i> Lĩnh vực đề tài</a></li>
               <li><a href="{{ route('product.index') }}"><i class="fa fa-solid fa-certificate"></i> Loại sản phẩm</a></li>
               <li><a href="{{ route('money.index') }}"><i class="fa fa-solid fa-money-check-dollar"></i> Nguồn kinh phí</a></li>
               <li><a href=""><i class="fa fa-solid fa-chart-pie"></i> Loại hạng mục</a></li>

@@ -2,12 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\ArsearchController;
+use App\Http\Controllers\ArtopicController;
 use App\Http\Controllers\Topic\TopicController;
 use App\Http\Controllers\Magazine\MagazineController;
 use App\Http\Controllers\Scientist\ScientistController;
 
 use App\Http\Controllers\CouncilController;
+use App\Http\Controllers\LvcouncilController;
 use App\Http\Controllers\LvtopicController;
 use App\Http\Controllers\MoneyController;
 use App\Http\Controllers\PaperController;
@@ -50,7 +52,9 @@ Route::group(['prefix' => 'admin' , 'middleware'=>'auth'], function(){
    Route::resource('money',MoneyController::class);
    Route::resource('product',ProductController::class);
    Route::resource('training',TrainingController::class);
-
+   Route::resource('lvcouncil',LvcouncilController::class);
+   Route::resource('artopic',ArtopicController::class);
+   Route::resource('arsearch',ArsearchController::class);
 
  });
 
