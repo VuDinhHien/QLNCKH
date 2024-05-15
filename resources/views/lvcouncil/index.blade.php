@@ -26,6 +26,51 @@
     <a href="{{ route('lvcouncil.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Thêm mới</a>
 </form>
 
+<!-- <style>
+    .modal-header {
+        background-color: #5cb85c;
+        color: white;
+    }
+
+    .modal-footer .btn-primary {
+        background-color: #5cb85c;
+        border-color: #4cae4c;
+    }
+</style>
+
+Button trigger modal 
+<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#createModal" >
+        Thêm mới
+    </button>
+
+    
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="createModalLabel">Thêm mới</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="createForm" method="post" action="{{ route('lvcouncil.store') }}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="itemName">Tên</label>
+                            <input type="text" class="form-control" id="itemName" placeholder="Nhập tên">
+                        </div>
+                        <div class="form-group">
+                            <label for="itemDescription">Mô tả</label>
+                            <textarea class="form-control" id="itemDescription" rows="3" placeholder="Nhập mô tả"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="saveButton">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+ -->
 
 <table class="table table-hover">
     <thead>

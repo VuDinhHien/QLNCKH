@@ -31,7 +31,7 @@
     <thead>
         <tr>
             <th>Tên nguồn kinh phí</th>
-            <th>Thao tác</th>
+            <th class="text-right">Thao tác</th>
 
         </tr>
     </thead>
@@ -42,7 +42,7 @@
 
             <td>{{ $row->money_name }}</td>
             
-            <td>
+            <td class="text-right">
                 <form method="post" action="{{ route('money.destroy', $row->id) }}">
                     @csrf
                     @method('DELETE')

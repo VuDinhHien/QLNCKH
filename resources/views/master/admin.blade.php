@@ -156,10 +156,10 @@
               <li><a href="{{ route('council.index') }}"><i class="fa fa-solid fa-user-tie"></i></i> Chức vụ hội đồng</a></li>
               <li><a href="{{ route('lvtopic.index') }}"><i class="fa fa-solid fa-message"></i> Cấp đề tài</a></li>
               <li><a href="{{ route('lvcouncil.index') }}"><i class="fa fa-solid fa-layer-group"></i> Cấp hội đồng</a></li>
-              <li><a href=""><i class="fa fa-solid fa-building"></i> Cơ quan</a></li>
+              <li><a href="{{ route('office.index') }}"><i class="fa fa-solid fa-building"></i> Cơ quan</a></li>
               <li><a href="{{ route('paper.index') }}"><i class="fa fa-solid fa-file"></i> Tên tạp chí KHHĐGS</a></li>
-              <li><a href=""><i class="fa fa-solid fa-file-contract"></i> Loại hợp đông</a></li>
-              <li><a href=""><i class="fa fa-solid fa-users"></i> Loại hội đồng</a></li>
+              <li><a href=""><i class="fa fa-solid fa-file-contract"></i> Loại hợp đồng</a></li>
+              <li><a href="{{ route('tpcouncil.index') }}"><i class="fa fa-solid fa-users"></i> Loại hội đồng</a></li>
               <li><a href="{{ route('seminar.index') }}"><i class="fa fa-solid fa-warehouse"></i> Loại hội thảo</a></li>
               <li><a href="{{ route('propose.index') }}"><i class="fa fa-solid fa-list-check"></i> Loại đề xuất</a></li>
               <li><a href="{{ route('arsearch.index') }}"><i class="fa fa-solid fa-tag"></i> Lĩnh vực nghiên cứu</a></li>
@@ -167,8 +167,8 @@
               <li><a href="{{ route('product.index') }}"><i class="fa fa-solid fa-certificate"></i> Loại sản phẩm</a></li>
               <li><a href="{{ route('money.index') }}"><i class="fa fa-solid fa-money-check-dollar"></i> Nguồn kinh phí</a></li>
               <li><a href=""><i class="fa fa-solid fa-chart-pie"></i> Loại hạng mục</a></li>
-              <li><a href=""><i class="fa fa-solid fa-circle-half-stroke"></i> Trạng thái đề xuất</a></li>
-              <li><a href=""><i class="fa fa-solid fa-snowflake"></i> Tiêu chí điểm</a></li>
+              <li><a href="{{ route('suggestion.index') }}"><i class="fa fa-solid fa-circle-half-stroke"></i> Trạng thái đề xuất</a></li>
+              <li><a href="{{ route('score.index') }}"><i class="fa fa-solid fa-snowflake"></i> Tiêu chí điểm</a></li>
               <li><a href="{{ route('training.index') }}"><i class="fa fa-solid fa-building-columns"></i> Trình độ đào tạo</a></li>
 
             </ul>
@@ -177,14 +177,14 @@
         </ul>
 
       </section>
-      <!-- /.sidebar -->
+
     </aside>
 
-    <!-- =============================================== -->
 
-    <!-- Content Wrapper. Contains page content -->
+
+
     <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
+
       <section class="content-header">
         <!-- <h1>
           @yield('title')
@@ -219,9 +219,6 @@
 
 
 
-
-
-
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
@@ -237,19 +234,16 @@
     <!-- /.content-wrapper -->
 
     <footer class="main-footer">
-      <!-- <div class="pull-right hidden-xs">
-       
-      </div>
-      <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
-      reserved. -->
-    </footer>
 
-    <!-- Control Sidebar -->
+    </footer>
 
 
   </div>
   <!-- ./wrapper -->
-
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <!-- Bootstrap 3 JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <!-- jQuery 2.2.0 -->
   <script src="assets/plugins/jQuery/jQuery-2.2.0.min.js"></script>
   <!-- Bootstrap 3.3.6 -->

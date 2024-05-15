@@ -10,4 +10,9 @@ class Lvtopic extends Model
     use HasFactory;
 
     protected $fillable = ['lvtopic_name', 'category'];
+
+    public function topics()
+    {
+        return $this->hasMany(Topic::class);
+    }
 }

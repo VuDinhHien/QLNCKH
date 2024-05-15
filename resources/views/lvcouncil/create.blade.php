@@ -33,5 +33,18 @@
     </div>
 </div>
 
+<!-- <style>
+    .modal-header {
+        background-color: #5cb85c;
+        color: white;
+    }
+
+    .modal-footer .btn-primary {
+        background-color: #5cb85c;
+        border-color: #4cae4c;
+    }
+</style> -->
+
+
 
 @endsection('content')

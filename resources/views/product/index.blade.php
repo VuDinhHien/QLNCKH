@@ -31,7 +31,7 @@
     <thead>
         <tr>
             <th>Tên loại sản phẩm</th>
-            <th>Thao tác</th>
+            <th class="text-right">Thao tác</th>
 
         </tr>
     </thead>
@@ -42,7 +42,7 @@
 
             <td>{{ $row->product_name }}</td>
             
-            <td>
+            <td class="text-right">
                 <form method="post" action="{{ route('product.destroy', $row->id) }}">
                     @csrf
                     @method('DELETE')
@@ -62,7 +62,9 @@
 
     </tbody>
 </table>
-
+<div class="text-right">
+{{ $data->links('pagination::bootstrap-3') }}
+</div>
 
 
 @stop()
