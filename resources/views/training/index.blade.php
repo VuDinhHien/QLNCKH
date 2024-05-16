@@ -50,7 +50,7 @@
                    
                     <a href="{{ route('training.edit', $row->id) }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
                     
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you want to Delete it ?')"><i class="fa fa-trash"></i></button>
+                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                 </form>
 
             </td>

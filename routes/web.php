@@ -70,5 +70,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   Route::delete('/topic/{id}', [TopicController::class, 'destroy'])->name('topic.destroy');
   Route::resource('topic', TopicController::class);
 
+
   
 });

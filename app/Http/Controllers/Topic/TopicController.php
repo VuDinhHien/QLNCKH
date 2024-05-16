@@ -16,7 +16,7 @@ class TopicController extends Controller
     {
         //
         $lvtopics = Lvtopic::orderBy('lvtopic_name', 'ASC')->select('id', 'lvtopic_name')->get();
-        $topics = Topic::all();
+        $topics = Topic::paginate(5); 
         return view('topic.index', compact('lvtopics', 'topics'));
     }
 
@@ -66,9 +66,9 @@ class TopicController extends Controller
     public function edit(Topic $id)
     {
         //
-        $topic = Topic::findOrFail($id);
+        $topics = Topic::findOrFail($id);
         $lvtopic = Lvtopic::orderBy('lvtopic_name', 'ASC')->select('id', 'lvtopic_name')->get();
-        return view('topic.edit', compact('topic', 'lvtopic'));
+        return view('topic.edit', compact('topics', 'lvtopic'));
     }
 
     /**
@@ -78,8 +78,7 @@ class TopicController extends Controller
     {
         //
 
-        // Validate the request data
-        // Validate the request data
+      
         $validatedData = $request->validate([
             'topic_name' => 'required',
             'teacher_name' => 'required',
@@ -88,22 +87,19 @@ class TopicController extends Controller
             'lvtopic_id' => 'required|exists:lvtopics,id',
         ]);
 
-        // Find the topic by its ID
         $topic = Topic::findOrFail($id);
 
-        // Update the topic with the validated data
         $topic->update($validatedData);
 
-        // Redirect back to the index page
         return redirect()->route('topic.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Topic $topic, $id)
+    public function destroy($id)
     {
-        //
+        
         $topic = Topic::findOrFail($id);
         $topic->delete();
 
