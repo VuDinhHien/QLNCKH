@@ -28,11 +28,11 @@
         <tr>
             <th>STT</th>
             <th style="width:400px; text-align: center">Tên đề tài/đề án</th>
-            <th>Chủ nhiệm</th>
-            <th>Cấp đề tài/đề án</th>
-            <th>Kết quả nghiệm thu</th>
-            <th>Ngày kết thúc</th>
-            <th>Thao Tác</th>
+            <th style="text-align: center">Chủ nhiệm</th>
+            <th style="text-align: center">Cấp đề tài/đề án</th>
+            <th style="text-align: center">Kết quả nghiệm thu</th>
+            <th style="text-align: center">Ngày kết thúc</th>
+            <th style="text-align: center">Thao Tác</th>
         </tr>
     </thead>
     <tbody>

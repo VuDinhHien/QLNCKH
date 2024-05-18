@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArsearchController;
 use App\Http\Controllers\ArtopicController;
+use App\Http\Controllers\Conference\ConferenceController;
 use App\Http\Controllers\Topic\TopicController;
 use App\Http\Controllers\Magazine\MagazineController;
 use App\Http\Controllers\Scientist\ScientistController;
@@ -21,7 +22,7 @@ use App\Http\Controllers\SeminarController;
 use App\Http\Controllers\SuggestionController;
 use App\Http\Controllers\TpcouncilController;
 use App\Http\Controllers\TrainingController;
-use App\Models\Topic;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +47,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 
-  Route::resource('magazine', MagazineController::class);
+  
   Route::resource('scientist', ScientistController::class);
 
   Route::resource('council', CouncilController::class);
@@ -69,7 +70,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   Route::post('/topic', [TopicController::class, 'store'])->name('topic.store');
   Route::delete('/topic/{id}', [TopicController::class, 'destroy'])->name('topic.destroy');
   Route::resource('topic', TopicController::class);
-
-
+   
+  Route::get('/conference', [ConferenceController::class, 'index'])->name('conference.index');
+  Route::post('/conference', [ConferenceController::class, 'store'])->name('conference.store');
+  Route::delete('/conference/{id}', [ConferenceController::class, 'destroy'])->name('conference.destroy');
+  Route::resource('conference', ConferenceController::class);
+ 
   
+  Route::get('/magazine', [MagazineController::class, 'index'])->name('magazine.index');
+  Route::post('/magazine', [MagazineController::class, 'store'])->name('magazine.store');
+  Route::delete('/magazine/{id}', [MagazineController::class, 'destroy'])->name('magazine.destroy');
+  Route::resource('magazine', MagazineController::class);
 });

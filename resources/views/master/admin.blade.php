@@ -105,7 +105,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="{{ route('conference.index') }}">
               <i class="fa fa-regular fa-comments"></i> <span>Hội thảo/Hội nghị</span>
 
             </a>
