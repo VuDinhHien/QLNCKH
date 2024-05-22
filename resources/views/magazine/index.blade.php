@@ -39,16 +39,17 @@
         <tr>
             <td>{{ $loop->index + 1 }}</td>
             <td>{{ $magazine->magazine_name }}</td>
-            <td>{{ $magazine->year }}</td>
+            <td style="text-align: center">{{ $magazine->year }}</td>
             <td>{{ $magazine->journal }}</td>
             <td>{{ $magazine->paper->paper_name }}</td>
 
 
 
             <td>
-                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editTopicModal" data-topic-id="{{ $magazine->id }}" data-magazine-name="{{ $magazine->magazine_name }}" data-year="{{ $magazine->year }}" data-journal="{{ $magazine->journal }}" data-paper-id="{{ $magazine->paper_id }}">
-                    <i class="fa fa-edit"></i>
+                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editTopicModal" data-magazine-id="{{ $magazine->id }}" data-magazine-name="{{ $magazine->magazine_name }}" data-year="{{ $magazine->year }}" data-journal="{{ $magazine->journal }}" data-paper-id="{{ $magazine->paper_id }}">
+                   <i class="fa fa-edit"></i>
                 </button>
+
 
                 <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $magazine->id }}">
                     <i class="fa fa-trash"></i>
@@ -70,7 +71,7 @@
     {{ $magazines->links() }}
 </div>
 
-<!-- Modal -->
+<!-- Modal create-->
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -114,6 +115,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('saveButton').addEventListener('click', function() {
+        document.getElementById('createForm').submit();
+    });
+</script>
 
 
 <!-- The Modal -->
@@ -160,44 +167,32 @@
     </div>
 </div>
 
-
-
-
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <!-- Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-
 <script>
-    document.getElementById('saveButton').addEventListener('click', function() {
-        document.getElementById('createForm').submit();
-    });
-
-
-
     $(document).ready(function() {
         $('#editTopicModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
             var magazineId = button.data('magazine-id'); // Extract info from data-* attributes
-            var paperName = button.data('paper-name');
+            var magazineName = button.data('magazine-name'); // Corrected to match the id in the modal
             var year = button.data('year');
             var journal = button.data('journal');
             var paperId = button.data('paper-id');
 
             // Update the modal's content
             var modal = $(this);
-            modal.find('.modal-body #paper_name').val(paperName);
+            modal.find('.modal-body #magazine_name').val(magazineName); // Corrected to match the id in the modal
             modal.find('.modal-body #year').val(year);
             modal.find('.modal-body #journal').val(journal);
             modal.find('.modal-body #paper_id').val(paperId);
 
-          
+            // Optionally update the form action
             // modal.find('form').attr('action', `/magazine/${magazineId}`);
         });
     });
-
-
 </script>
 
 

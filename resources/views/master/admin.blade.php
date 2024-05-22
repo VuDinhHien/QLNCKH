@@ -21,7 +21,19 @@
   <!-- font awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+  <!-- Linh google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+
+  <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+
 </head>
+
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+  }
+</style>
 
 <body class="hold-transition skin-blue sidebar-mini">
   <!-- Site wrapper -->
@@ -36,6 +48,8 @@
         <span class="logo-lg"><b>Đại học Thủy Lợi</b></span>
       </a>
       <!-- Header Navbar: style can be found in header.less -->
+
+
       <nav class="navbar navbar-static-top">
         <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -44,6 +58,31 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
+
+
+
+
+        <!-- <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <li class="dropdown user user-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-solid fa-power-off"></i>
+                <span class="hidden-xs">{{ auth()->user()->name }}</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <div class="row">
+                    <div class="text-center">
+                      <a href="#">Log out</a>
+                    </div>
+
+                  </div>
+                </li>
+
+              </ul>
+            </li>
+          </ul>
+        </div> -->
 
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
@@ -56,12 +95,18 @@
                 <i class="fa fa-solid fa-power-off"></i>
                 <span class="hidden-xs">{{ auth()->user()->name }}</span>
               </a>
+              
+
+              
 
             </li>
+
+
             <!-- Control Sidebar Toggle Button -->
 
           </ul>
         </div>
+
       </nav>
     </header>
 
@@ -124,7 +169,7 @@
           </li>
 
           <li>
-            <a href="#">
+            <a href="{{ route('scouncil.index') }}">
               <i class="fa fa-solid fa-check"></i> <span>Hội đồng khoa học</span>
 
             </a>
@@ -170,7 +215,7 @@
               <li><a href="{{ route('suggestion.index') }}"><i class="fa fa-solid fa-circle-half-stroke"></i> Trạng thái đề xuất</a></li>
               <li><a href="{{ route('score.index') }}"><i class="fa fa-solid fa-snowflake"></i> Tiêu chí điểm</a></li>
               <li><a href="{{ route('training.index') }}"><i class="fa fa-solid fa-building-columns"></i> Trình độ đào tạo</a></li>
-
+              <li><a href="{{ route('profile.index') }}"><i class="fa fa-solid fa-user-tie"></i></i> Lý lịch</a></li>
             </ul>
           </li>
 
@@ -183,14 +228,25 @@
 
 
 
+
     <div class="content-wrapper">
 
       <section class="content-header">
-        <!-- <h1>
-          @yield('title')
-        </h1> -->
+
 
       </section>
+
+
+
+
+
+
+
+
+
+
+
+
 
       <!-- Main content -->
       <section class="content">
@@ -214,7 +270,7 @@
             @endif
 
 
-            <!-- cua main -->
+
             @yield('main')
 
 
@@ -256,6 +312,8 @@
   <script src="assets/dist/js/app.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="assets/dist/js/demo.js"></script>
+
+
 </body>
 
 </html>

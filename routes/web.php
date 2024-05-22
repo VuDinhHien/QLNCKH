@@ -16,8 +16,10 @@ use App\Http\Controllers\MoneyController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\PaperController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProposeController;
 use App\Http\Controllers\ScoreController;
+use App\Http\Controllers\Scouncil\ScouncilController;
 use App\Http\Controllers\SeminarController;
 use App\Http\Controllers\SuggestionController;
 use App\Http\Controllers\TpcouncilController;
@@ -65,6 +67,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   Route::resource('suggestion', SuggestionController::class);
   Route::resource('tpcouncil', TpcouncilController::class);
   Route::resource('score', ScoreController::class);
+  Route::resource('profile', ProfileController::class);
+  
 
   Route::get('/topic', [TopicController::class, 'index'])->name('topic.index');
   Route::post('/topic', [TopicController::class, 'store'])->name('topic.store');
@@ -81,4 +85,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   Route::post('/magazine', [MagazineController::class, 'store'])->name('magazine.store');
   Route::delete('/magazine/{id}', [MagazineController::class, 'destroy'])->name('magazine.destroy');
   Route::resource('magazine', MagazineController::class);
+
+  Route::get('/scouncil', [ScouncilController::class, 'index'])->name('scouncil.index');
+  Route::post('/scouncil', [ScouncilController::class, 'store'])->name('scouncil.store');
+  Route::delete('/scouncil/{id}', [ScouncilController::class, 'destroy'])->name('scouncil.destroy');
+  Route::resource('scouncil', ScouncilController::class);
+
+  
 });
