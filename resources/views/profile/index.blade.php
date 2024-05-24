@@ -16,14 +16,11 @@
 
 <form action="" method="POST" class="form-inline" role="form">
 
-    <div class="form-group">
-        <label class="sr-only" for="">label</label>
-        <input type="email" class="form-control" id="" placeholder="Input field">
-    </div>
+    
 
 
 
-    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+
     <a href="{{ route('profile.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Thêm mới</a>
 </form>
 
@@ -82,7 +79,7 @@
                     @csrf
                     @method('DELETE')
 
-
+                    <a href="{{ route('profile.show', $model->id) }}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
                     <a href="{{ route('profile.edit', $model->id) }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
 
                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you want to Delete it ?')"><i class="fa fa-trash"></i></button>

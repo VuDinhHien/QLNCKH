@@ -13,6 +13,7 @@ use App\Http\Controllers\CouncilController;
 use App\Http\Controllers\LvcouncilController;
 use App\Http\Controllers\LvtopicController;
 use App\Http\Controllers\MoneyController;
+use App\Http\Controllers\Offer\OfferController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\PaperController;
 use App\Http\Controllers\ProductController;
@@ -90,6 +91,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   Route::post('/scouncil', [ScouncilController::class, 'store'])->name('scouncil.store');
   Route::delete('/scouncil/{id}', [ScouncilController::class, 'destroy'])->name('scouncil.destroy');
   Route::resource('scouncil', ScouncilController::class);
+
+  Route::get('/offer', [OfferController::class, 'index'])->name('offer.index');
+  Route::post('/offer', [OfferController::class, 'store'])->name('offer.store');
+  Route::delete('/offer/{id}', [OfferController::class, 'destroy'])->name('offer.destroy');
+  Route::resource('offer', OfferController::class);
 
   
 });

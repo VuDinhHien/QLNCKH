@@ -96,7 +96,7 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label for="research_major">Chuyên ngành nghiên cứu</label>
-                <input type="text" class="form-control" name="research_major" placeholder="Input field" required>
+                <input type="text" class="form-control" name="research_major" placeholder="Input field">
             </div>
         </div>
         <div class="col-md-4">

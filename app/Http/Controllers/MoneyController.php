@@ -104,6 +104,5 @@ class MoneyController extends Controller
         $money->delete();
 
         return redirect()->route('money.index');
-
     }
 }

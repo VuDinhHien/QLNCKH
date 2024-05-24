@@ -45,7 +45,7 @@ class ProfileController extends Controller
             'telephone' => 'required',
             'email' => 'required|email',
             'degree_id' => 'required|exists:degrees,id',
-            'research_major' => 'required',
+            'research_major' => 'nullable',
             'office_id' => 'required|exists:offices,id',
             'address_office' => 'required',
         ]);
@@ -79,6 +79,9 @@ class ProfileController extends Controller
     public function show(Profile $profile)
     {
         //
+        $degrees = Degree::orderBy('degree_name', 'ASC')->select('id', 'degree_name')->get();
+        $offices = Office::orderBy('office_name', 'ASC')->select('id', 'office_name')->get();
+        return view('profile.show', compact('degrees', 'offices', 'profile'));
     }
 
     /**
@@ -108,7 +111,7 @@ class ProfileController extends Controller
             'telephone' => 'required',
             'email' => 'required|email',
             'degree_id' => 'required|exists:degrees,id',
-            'research_major' => 'required',
+            'research_major' => 'nullable',
             'office_id' => 'required|exists:offices,id',
             'address_office' => 'required',
         ]);

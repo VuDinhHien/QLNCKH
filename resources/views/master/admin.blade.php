@@ -138,7 +138,7 @@
           </li>
 
           <li>
-            <a href="#">
+            <a href="{{ route('offer.index') }}">
               <i class="fa fa-solid fa-clipboard-check"></i> <span> Quản lý đề xuất</span>
 
             </a>

@@ -13,7 +13,7 @@ class PaperController extends Controller
     public function index()
     {
         //
-        $data = Paper::latest()->paginate(5);
+        $data = Paper::latest()->paginate(10);
 
         return view('paper.index', compact('data'));
 
