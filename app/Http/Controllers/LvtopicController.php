@@ -13,7 +13,7 @@ class LvtopicController extends Controller
     public function index()
     {
         //
-        $data = Lvtopic::latest()->paginate(5);
+        $data = Lvtopic::latest()->paginate(15);
 
         return view('lvtopic.index', compact('data'));
     }

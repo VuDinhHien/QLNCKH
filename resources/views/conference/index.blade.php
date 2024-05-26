@@ -40,7 +40,8 @@
     <tbody>
         @foreach ($conferences as $conference)
         <tr>
-            <td>{{ $loop->index + 1 }}</td>
+            <!-- <td>{{ $loop->index + 1 }}</td> -->
+            <td>{{ $conference->id }}</td>
             <td>{{ $conference->conference_name }}</td>
             <td>{{ $conference->seminar->seminar_name }}</td>
             <td>{{ $conference->office }}</td>
@@ -237,7 +238,7 @@
             modal.find('.modal-body #date').val(date);
 
             // Update the form action
-            // modal.find('form').attr('action', `/conference/${conferenceId}`);
+             modal.find('form').attr('action', `admin/conference/${conferenceId}`);
         });
     });
 </script>

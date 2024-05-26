@@ -31,6 +31,7 @@
             <th style="text-align: center">Chủ nhiệm</th>
             <th style="text-align: center">Cấp đề tài/đề án</th>
             <th style="text-align: center">Kết quả nghiệm thu</th>
+            <th style="text-align: center">Ngày bắt đầu</th>
             <th style="text-align: center">Ngày kết thúc</th>
             <th style="text-align: center">Thao Tác</th>
         </tr>
@@ -38,15 +39,16 @@
     <tbody>
         @foreach ($topics as $topic)
         <tr>
-            <td>{{ $loop->index + 1 }}</td>
+            <td>{{ $topic->id }}</td>
             <td>{{ $topic->topic_name }}</td>
-            <td>{{ $topic->teacher_name }}</td>
+            <td>{{ $topic->profile->profile_name }}</td>
             <td>{{ $topic->lvtopic->lvtopic_name }}</td>
             <td>{{ $topic->result }}</td>
+            <td>{{ $topic->start_date }}</td>
             <td>{{ $topic->end_date }}</td>
 
             <td>
-                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editTopicModal" data-topic-id="{{ $topic->id }}" data-topic-name="{{ $topic->topic_name }}" data-teacher-name="{{ $topic->teacher_name }}" data-result="{{ $topic->result }}" data-end-date="{{ $topic->end_date }}" data-lvtopic-id="{{ $topic->lvtopic_id }}">
+                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editTopicModal" data-topic-id="{{ $topic->id }}" data-topic-name="{{ $topic->topic_name }}" data-profile-id="{{ $topic->profile_id }}" data-lvtopic-id="{{ $topic->lvtopic_id }}" data-result="{{ $topic->result }}" data-start-date="{{ $topic->start_date }}" data-end-date="{{ $topic->end_date }}" >
                     <i class="fa fa-edit"></i>
                 </button>
 
@@ -90,9 +92,14 @@
                         <label for="topic_name">Tên đề tài/đề án</label>
                         <input type="text" class="form-control" id="topic_name" name="topic_name" required>
                     </div>
+
                     <div class="form-group">
-                        <label for="teacher_name">Chủ nhiệm</label>
-                        <input type="text" class="form-control" id="teacher_name" name="teacher_name" required>
+                        <label for="profile_id">Chủ nhiệm</label>
+                        <select class="form-control" name="profile_id" required>
+                            @foreach ($profiles as $profile)
+                            <option value="{{ $profile->id }}">{{ $profile->profile_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -112,6 +119,12 @@
                             <option value="Xuất sắc">Xuất sắc</option>
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <label for="start_date">Ngày bắt đầu</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" required>
+                    </div>
+
                     <div class="form-group">
                         <label for="end_date">Ngày kết thúc</label>
                         <input type="date" class="form-control" id="end_date" name="end_date" required>
@@ -141,34 +154,48 @@
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="topic_name">Tên Topic</label>
-                        <input type="text" class="form-control" id="topic_name" name="topic_name">
+                   <div class="form-group">
+                        <label for="topic_name">Tên đề tài/đề án</label>
+                        <input type="text" class="form-control" id="topic_name" name="topic_name" required>
                     </div>
+
                     <div class="form-group">
-                        <label for="teacher_name">Tên Giáo viên</label>
-                        <input type="text" class="form-control" id="teacher_name" name="teacher_name">
-                    </div>
-                    <div class="form-group">
-                        <label for="result">Kết quả nghiệm thu</label>
-                        <select name="result" id="result" class="form-control">
-                            <option value="Khá">Khá</option>
-                            <option value="Giỏi">Giỏi</option>
-                            <option value="Xuất sắc">Xuất sắc</option>
+                        <label for="profile_id">Chủ nhiệm</label>
+                        <select class="form-control" name="profile_id" required>
+                            @foreach ($profiles as $profile)
+                            <option value="{{ $profile->id }}">{{ $profile->profile_name }}</option>
+                            @endforeach
                         </select>
                     </div>
+
                     <div class="form-group">
-                        <label for="end_date">Ngày kết thúc</label>
-                        <input type="date" class="form-control" id="end_date" name="end_date">
-                    </div>
-                    <div class="form-group">
-                        <label for="lvtopic_id">Cấp đề tài/đề án</label>
-                        <select class="form-control" name="lvtopic_id" id="lvtopic_id">
+                        <label for="lvtopic_id">Cấp đề tài/đề án</label>
+                        <select class="form-control" name="lvtopic_id" required>
                             @foreach ($lvtopics as $lvtopic)
                             <option value="{{ $lvtopic->id }}">{{ $lvtopic->lvtopic_name }}</option>
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <label for="result">Kết quả nghiệm thu</label>
+                        <select name="result" id="" class="form-control">
+                            <option value="Khá">Khá</option>
+                            <option value="Giỏi">Giỏi</option>
+                            <option value="Xuất sắc">Xuất sắc</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="start_date">Ngày bắt đầu</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="end_date">Ngày kết thúc</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date" required>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -195,24 +222,30 @@
 
 
     $(document).ready(function() {
-        $('#editTopicModal').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget); // Button that triggered the modal
-            var topicId = button.data('topic-id'); // Extract info from data-* attributes
-            var topicName = button.data('topic-name');
-            var teacherName = button.data('teacher-name');
-            var result = button.data('result');
-            var endDate = button.data('end-date');
-            var lvtopicId = button.data('lvtopic-id');
+    $('#editTopicModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var topicId = button.data('topic-id'); // Extract info from data-* attributes
+        var topicName = button.data('topic-name');
+        var profileId = button.data('profile-id');
+        
+        var result = button.data('result');
+        var startDate = button.data('start-date');
+        var endDate = button.data('end-date');
+        var lvtopicId = button.data('lvtopic-id');
 
-            // Update the modal's content
-            var modal = $(this);
-            modal.find('.modal-body #topic_name').val(topicName);
-            modal.find('.modal-body #teacher_name').val(teacherName);
-            modal.find('.modal-body #result').val(result);
-            modal.find('.modal-body #end_date').val(endDate);
-            modal.find('.modal-body #lvtopic_id').val(lvtopicId);
-        });
+        // Update the modal's content
+        var modal = $(this);
+        modal.find('.modal-body #topic_name').val(topicName);
+        modal.find('.modal-body #profile_id').val(profileId);
+        modal.find('.modal-body #result').val(result);
+        modal.find('.modal-body #start_date').val(startDate);
+        modal.find('.modal-body #end_date').val(endDate);
+        modal.find('.modal-body #lvtopic_id').val(lvtopicId);
+
+        modal.find('#editTopicForm').attr('action', 'admin/topic/' + topicId);
     });
+});
+
 </script>
 
 
@@ -254,5 +287,6 @@
         });
     });
 </script>
+
 
 @stop()

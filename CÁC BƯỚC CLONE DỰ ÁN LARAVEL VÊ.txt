@@ -1,0 +1,26 @@
+Cài đặt XAMPP, Composer để chạy
+
+CÁC BƯỚC CLONE DỰ ÁN LARAVEL VỀ MÁY TÍNH
+
+-Chạy các lệnh trong git bash 
+
+git clone......link
+
+cd (thư mục clone)
+
+composer update --no-scripts
+
+
+ php artisan cache:clear
+
+ php artisan config:clear
+
+ php artisan key:generate
+
+-coppy file .env.example ra 1 file nữa, doi tên thành .env
+
+----------------------------------------------
+(Nếu chưa có CSDL trên máy thì 
+tạo csdl  rỗng rồi cấu hình file .env
+ import csdl
+

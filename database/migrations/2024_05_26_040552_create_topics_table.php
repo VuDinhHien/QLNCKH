@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
             $table->string('topic_name');
-            $table->string('teacher_name');
-            $table->enum('result', ['Khá', 'Giỏi', 'Xuất sắc']);
-            $table->date('end_date');
+            $table->unsignedBigInteger('profile_id');
+            $table->enum('result' , ['Khá' , 'Giỏi' , 'Xuất sắc']);
             $table->unsignedBigInteger('lvtopic_id');
+            $table->date('start_date');
+            $table->date('end_date');
 
+
+            $table->foreign('profile_id')->references('id')->on('profiles');
             $table->foreign('lvtopic_id')->references('id')->on('lvtopics');
             $table->timestamps();
         });

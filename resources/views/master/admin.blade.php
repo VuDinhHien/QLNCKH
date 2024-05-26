@@ -198,12 +198,13 @@
               <i class=" fa fa-solid fa-gear"></i> <span> Danh Mục</span> <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ route('council.index') }}"><i class="fa fa-solid fa-user-tie"></i></i> Chức vụ hội đồng</a></li>
+            <li><a href="{{ route('profile.index') }}"><i class="fa fa-solid fa-user-tie"></i></i> Lý lịch nhà khoa học</a></li>
+              <li><a href="{{ route('council.index') }}"><i class="fa fa-solid fa-users"></i></i> Chức vụ hội đồng</a></li>
               <li><a href="{{ route('lvtopic.index') }}"><i class="fa fa-solid fa-message"></i> Cấp đề tài</a></li>
               <li><a href="{{ route('lvcouncil.index') }}"><i class="fa fa-solid fa-layer-group"></i> Cấp hội đồng</a></li>
               <li><a href="{{ route('office.index') }}"><i class="fa fa-solid fa-building"></i> Cơ quan</a></li>
               <li><a href="{{ route('paper.index') }}"><i class="fa fa-solid fa-file"></i> Tên tạp chí KHHĐGS</a></li>
-              <li><a href=""><i class="fa fa-solid fa-file-contract"></i> Loại hợp đồng</a></li>
+             
               <li><a href="{{ route('tpcouncil.index') }}"><i class="fa fa-solid fa-users"></i> Loại hội đồng</a></li>
               <li><a href="{{ route('seminar.index') }}"><i class="fa fa-solid fa-warehouse"></i> Loại hội thảo</a></li>
               <li><a href="{{ route('propose.index') }}"><i class="fa fa-solid fa-list-check"></i> Loại đề xuất</a></li>
@@ -215,7 +216,7 @@
               <li><a href="{{ route('suggestion.index') }}"><i class="fa fa-solid fa-circle-half-stroke"></i> Trạng thái đề xuất</a></li>
               <li><a href="{{ route('score.index') }}"><i class="fa fa-solid fa-snowflake"></i> Tiêu chí điểm</a></li>
               <li><a href="{{ route('training.index') }}"><i class="fa fa-solid fa-building-columns"></i> Trình độ đào tạo</a></li>
-              <li><a href="{{ route('profile.index') }}"><i class="fa fa-solid fa-user-tie"></i></i> Lý lịch</a></li>
+             
             </ul>
           </li>
 

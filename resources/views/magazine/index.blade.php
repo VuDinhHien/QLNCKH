@@ -190,7 +190,7 @@
             modal.find('.modal-body #paper_id').val(paperId);
 
             // Optionally update the form action
-            // modal.find('form').attr('action', `/magazine/${magazineId}`);
+             modal.find('form').attr('action', `admin/magazine/${magazineId}`);
         });
     });
 </script>

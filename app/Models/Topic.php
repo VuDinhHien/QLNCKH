@@ -9,7 +9,7 @@ class Topic extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['topic_name', 'teacher_name', 'result', 'end_date', 'lvtopic_id'];
+   protected $fillable = ['topic_name','profile_id', 'lvtopic_id', 'result' , 'start_date' , 'end_date', ];
 
     // public function lvtopic() {
     //      return $this->hasOne(Lvtopic::class, 'id', 'lvtopic_id');
@@ -18,5 +18,9 @@ class Topic extends Model
     public function lvtopic()
     {
         return $this->belongsTo(Lvtopic::class);
+    }
+
+    public function profile(){
+        return $this->belongsTo(Profile::class);
     }
 }

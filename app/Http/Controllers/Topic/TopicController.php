@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Topic;
 
 use App\Http\Controllers\Controller;
+use App\Models\Profile;
 use App\Models\Lvtopic;
 use App\Models\Topic;
 use Illuminate\Http\Request;
@@ -15,9 +16,10 @@ class TopicController extends Controller
     public function index()
     {
         //
+        $profiles = Profile::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
         $lvtopics = Lvtopic::orderBy('lvtopic_name', 'ASC')->select('id', 'lvtopic_name')->get();
         $topics = Topic::paginate(5); 
-        return view('topic.index', compact('lvtopics', 'topics'));
+        return view('topic.index', compact('lvtopics', 'topics', 'profiles'));
     }
 
     /**
@@ -39,8 +41,9 @@ class TopicController extends Controller
     {
         $request->validate([
             'topic_name'     =>  'required',
-            'teacher_name'   =>  'required',
+            'profile_id'     =>  'required|exists:profiles,id',
             'result'         =>  'required',
+            'start_date'       =>  'required',
             'end_date'       =>  'required',
             'lvtopic_id'     =>  'required|exists:lvtopics,id',
         ]);
@@ -67,8 +70,9 @@ class TopicController extends Controller
     {
         //
         $topics = Topic::findOrFail($id);
-        $lvtopic = Lvtopic::orderBy('lvtopic_name', 'ASC')->select('id', 'lvtopic_name')->get();
-        return view('topic.edit', compact('topics', 'lvtopic'));
+        $profile = Profile::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
+        $lvtopic = Lvtopic::orderBy('lvtopic_name', 'DESC')->select('id', 'lvtopic_name')->get();
+        return view('topic.edit', compact('topics', 'lvtopic', 'profile'));
     }
 
     /**
@@ -80,11 +84,12 @@ class TopicController extends Controller
 
       
         $validatedData = $request->validate([
-            'topic_name' => 'required',
-            'teacher_name' => 'required',
-            'result' => 'required',
-            'end_date' => 'required',
-            'lvtopic_id' => 'required|exists:lvtopics,id',
+            'topic_name'     =>  'required',
+            'profile_id'     =>  'required|exists:profiles,id',
+            'result'         =>  'required',
+            'start_date'      =>  'required',
+            'end_date'       =>  'required',
+            'lvtopic_id'     =>  'required|exists:lvtopics,id',
         ]);
 
         $topic = Topic::findOrFail($id);
