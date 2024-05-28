@@ -12,7 +12,12 @@
     </ol>
 </nav>
 
-
+<style>
+    .action{
+        display: flex;
+        justify-content: space-between
+    }
+</style>
 
 
 
@@ -23,16 +28,16 @@
     Thêm mới
 </button>
 
-<table class="table table-hover table-bordered mt-3">
+<table class="table table-hover table-bordered mt-3" id="myTable">
     <thead>
         <tr>
-            <th>Người đề xuất</th>
-            <th>Năm</th>
-            <th style="width: 400px">Tên đề xuất</th>
-            <th>Loại đề xuất</th>
-            <th>Trạng thái</th>
-            <th>Ghi chú</th>
-            <th>Thao Tác</th>
+            <th style="text-align: center">Người đề xuất</th>
+            <th style="text-align: center">Năm</th>
+            <th style="width: 400px; text-align: center">Tên đề xuất</th>
+            <th style="text-align: center">Loại đề xuất</th>
+            <th style="text-align: center">Trạng thái</th>
+            <th style="text-align: center">Ghi chú</th>
+            <th style="text-align: center">Thao Tác</th>
         </tr>
     </thead>
     <tbody>
@@ -47,13 +52,19 @@
 
             <td>
 
-                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $offer->id }}">
-                    <i class="fa fa-trash"></i>
-                </button>
-
-                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editscouncilModal" data-offer-id="{{ $offer->id }}" data-proposer="{{ $offer->proposer }}" data-year="{{ $offer->year }}" data-offer-name="{{ $offer->offer_name }}" data-propose-id="{{ $offer->propose_id }}" data-suggestion-id="{{ $offer->suggestion_id }}" data-note="{{ $offer->note }}">
-                    <i class="fa fa-edit"></i>
-                </button>
+                <div class="action">
+                    <div>
+                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $offer->id }}">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+    
+                   <div>
+                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editscouncilModal" data-offer-id="{{ $offer->id }}" data-proposer="{{ $offer->proposer }}" data-year="{{ $offer->year }}" data-offer-name="{{ $offer->offer_name }}" data-propose-id="{{ $offer->propose_id }}" data-suggestion-id="{{ $offer->suggestion_id }}" data-note="{{ $offer->note }}">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                   </div>
+                </div>
 
 
 
@@ -68,10 +79,7 @@
 
 
 
-<!-- Liên kết phân trang -->
-<div class="text-right">
-    {{ $offers->links() }}
-</div>
+
 
 <!-- Modal -->
 <!-- Modal -->

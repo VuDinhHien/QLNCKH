@@ -13,6 +13,17 @@
 </nav>
 
 
+<style>
+    th{
+        text-align: center
+    }
+
+    .action {
+        display: flex;
+        justify-content: space-between
+    }
+</style>
+
 
 
 
@@ -23,7 +34,7 @@
     Thêm mới
 </button>
 
-<table class="table table-hover table-bordered mt-3">
+<table class="table table-hover table-bordered mt-3" id="myTable">
     <thead>
         <tr>
             <th>Số quyết định</th>
@@ -47,15 +58,15 @@
 
             <td>
 
-                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $scouncil->id }}">
-                    <i class="fa fa-trash"></i>
-                </button>
+               
 
                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editscouncilModal" data-scouncil-id="{{ $scouncil->id }}" data-decision-number="{{ $scouncil->decision_number }}" data-date="{{ $scouncil->date }}" data-lvcouncil-id="{{ $scouncil->lvcouncil_id }}" data-tpcouncil-id="{{ $scouncil->tpcouncil_id }}" data-scouncil-name="{{ $scouncil->scouncil_name }}" data-year="{{ $scouncil->year }}">
                     <i class="fa fa-edit"></i>
                 </button>
 
-
+                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $scouncil->id }}">
+                    <i class="fa fa-trash"></i>
+                </button>
 
 
             </td>
@@ -69,9 +80,7 @@
 
 
 <!-- Liên kết phân trang -->
-<div class="text-right">
-    {{ $scouncils->links() }}
-</div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel">

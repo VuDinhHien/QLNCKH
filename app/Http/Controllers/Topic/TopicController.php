@@ -18,7 +18,7 @@ class TopicController extends Controller
         //
         $profiles = Profile::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
         $lvtopics = Lvtopic::orderBy('lvtopic_name', 'ASC')->select('id', 'lvtopic_name')->get();
-        $topics = Topic::paginate(5); 
+        $topics = Topic::paginate(10); 
         return view('topic.index', compact('lvtopics', 'topics', 'profiles'));
     }
 
@@ -69,34 +69,37 @@ class TopicController extends Controller
     public function edit(Topic $id)
     {
         //
-        $topics = Topic::findOrFail($id);
-        $profile = Profile::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
-        $lvtopic = Lvtopic::orderBy('lvtopic_name', 'DESC')->select('id', 'lvtopic_name')->get();
-        return view('topic.edit', compact('topics', 'lvtopic', 'profile'));
-    }
+         //
+         $topic = Topic::findOrFail($id);
+         $lvtopics = Lvtopic::orderBy('lvtopic_name', 'ASC')->select('id', 'lvtopic_name')->get();
+         $profiles = Profile::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
+         return view('topic.index', compact('topic', 'lvtopics', 'profiles'));
+       
 
     /**
      * Update the specified resource in storage.
      */
+    }
     public function update(Request $request,$id)
     {
         //
-
-      
         $validatedData = $request->validate([
             'topic_name'     =>  'required',
             'profile_id'     =>  'required|exists:profiles,id',
             'result'         =>  'required',
-            'start_date'      =>  'required',
+            'start_date'     =>  'required',
             'end_date'       =>  'required',
             'lvtopic_id'     =>  'required|exists:lvtopics,id',
+            
         ]);
 
         $topic = Topic::findOrFail($id);
-
         $topic->update($validatedData);
 
         return redirect()->route('topic.index');
+
+      
+        
     }
 
     /**

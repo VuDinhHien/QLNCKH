@@ -13,7 +13,16 @@
 </nav>
 
 
+<style>
+    th{
+        text-align: center
+    }
 
+    .action {
+        display: flex;
+        justify-content: space-between
+    }
+</style>
 
 
 <!-- Modal -->
@@ -23,11 +32,11 @@
     Thêm mới
 </button>
 
-<table class="table table-hover table-bordered mt-3">
+<table class="table table-hover table-bordered mt-3" id="myTable">
     <thead>
         <tr>
             <th>STT</th>
-            <th style="width:400px; text-align: center">Tên hội nghị/hội thảo</th>
+            <th style="width:400px">Tên hội nghị/hội thảo</th>
             <th>Loại hội thảo</th>
             <th>Cơ quan</th>
             <th>Đơn vị</th>
@@ -51,14 +60,21 @@
             <td>{{ $conference->date }}</td>
 
             <td>
-                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editconferenceModal" data-conference-id="{{ $conference->id }}" data-conference-name="{{ $conference->conference_name }}" data-seminar-id="{{ $conference->seminar_id }}" data-office="{{ $conference->office }}" data-unit="{{ $conference->unit }}" data-money="{{ $conference->money }}" data-status_name="{{ $conference->status_name }}" data-date="{{ $conference->date }}">
-                    <i class="fa fa-edit"></i>
-                </button>
+                
 
-                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $conference->id }}">
-                    <i class="fa fa-trash"></i>
-                </button>
+               
+                
+                <div class="action">
+                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editconferenceModal" data-conference-id="{{ $conference->id }}" data-conference-name="{{ $conference->conference_name }}" data-seminar-id="{{ $conference->seminar_id }}" data-office="{{ $conference->office }}" data-unit="{{ $conference->unit }}" data-money="{{ $conference->money }}" data-status_name="{{ $conference->status_name }}" data-date="{{ $conference->date }}">
+                        <i class="fa fa-edit"></i>
+                    </button>
 
+                    <div>
+                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $conference->id }}">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
 
 
 
@@ -72,10 +88,7 @@
 
 
 
-<!-- Liên kết phân trang -->
-<div class="text-right">
-    {{ $conferences->links() }}
-</div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel">
