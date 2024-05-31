@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Scientist;
 
 use App\Http\Controllers\Controller;
 use App\Models\Scientist;
+use App\Models\Degree;
+use App\Models\Office;
 use Illuminate\Http\Request;
 
 class ScientistController extends Controller
@@ -14,7 +16,10 @@ class ScientistController extends Controller
     public function index()
     {
         //
-        return view('scientist.index');
+        $data = Scientist::orderBy('id', 'ASC')->paginate(10);
+        $degrees = Degree::orderBy('degree_name', 'ASC')->select('id', 'degree_name')->get();
+        $offices = Office::orderBy('office_name', 'ASC')->select('id', 'office_name')->get();
+        return view('scientist.index', compact('data','degrees', 'offices'));
     }
 
     /**
@@ -23,7 +28,7 @@ class ScientistController extends Controller
     public function create()
     {
         //
-        return view('scientist.create');
+  
     }
 
     /**
