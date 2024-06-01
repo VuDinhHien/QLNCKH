@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArsearchController;
 use App\Http\Controllers\ArtopicController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Conference\ConferenceController;
 use App\Http\Controllers\Topic\TopicController;
 use App\Http\Controllers\Magazine\MagazineController;
@@ -52,6 +53,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
   
   Route::resource('scientist', ScientistController::class);
+  Route::get('/scientist/{scientist}/profile', [ScientistController::class, 'showProfile'])->name('scientist.profile');
 
   Route::resource('council', CouncilController::class);
   Route::resource('lvtopic', LvtopicController::class);
@@ -75,6 +77,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   Route::post('/topic', [TopicController::class, 'store'])->name('topic.store');
   Route::delete('/topic/{id}', [TopicController::class, 'destroy'])->name('topic.destroy');
   Route::resource('topic', TopicController::class);
+
+  Route::get('/scientist/{scientist}/topics', [TopicController::class, 'showTopicsByScientist'])->name('scientist.topics');
    
   Route::get('/conference', [ConferenceController::class, 'index'])->name('conference.index');
   Route::post('/conference', [ConferenceController::class, 'store'])->name('conference.store');
@@ -96,6 +100,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   Route::post('/offer', [OfferController::class, 'store'])->name('offer.store');
   Route::delete('/offer/{id}', [OfferController::class, 'destroy'])->name('offer.destroy');
   Route::resource('offer', OfferController::class);
+
+  Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+  Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+  Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+  Route::resource('category', CategoryController::class);
 
   
 });

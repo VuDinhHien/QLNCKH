@@ -24,7 +24,7 @@
     <!-- Linh google font -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-   <link rel="stylesheet" href="//cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css"> 
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css">
 
 
     {{-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">  --}}
@@ -228,7 +228,7 @@
                                     Loại sản phẩm</a></li>
                             <li><a href="{{ route('money.index') }}"><i
                                         class="fa fa-solid fa-money-check-dollar"></i> Nguồn kinh phí</a></li>
-                            <li><a href=""><i class="fa fa-solid fa-chart-pie"></i> Loại hạng mục</a></li>
+                            <li><a href="{{ route('category.index') }}"><i class="fa fa-solid fa-chart-pie"></i> Loại hạng mục</a></li>
                             <li><a href="{{ route('suggestion.index') }}"><i
                                         class="fa fa-solid fa-circle-half-stroke"></i> Trạng thái đề xuất</a></li>
                             <li><a href="{{ route('score.index') }}"><i class="fa fa-solid fa-snowflake"></i> Tiêu
@@ -337,14 +337,11 @@
     <!-- AdminLTE for demo purposes -->
     <script src="assets/dist/js/demo.js"></script>
 
-    <script src="//cdn.datatables.net/2.0.7/js/dataTables.min.js"></script> 
+    <script src="//cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
 
 
     <script>
         let table = new DataTable('#myTable');
-
-        
-
     </script>
 
 

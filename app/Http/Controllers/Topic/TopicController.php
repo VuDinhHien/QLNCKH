@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Profile;
 use App\Models\Lvtopic;
 use App\Models\Topic;
+use App\Models\Scientist;
 use Illuminate\Http\Request;
 
 class TopicController extends Controller
@@ -18,7 +19,7 @@ class TopicController extends Controller
         //
         $profiles = Profile::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
         $lvtopics = Lvtopic::orderBy('lvtopic_name', 'ASC')->select('id', 'lvtopic_name')->get();
-        $topics = Topic::paginate(10); 
+        $topics = Topic::paginate(10);
         return view('topic.index', compact('lvtopics', 'topics', 'profiles'));
     }
 
@@ -58,10 +59,13 @@ class TopicController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Topic $topic)
-    {
-        //
-    }
+
+     public function showTopicsByScientist(Scientist $scientist)
+     {
+         $topics = $scientist->topics()->paginate(10);
+         return view('topic.scientist_topics', compact('topics', 'scientist'));
+     }
+ 
 
     /**
      * Show the form for editing the specified resource.
@@ -69,18 +73,18 @@ class TopicController extends Controller
     public function edit(Topic $id)
     {
         //
-         //
-         $topic = Topic::findOrFail($id);
-         $lvtopics = Lvtopic::orderBy('lvtopic_name', 'ASC')->select('id', 'lvtopic_name')->get();
-         $profiles = Profile::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
-         return view('topic.index', compact('topic', 'lvtopics', 'profiles'));
-       
+        //
+        $topic = Topic::findOrFail($id);
+        $lvtopics = Lvtopic::orderBy('lvtopic_name', 'ASC')->select('id', 'lvtopic_name')->get();
+        $profiles = Profile::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
+        return view('topic.index', compact('topic', 'lvtopics', 'profiles'));
 
-    /**
-     * Update the specified resource in storage.
-     */
+
+        /**
+         * Update the specified resource in storage.
+         */
     }
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         //
         $validatedData = $request->validate([
@@ -90,16 +94,13 @@ class TopicController extends Controller
             'start_date'     =>  'required',
             'end_date'       =>  'required',
             'lvtopic_id'     =>  'required|exists:lvtopics,id',
-            
+
         ]);
 
         $topic = Topic::findOrFail($id);
         $topic->update($validatedData);
 
         return redirect()->route('topic.index');
-
-      
-        
     }
 
     /**
@@ -107,7 +108,7 @@ class TopicController extends Controller
      */
     public function destroy($id)
     {
-        
+
         $topic = Topic::findOrFail($id);
         $topic->delete();
 

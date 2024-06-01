@@ -4,12 +4,12 @@
 
 <!-- @section('title', 'Dashboard') -->
 
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"><i class="fa-solid fa-house-chimney"></i> Trang
                 chủ</a></li>
-
-        <li class="breadcrumb-item active" aria-current="page">Quản lý đề tài/đề án</li>
+        <li class="breadcrumb-item active" aria-current="page"> Danh sách Đề tài</li>
     </ol>
 </nav>
 
@@ -91,7 +91,7 @@
 
 
 
-<!-- Liên kết phân trang -->
+
 
 <!-- Modal -->
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel">
