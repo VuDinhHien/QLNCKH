@@ -20,11 +20,7 @@ class Topic extends Model
         return $this->belongsTo(Lvtopic::class);
     }
 
-    public function profile()
-    {
-        return $this->belongsTo(Profile::class);
-    }
-
+    
     public function scientist()
     {
         return $this->belongsTo(Scientist::class, 'profile_id');

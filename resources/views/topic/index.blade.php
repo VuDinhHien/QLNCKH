@@ -48,7 +48,7 @@
             <tr>
                 <td>{{ $topic->id }}</td>
                 <td>{{ $topic->topic_name }}</td>
-                <td>{{ $topic->profile->profile_name }}</td>
+                <td>{{ $topic->scientist->profile_name }}</td>
                 <td>{{ $topic->lvtopic->lvtopic_name }}</td>
                 <td>{{ $topic->result }}</td>
                 <td>{{ $topic->start_date }}</td>
@@ -116,8 +116,8 @@
                     <div class="form-group">
                         <label for="profile_id">Chủ nhiệm</label>
                         <select class="form-control" name="profile_id" required>
-                            @foreach ($profiles as $profile)
-                                <option value="{{ $profile->id }}">{{ $profile->profile_name }}</option>
+                            @foreach ($scientists as $scientist)
+                                <option value="{{ $scientist->id }}">{{ $scientist->profile_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -189,8 +189,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('topic.update', ['topic' => $topic->id]) }}" method="POST"
-                id="editscouncilForm">
+            <form action="" method="POST" id="editscouncilForm">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
@@ -202,8 +201,8 @@
                     <div class="form-group">
                         <label for="profile_id">Chủ Nhiệm</label>
                         <select class="form-control" name="profile_id" id="profile_id" required>
-                            @foreach ($profiles as $profile)
-                                <option value="{{ $profile->id }}">{{ $profile->profile_name }}</option>
+                            @foreach ($scientists as $scientist)
+                                <option value="{{ $scientist->id }}">{{ $scientist->profile_name }}</option>
                             @endforeach
                         </select>
                     </div>

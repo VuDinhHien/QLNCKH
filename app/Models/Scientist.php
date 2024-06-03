@@ -26,4 +26,9 @@ class Scientist extends Model
     {
         return $this->hasMany(Topic::class, 'profile_id');
     }
+
+    public function curriculums()
+    {
+        return $this->hasMany(Curriculum::class, 'profile_id');
+    }
 }

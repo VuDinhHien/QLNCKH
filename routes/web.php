@@ -11,6 +11,7 @@ use App\Http\Controllers\Magazine\MagazineController;
 use App\Http\Controllers\Scientist\ScientistController;
 
 use App\Http\Controllers\CouncilController;
+use App\Http\Controllers\Curriculum\CurriculumController;
 use App\Http\Controllers\LvcouncilController;
 use App\Http\Controllers\LvtopicController;
 use App\Http\Controllers\MoneyController;
@@ -107,4 +108,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   Route::resource('category', CategoryController::class);
 
   
+  Route::get('/curriculum', [CurriculumController::class, 'index'])->name('curriculum.index');
+  Route::post('/curriculum', [CurriculumController::class, 'store'])->name('curriculum.store');
+  Route::delete('/curriculum/{id}', [CurriculumController::class, 'destroy'])->name('curriculum.destroy');
+  Route::resource('curriculum', CurriculumController::class);
+
+  Route::get('/scientist/{scientist}/curriculums', [CurriculumController::class, 'showCurriculumsByScientist'])->name('scientist.curriculums');
+
 });

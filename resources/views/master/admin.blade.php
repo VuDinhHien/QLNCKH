@@ -164,7 +164,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{ route('curriculum.index') }}">
                             <i class="fa fa-solid fa-book"></i> <span>Giáo trình/Sách tham khảo</span>
 
                         </a>

@@ -36,9 +36,23 @@
                 <td>{{ $model->degree->degree_name }}</td>
                 <td>{{ $model->research_major }}</td>
                 <td>
-                    <a href="{{ route('scientist.topics', ['scientist' => $model->id]) }}" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
                     
+                    
+                    <form method="post" action="{{ route('scientist.destroy', $model->id) }}">
+                        @csrf
+                        @method('DELETE')
+
+                        <a href="{{ route('scientist.profile', ['scientist' => $model->id]) }}" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
+    
+                        
+                        <a href="{{ route('scientist.edit', $model->id) }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+    
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you want to Delete it ?')"><i class="fa fa-trash"></i></button>
+                    </form>
+
                 </td>
+
+                
             </tr>
         @endforeach
     </tbody>

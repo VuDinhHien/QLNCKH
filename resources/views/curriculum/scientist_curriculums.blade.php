@@ -3,7 +3,7 @@
 
 @section('main')
 
-@section('title', 'Danh sách đề tài của ' . $scientist->profile_name)
+@section('title', 'Danh sách sách tham khảo/giáo trình ' . $scientist->profile_name)
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -56,11 +56,10 @@
             <ul class="nav navbar-nav">
                 
                 <li><a class="nav-link"href="{{ route('scientist.profile', ['scientist' => $scientist->id]) }}">Lý lịch <span class="sr-only">(current)</span></a></li>
-                <li class="active"><a href="{{ route('scientist.topics', ['scientist' => $scientist->id]) }}">Đề tài/Đề án</a></li>
-              
+                <li><a a class="nav-link" href="{{ route('scientist.topics', ['scientist' => $scientist->id]) }}">Đề tài/Đề án</a></li>
+        
                 <li><a href="#">Bài tham luận</a></li>
-               
-                <li><a href="{{ route('scientist.curriculums', ['scientist' => $scientist->id]) }}">Sách tham khảo/Giáo trình</a></li>
+                <li  class="active"><a href="{{ route('scientist.curriculums', ['scientist' => $scientist->id]) }}">Sách tham khảo/Giáo trình</a></li>
                 <li><a href="#">Bài báo</a></li>
                 <li><a href="#">Công trình áp dụng</a></li>
                 <li><a href="#">Giải thưởng</a></li>
@@ -78,44 +77,28 @@
     <thead>
         <tr>
             <th>STT</th>
-            <th style="width:200px; text-align: center">Tên đề tài/đề án</th>
-            <th style="text-align: center">Chủ nhiệm</th>
-            <th style="text-align: center">Cấp đề tài/đề án</th>
-            <th style="text-align: center">Kết quả nghiệm thu</th>
-            <th style="text-align: center">Ngày bắt đầu</th>
-            <th style="text-align: center">Ngày kết thúc</th>
-            {{-- <th style="text-align: center">Thao Tác</th> --}}
+            <th style="width:200px; text-align: center">Tên sách tham khảo</th>
+            <th style="text-align: center">Năm XB</th>
+            <th style="text-align: center">Nhà XB</th>
+           
+            <th style="text-align: center">Loại sách</th>
+            <th style="text-align: center">Trình độ đào tạo</th>
+
+           
         </tr>
     </thead>
     <tbody>
-        @foreach ($topics as $topic)
+        @foreach ($curriculums as $curriculum)
             <tr>
-                <td>{{ $topic->id }}</td>
-                <td>{{ $topic->topic_name }}</td>
-                <td>{{ $topic->scientist->profile_name }}</td>
-                <td>{{ $topic->lvtopic->lvtopic_name }}</td>
-                <td>{{ $topic->result }}</td>
-                <td>{{ $topic->start_date }}</td>
-                <td>{{ $topic->end_date }}</td>
-                {{-- <td>
-                    <div class="action">
-                        <div>
-                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                data-target="#editscouncilModal" data-topic-id="{{ $topic->id }}"
-                                data-topic-name="{{ $topic->topic_name }}" data-profile-id="{{ $topic->profile_id }}"
-                                data-result="{{ $topic->result }}" data-lvtopic-id="{{ $topic->lvtopic_id }}"
-                                data-start-date="{{ $topic->start_date }}" data-end-date="{{ $topic->end_date }}">
-                                <i class="fa fa-edit"></i>
-                            </button>
-                        </div>
-                        <div>
-                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal"
-                                data-id="{{ $topic->id }}">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                </td> --}}
+                <td>{{ $curriculum->id }}</td>
+                <td>{{ $curriculum->name }}</td>
+                <td>{{ $curriculum->year }}</td>
+                <td>{{ $curriculum->publisher }}</td>
+              
+                <td>{{ $curriculum->book->book_name }}</td>
+                <td>{{ $curriculum->training->training_name }}</td>
+
+                
             </tr>
         @endforeach
     </tbody>

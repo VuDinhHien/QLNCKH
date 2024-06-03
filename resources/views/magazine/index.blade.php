@@ -6,7 +6,8 @@
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"><i class="fa-solid fa-house-chimney"></i> Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"><i class="fa-solid fa-house-chimney"></i> Trang
+                chủ</a></li>
 
         <li class="breadcrumb-item active" aria-current="page">Quản lý bài báo khoa học</li>
     </ol>
@@ -19,45 +20,56 @@
 <!-- Modal -->
 
 
-<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#createModal" style="margin-bottom: 10px;">
+<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#createModal"
+    style="margin-bottom: 10px;">
     Thêm mới
 </button>
 
-<table class="table table-hover table-bordered mt-3">
+<table class="table table-hover table-bordered mt-3" id="myTable">
     <thead>
         <tr>
             <th>STT</th>
-            <th style="width:400px; text-align: center">Tên bài báo</th>
+            <th style="text-align: center">Tên bài báo</th>
             <th style="text-align: center">Năm công bố</th>
-            <th style="width:300px;text-align: center">Tên tạp chí</th>
-            <th style="width:300px;text-align: center">Loại bài báo</th>
+            <th style="text-align: center">Tên tạp chí</th>
+            <th style="text-align: center">Loại bài báo</th>
             <th style="text-align: center">Thao Tác</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($magazines as $magazine)
-        <tr>
-            <td>{{ $loop->index + 1 }}</td>
-            <td>{{ $magazine->magazine_name }}</td>
-            <td style="text-align: center">{{ $magazine->year }}</td>
-            <td>{{ $magazine->journal }}</td>
-            <td>{{ $magazine->paper->paper_name }}</td>
+            <tr>
+                <td>{{ $loop->index + 1 }}</td>
+                <td>{{ $magazine->magazine_name }}</td>
+                <td>{{ $magazine->year }}</td>
+                <td>{{ $magazine->journal }}</td>
+                <td>{{ $magazine->paper->paper_name }}</td>
+                <td>
+                    <div class="action" style="display: flex">
+                        <div>
+                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                data-target="#editTopicModal" data-magazine-id="{{ $magazine->id }}"
+                                data-magazine-name="{{ $magazine->magazine_name }}" data-year="{{ $magazine->year }}"
+                                data-journal="{{ $magazine->journal }}" data-paper-id="{{ $magazine->paper_id }}">
+                                <i class="fa fa-edit"></i>
+                            </button>
+
+                        </div>
+
+                        <div style="margin-left:10px">
+                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal"
+                                data-id="{{ $magazine->id }}">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
 
 
 
-            <td>
-                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editTopicModal" data-magazine-id="{{ $magazine->id }}" data-magazine-name="{{ $magazine->magazine_name }}" data-year="{{ $magazine->year }}" data-journal="{{ $magazine->journal }}" data-paper-id="{{ $magazine->paper_id }}">
-                   <i class="fa fa-edit"></i>
-                </button>
 
 
-                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $magazine->id }}">
-                    <i class="fa fa-trash"></i>
-                </button>
-
-
-            </td>
-        </tr>
+                </td>
+            </tr>
         @endforeach
     </tbody>
 </table>
@@ -67,9 +79,7 @@
 
 
 <!-- Liên kết phân trang -->
-<div class="text-right">
-    {{ $magazines->links() }}
-</div>
+
 
 <!-- Modal create-->
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel">
@@ -77,7 +87,8 @@
         <div class="modal-content">
             <div class="modal-header btn-success">
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="createModalLabel">Thêm mới</h4>
 
 
@@ -101,7 +112,7 @@
                         <label for="paper_id">Loại bài báo</label>
                         <select class="form-control" name="paper_id" required>
                             @foreach ($papers as $paper)
-                            <option value="{{ $paper->id }}">{{ $paper->paper_name }}</option>
+                                <option value="{{ $paper->id }}">{{ $paper->paper_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -133,7 +144,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('magazine.update', ['magazine' => $magazine->id]) }}" method="POST" id="editmagazineForm">
+            <form action="{{ route('magazine.update', ['magazine' => $magazine->id]) }}" method="POST"
+                id="editmagazineForm">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
@@ -153,7 +165,7 @@
                         <label for="paper_id">Loại bài báo</label>
                         <select class="form-control" name="paper_id" id="paper_id" required>
                             @foreach ($papers as $paper)
-                            <option value="{{ $paper->id }}">{{ $paper->paper_name }}</option>
+                                <option value="{{ $paper->id }}">{{ $paper->paper_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -184,20 +196,22 @@
 
             // Update the modal's content
             var modal = $(this);
-            modal.find('.modal-body #magazine_name').val(magazineName); // Corrected to match the id in the modal
+            modal.find('.modal-body #magazine_name').val(
+                magazineName); // Corrected to match the id in the modal
             modal.find('.modal-body #year').val(year);
             modal.find('.modal-body #journal').val(journal);
             modal.find('.modal-body #paper_id').val(paperId);
 
             // Optionally update the form action
-             modal.find('form').attr('action', `admin/magazine/${magazineId}`);
+            modal.find('form').attr('action', `admin/magazine/${magazineId}`);
         });
     });
 </script>
 
 
 <!-- Confirm Delete Modal -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
+    aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header btn-danger">
@@ -226,7 +240,7 @@
         $('#confirmDeleteModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
             var id = button.data('id'); // Extract info from data-* attributes
-            var url = '{{ route("magazine.destroy", ":id") }}'; // Ensure the route name is correct
+            var url = '{{ route('magazine.destroy', ':id') }}'; // Ensure the route name is correct
             url = url.replace(':id', id);
 
             var modal = $(this);

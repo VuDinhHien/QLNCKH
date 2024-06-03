@@ -4,29 +4,23 @@
 
 <!-- @section('title', 'Dashboard') -->
 
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"><i class="fa-solid fa-house-chimney"></i> Trang
                 chủ</a></li>
-
-        <li class="breadcrumb-item active" aria-current="page">Loại Hạng Mục</li>
+        <li class="breadcrumb-item active" aria-current="page"> Quản lý giáo trình/Sách tham khảo</li>
     </ol>
 </nav>
 
 
-<style>
-    th {
-        text-align: center
-    }
 
+<style>
     .action {
         display: flex;
         justify-content: space-between
     }
 </style>
-
-
-
 
 <!-- Modal -->
 
@@ -40,39 +34,54 @@
     <thead>
         <tr>
             <th>STT</th>
-            <th>Tên hạng mục</th>
-            <th>Loại nghiên cứu</th>
-            <th>Vai trò</th>
-            <th>Trình độ đào tạo</th>
-            <th>Số giờ nghiên cứu</th>
-            <th>Thao Tác</th>
+            <th style="width:200px; text-align: center">Tên sách tham khảo</th>
+            <th style="text-align: center">Năm XB</th>
+            <th style="text-align: center">Nhà XB</th>
+            <th style="text-align: center">Cán bộ tham gia</th>
+            <th style="text-align: center">Loại sách</th>
+            <th style="text-align: center">Trình độ đào tạo</th>
+
+            <th style="text-align: center">Thao Tác</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($categories as $category)
+        @foreach ($curriculums as $curriculum)
             <tr>
-                <td>{{ $category->id }}</td>
-                <td>{{ $category->category_name }}</td>
-                <td>{{ $category->type }}</td>
-                <td>{{ $category->role->role_name }}</td>
-                <td>{{ $category->training->training_name }}</td>
-                <td>{{ $category->research_number }}</td>
+                <td>{{ $curriculum->id }}</td>
+                <td>{{ $curriculum->name }}</td>
+                <td>{{ $curriculum->year }}</td>
+                <td>{{ $curriculum->publisher }}</td>
+                <td>{{ $curriculum->scientist->profile_name }}</td>
+                <td>{{ $curriculum->book->book_name }}</td>
+                <td>{{ $curriculum->training->training_name }}</td>
+
 
 
                 <td>
 
-                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                        data-target="#editscouncilModal" data-category-id="{{ $category->id }}"
-                        data-category-name="{{ $category->category_name }}" data-type="{{ $category->type }}"
-                        data-role-id="{{ $category->role_id }}" data-training-id="{{ $category->training_id }}"
-                        data-research-number="{{ $category->research_number }}">
-                        <i class="fa fa-edit"></i>
-                    </button>
 
-                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal"
-                        data-id="{{ $category->id }}">
-                        <i class="fa fa-trash"></i>
-                    </button>
+
+
+                    <div class="action">
+                        <div>
+                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                data-target="#editscouncilModal" data-curriculum-id="{{ $curriculum->id }}"
+                                data-name="{{ $curriculum->name }}" data-year="{{ $curriculum->year }}"
+                                data-publisher="{{ $curriculum->publisher }}"
+                                data-profile-id="{{ $curriculum->profile_id }}"
+                                data-book-id="{{ $curriculum->book_id }}"
+                                data-training-id="{{ $curriculum->training_id }}">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </div>
+
+                        <div>
+                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal"
+                                data-id="{{ $curriculum->id }}">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
 
 
 
@@ -82,6 +91,11 @@
         @endforeach
     </tbody>
 </table>
+
+
+
+
+
 
 
 <!-- Modal -->
@@ -97,25 +111,35 @@
 
             </div>
             <div class="modal-body">
-                <form id="createForm" action="{{ route('category.store') }}" method="POST">
+                <form id="createForm" action="{{ route('curriculum.store') }}" method="POST">
                     @csrf
-
                     <div class="form-group">
-                        <label for="category_name">Tên hạng mục</label>
-                        <input type="text" class="form-control" id="category_name" name="category_name" required>
+                        <label for="name">Tên sách tham khảo/ giáo trình</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Năm XB</label>
+                        <input type="text" class="form-control" id="year" name="year" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="publisher">Nhà XB</label>
+                        <input type="text" class="form-control" id="publisher" name="publisher" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="type">Loại nghiên cứu</label>
-                        <input type="text" class="form-control" id="type" name="type">
+                        <label for="profile_id">Cán bộ tham gia</label>
+                        <select class="form-control" name="profile_id" required>
+                            @foreach ($scientists as $scientist)
+                                <option value="{{ $scientist->id }}">{{ $scientist->profile_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
-
                     <div class="form-group">
-                        <label for="role_id">Vai trò</label>
-                        <select class="form-control" name="role_id" required>
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                        <label for="book_id">Loại sách</label>
+                        <select class="form-control" name="book_id" required>
+                            @foreach ($books as $book)
+                                <option value="{{ $book->id }}">{{ $book->book_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -129,12 +153,6 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label for="research_number">Số giờ nghiên cứu</label>
-                        <input type="text" class="form-control" id="research_number" name="research_number">
-                    </div>
-
-
 
 
                 </form>
@@ -146,6 +164,8 @@
         </div>
     </div>
 </div>
+
+
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -161,13 +181,14 @@
 </script>
 
 
+
 <!-- The Modal -->
 <div class="modal fade" id="editscouncilModal" tabindex="-1" aria-labelledby="editscouncilModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header btn-warning">
-                <h4 class="modal-title" id="editscouncilModalLabel">Sửa Hạng Mục</h4>
+                <h4 class="modal-title" id="editscouncilModalLabel">Sửa Hội thảo/hội nghị</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -177,20 +198,32 @@
                 @method('PUT')
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="category_name">Tên hạng mục</label>
-                        <input type="text" class="form-control" id="category_name" name="category_name" required>
+                        <label for="name">Tên sách tham khảo/ giáo trình</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Năm XB</label>
+                        <input type="text" class="form-control" id="year" name="year" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="publisher">Nhà XB</label>
+                        <input type="text" class="form-control" id="publisher" name="publisher" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="type">Loại nghiên cứu</label>
-                        <input type="text" class="form-control" id="type" name="type">
+                        <label for="profile_id">Cán bộ tham gia</label>
+                        <select class="form-control" id="profile_id" name="profile_id" required>
+                            @foreach ($scientists as $scientist)
+                                <option value="{{ $scientist->id }}">{{ $scientist->profile_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="role_id">Vai trò</label>
-                        <select class="form-control" id="role_id" name="role_id" required>
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                        <label for="book_id">Loại sách</label>
+                        <select class="form-control" id="book_id" name="book_id" required>
+                            @foreach ($books as $book)
+                                <option value="{{ $book->id }}">{{ $book->book_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -204,13 +237,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label for="research_number">Số giờ nghiên cứu</label>
-                        <input type="text" class="form-control" id="research_number" name="research_number">
-                    </div>
-
                 </div>
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                     <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
@@ -224,28 +251,26 @@
     $(document).ready(function() {
         $('#editscouncilModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
-            var categoryId = button.data('category-id'); // Extract info from data-* attributes
-            var categoryName = button.data('category-name');
-            var type = button.data('type');
-            var roleId = button.data('role-id');
+            var curriculumId = button.data('curriculum-id'); // Extract info from data-* attributes
+            var name = button.data('name');
+            var year = button.data('year');
+            var publisher = button.data('publisher');
+            var profileId = button.data('profile-id');
+            var bookId = button.data('book-id');
             var trainingId = button.data('training-id');
-            var researchNumber = button.data('research-number');
 
             // Update the modal's content
             var modal = $(this);
-            modal.find('.modal-body #category_name').val(categoryName);
-            modal.find('.modal-body #type').val(type);
-            modal.find('.modal-body #role_id').val(roleId);
+            modal.find('.modal-body #name').val(name);
+            modal.find('.modal-body #year').val(year);
+            modal.find('.modal-body #publisher').val(publisher);
+            modal.find('.modal-body #profile_id').val(profileId);
+            modal.find('.modal-body #book_id').val(bookId);
             modal.find('.modal-body #training_id').val(trainingId);
-            modal.find('.modal-body #research_number').val(researchNumber);
-
-            // kích hoạt sự kiện thay đổi và đảm bảo select đã chọn
-            modal.find('.modal-body #role_id').val(roleId).change();
-            modal.find('.modal-body #training_id').val(trainingId).change();
 
             // Update the form action
             var form = modal.find('#editscouncilForm');
-            form.attr('action', '/admin/category/' + categoryId); // Adjust the URL as needed
+            form.attr('action', '{{ url('admin/curriculum/') }}/' + curriculumId); // Adjust the URL as needed
         });
     });
 </script>
@@ -263,7 +288,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h3>Bạn có chắc chắn muốn xóa Hạng mục này</h3>
+                <h3>Bạn có chắc chắn muốn xóa giáo trình/sách tham khảo này</h3>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary pull-left" data-dismiss="modal">Hủy</button>
@@ -280,9 +305,9 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         $('#confirmDeleteModal').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget);
-            var id = button.data('id');
-            var url = '{{ route('category.destroy', ':id') }}';
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var id = button.data('id'); // Extract info from data-* attributes
+            var url = '{{ route('curriculum.destroy', ':id') }}'; // Ensure the route name is correct
             url = url.replace(':id', id);
 
             var modal = $(this);
@@ -290,9 +315,6 @@
         });
     });
 </script>
-
-
-
 
 
 @stop()

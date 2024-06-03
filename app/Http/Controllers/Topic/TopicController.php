@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Topic;
 
 use App\Http\Controllers\Controller;
-use App\Models\Profile;
+
 use App\Models\Lvtopic;
 use App\Models\Topic;
 use App\Models\Scientist;
@@ -17,10 +17,10 @@ class TopicController extends Controller
     public function index()
     {
         //
-        $profiles = Profile::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
+        $scientists = Scientist::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
         $lvtopics = Lvtopic::orderBy('lvtopic_name', 'ASC')->select('id', 'lvtopic_name')->get();
-        $topics = Topic::paginate(10);
-        return view('topic.index', compact('lvtopics', 'topics', 'profiles'));
+        $topics = Topic::paginate(100);
+        return view('topic.index', compact('lvtopics', 'topics', 'scientists'));
     }
 
     /**
@@ -42,7 +42,7 @@ class TopicController extends Controller
     {
         $request->validate([
             'topic_name'     =>  'required',
-            'profile_id'     =>  'required|exists:profiles,id',
+            'profile_id'     =>  'required|exists:scientists,id',
             'result'         =>  'required',
             'start_date'       =>  'required',
             'end_date'       =>  'required',
@@ -76,8 +76,8 @@ class TopicController extends Controller
         //
         $topic = Topic::findOrFail($id);
         $lvtopics = Lvtopic::orderBy('lvtopic_name', 'ASC')->select('id', 'lvtopic_name')->get();
-        $profiles = Profile::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
-        return view('topic.index', compact('topic', 'lvtopics', 'profiles'));
+        $scientists = Scientist::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
+        return view('topic.index', compact('topic', 'lvtopics', 'scientists'));
 
 
         /**
@@ -89,7 +89,7 @@ class TopicController extends Controller
         //
         $validatedData = $request->validate([
             'topic_name'     =>  'required',
-            'profile_id'     =>  'required|exists:profiles,id',
+            'profile_id'     =>  'required|exists:scientists,id',
             'result'         =>  'required',
             'start_date'     =>  'required',
             'end_date'       =>  'required',
