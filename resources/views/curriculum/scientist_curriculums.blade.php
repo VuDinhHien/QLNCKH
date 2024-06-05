@@ -60,7 +60,7 @@
         
                 <li><a href="#">Bài tham luận</a></li>
                 <li  class="active"><a href="{{ route('scientist.curriculums', ['scientist' => $scientist->id]) }}">Sách tham khảo/Giáo trình</a></li>
-                <li><a href="#">Bài báo</a></li>
+                <li><a href="{{ route('scientist.magazines', ['scientist' => $scientist->id]) }}">Bài báo</a></li>
                 <li><a href="#">Công trình áp dụng</a></li>
                 <li><a href="#">Giải thưởng</a></li>
                 <li><a href="#">Thành tựu</a></li>

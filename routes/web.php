@@ -92,6 +92,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   Route::delete('/magazine/{id}', [MagazineController::class, 'destroy'])->name('magazine.destroy');
   Route::resource('magazine', MagazineController::class);
 
+  Route::get('/scientist/{scientist}/magazines', [MagazineController::class, 'showMagazinesByScientist'])->name('scientist.magazines');
+
   Route::get('/scouncil', [ScouncilController::class, 'index'])->name('scouncil.index');
   Route::post('/scouncil', [ScouncilController::class, 'store'])->name('scouncil.store');
   Route::delete('/scouncil/{id}', [ScouncilController::class, 'destroy'])->name('scouncil.destroy');

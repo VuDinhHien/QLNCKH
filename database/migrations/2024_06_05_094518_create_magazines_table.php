@@ -17,11 +17,15 @@ return new class extends Migration
             $table->integer('year');
             $table->string('journal');
             $table->unsignedBigInteger('paper_id');
+            $table->unsignedBigInteger('profile_id');
+            $table->unsignedBigInteger('role_id');
            
            
            
 
             $table->foreign('paper_id')->references('id')->on('papers');
+            $table->foreign('profile_id')->references('id')->on('scientists');
+            $table->foreign('role_id')->references('id')->on('roles');
             $table->timestamps();
         });
     }

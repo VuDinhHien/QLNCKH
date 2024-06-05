@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Magazine;
 use App\Http\Controllers\Controller;
 use App\Models\Magazine;
 use App\Models\Paper;
+use App\Models\Role;
+use App\Models\Scientist;
 use Illuminate\Http\Request;
 
 class MagazineController extends Controller
@@ -15,9 +17,11 @@ class MagazineController extends Controller
     public function index()
     {
         //
+        $scientists = Scientist::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
+        $roles = Role::orderBy('role_name', 'ASC')->select('id', 'role_name')->get();
         $papers = Paper::orderBy('paper_name', 'ASC')->select('id', 'paper_name')->get();
-        $magazines = Magazine::paginate(5);
-        return view('magazine.index', compact('papers', 'magazines'));
+        $magazines = Magazine::paginate(100);
+        return view('magazine.index', compact('papers', 'magazines','roles','scientists'));
     }
 
     /**
@@ -41,6 +45,8 @@ class MagazineController extends Controller
             'magazine_name'     =>  'required',
             'year'              =>  'required',
             'journal'           =>  'required',
+            'profile_id'     =>  'required|exists:scientists,id',
+            'role_id'     =>  'required|exists:roles,id',
             'paper_id'          =>  'required|exists:papers,id',
         ]);
 
@@ -57,6 +63,12 @@ class MagazineController extends Controller
         //
     }
 
+    public function showMagazinesByScientist(Scientist $scientist)
+     {
+         $magazines = $scientist->magazines()->paginate(10);
+         return view('magazine.scientist_magazines', compact('magazines', 'scientist'));
+     }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -64,8 +76,10 @@ class MagazineController extends Controller
     {
         //
         $magazines = Magazine::findOrFail($id);
+        $scientist = Scientist::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
+        $role = Role::orderBy('role_name', 'ASC')->select('id', 'role_name')->get();
         $paper = Paper::orderBy('paper_name', 'ASC')->select('id', 'paper_name')->get();
-        return view('magazine.edit', compact('magazines', 'paper'));
+        return view('magazine.edit', compact('magazines', 'paper', 'role','scientist'));
     }
 
     /**
@@ -81,6 +95,8 @@ class MagazineController extends Controller
             'year'   =>  'required',
             'journal'         =>  'required',
             'paper_id'     =>  'required|exists:papers,id',
+            'profile_id'     =>  'required|exists:scientists,id',
+            'role_id'     =>  'required|exists:roles,id',
         ]);
 
         $magazine = Magazine::findOrFail($id);

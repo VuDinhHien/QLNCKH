@@ -31,4 +31,9 @@ class Scientist extends Model
     {
         return $this->hasMany(Curriculum::class, 'profile_id');
     }
+
+    public function magazines()
+    {
+        return $this->hasMany(Magazine::class, 'profile_id');
+    }
 }

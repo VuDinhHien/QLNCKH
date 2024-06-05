@@ -35,7 +35,7 @@
         <tr>
             <th>STT</th>
             <th style="width:200px; text-align: center">Tên đề tài/đề án</th>
-            <th style="text-align: center">Chủ nhiệm</th>
+            <th style="text-align: center">Chủ nhiệm</th>
             <th style="text-align: center">Cấp đề tài/đề án</th>
             <th style="text-align: center">Kết quả nghiệm thu</th>
             <th style="text-align: center">Ngày bắt đầu</th>
@@ -114,10 +114,19 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="profile_id">Chủ nhiệm</label>
+                        <label for="profile_id">Cán bộ tham gia</label>
                         <select class="form-control" name="profile_id" required>
                             @foreach ($scientists as $scientist)
                                 <option value="{{ $scientist->id }}">{{ $scientist->profile_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role_id">Vai trò</label>
+                        <select class="form-control" name="role_id" required>
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->role_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -184,7 +193,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header btn-warning">
-                <h4 class="modal-title" id="editscouncilModalLabel">Sửa Hội thảo/hội nghị</h4>
+                <h4 class="modal-title" id="editscouncilModalLabel">Sửa Đề tài/Đề án</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -199,13 +208,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="profile_id">Chủ Nhiệm</label>
+                        <label for="profile_id">Chủ nhiệm</label>
                         <select class="form-control" name="profile_id" id="profile_id" required>
                             @foreach ($scientists as $scientist)
                                 <option value="{{ $scientist->id }}">{{ $scientist->profile_name }}</option>
                             @endforeach
                         </select>
                     </div>
+
+                   
 
                     <div class="form-group">
                         <label for="lvtopic_id">Cấp đề tài/đề án</label>
@@ -252,6 +263,7 @@
             var topicName = button.data('topic-name');
             var profileId = button.data('profile-id');
             var lvtopicId = button.data('lvtopic-id');
+            
             var result = button.data('result');
             var startDate = button.data('start-date');
             var endDate = button.data('end-date');
@@ -261,6 +273,7 @@
             modal.find('.modal-body #topic_name').val(topicName);
             modal.find('.modal-body #profile_id').val(profileId);
             modal.find('.modal-body #lvtopic_id').val(lvtopicId);
+           
             modal.find('.modal-body #result').val(result);
             modal.find('.modal-body #start_date').val(startDate);
             modal.find('.modal-body #end_date').val(endDate);

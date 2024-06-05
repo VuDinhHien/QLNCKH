@@ -29,11 +29,13 @@
     <thead>
         <tr>
             <th>STT</th>
-            <th style="text-align: center">Tên bài báo</th>
-            <th style="text-align: center">Năm công bố</th>
-            <th style="text-align: center">Tên tạp chí</th>
-            <th style="text-align: center">Loại bài báo</th>
-            <th style="text-align: center">Thao Tác</th>
+            <th>Tên bài báo</th>
+            <th>Năm công bố</th>
+            <th>Tên tạp chí</th>
+            <th>Loại bài báo</th>
+            <th>Cán bộ</th>
+            <th>Vai trò</th>
+            <th>Thao Tác</th>
         </tr>
     </thead>
     <tbody>
@@ -44,15 +46,19 @@
                 <td>{{ $magazine->year }}</td>
                 <td>{{ $magazine->journal }}</td>
                 <td>{{ $magazine->paper->paper_name }}</td>
+                <td>{{ $magazine->scientist->profile_name }}</td>
+                <td>{{ $magazine->role->role_name }}</td>
+
                 <td>
                     <div class="action" style="display: flex">
                         <div>
                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                data-target="#editTopicModal" data-magazine-id="{{ $magazine->id }}"
-                                data-magazine-name="{{ $magazine->magazine_name }}" data-year="{{ $magazine->year }}"
-                                data-journal="{{ $magazine->journal }}" data-paper-id="{{ $magazine->paper_id }}">
-                                <i class="fa fa-edit"></i>
-                            </button>
+                            data-target="#editTopicModal" data-magazine-id="{{ $magazine->id }}"
+                            data-magazine-name="{{ $magazine->magazine_name }}" data-year="{{ $magazine->year }}"
+                            data-journal="{{ $magazine->journal }}" data-paper-id="{{ $magazine->paper_id }}" 
+                            data-profile-id="{{ $magazine->profile_id }}" data-role-id="{{ $magazine->role_id }}">
+                            <i class="fa fa-edit"></i>
+                        </button>
 
                         </div>
 
@@ -116,6 +122,26 @@
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <label for="profile_id">Cán bộ tham gia</label>
+                        <select class="form-control" name="profile_id" required>
+                            @foreach ($scientists as $scientist)
+                                <option value="{{ $scientist->id }}">{{ $scientist->profile_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role_id">Vai trò</label>
+                        <select class="form-control" name="role_id" required>
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+
                 </form>
 
             </div>
@@ -133,7 +159,6 @@
     });
 </script>
 
-
 <!-- The Modal -->
 <div class="modal fade" id="editTopicModal" tabindex="-1" aria-labelledby="editTopicModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -144,8 +169,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('magazine.update', ['magazine' => $magazine->id]) }}" method="POST"
-                id="editmagazineForm">
+            <form action="" method="POST" id="editmagazineForm">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
@@ -169,6 +193,22 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="profile_id">Cán bộ tham gia</label>
+                        <select class="form-control" name="profile_id" id="profile_id" required>
+                            @foreach ($scientists as $scientist)
+                                <option value="{{ $scientist->id }}">{{ $scientist->profile_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="role_id">Vai trò</label>
+                        <select class="form-control" name="role_id" id="role_id" required>
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -189,21 +229,29 @@
         $('#editTopicModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
             var magazineId = button.data('magazine-id'); // Extract info from data-* attributes
-            var magazineName = button.data('magazine-name'); // Corrected to match the id in the modal
+            var magazineName = button.data('magazine-name'); 
             var year = button.data('year');
             var journal = button.data('journal');
             var paperId = button.data('paper-id');
+            var profileId = button.data('profile-id');
+            var roleId = button.data('role-id');
 
             // Update the modal's content
             var modal = $(this);
-            modal.find('.modal-body #magazine_name').val(
-                magazineName); // Corrected to match the id in the modal
+            modal.find('.modal-body #magazine_name').val(magazineName); 
             modal.find('.modal-body #year').val(year);
             modal.find('.modal-body #journal').val(journal);
             modal.find('.modal-body #paper_id').val(paperId);
+            modal.find('.modal-body #profile_id').val(profileId);
+            modal.find('.modal-body #role_id').val(roleId);
 
-            // Optionally update the form action
-            modal.find('form').attr('action', `admin/magazine/${magazineId}`);
+            // Update the selected options
+            modal.find('.modal-body #paper_id option[value="' + paperId + '"]').prop('selected', true);
+            modal.find('.modal-body #profile_id option[value="' + profileId + '"]').prop('selected', true);
+            modal.find('.modal-body #role_id option[value="' + roleId + '"]').prop('selected', true);
+
+            // Update the form action
+            modal.find('form').attr('action', `/admin/magazine/${magazineId}`);
         });
     });
 </script>

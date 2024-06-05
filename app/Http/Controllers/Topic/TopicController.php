@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Topic;
 use App\Http\Controllers\Controller;
 
 use App\Models\Lvtopic;
+use App\Models\Role;
 use App\Models\Topic;
 use App\Models\Scientist;
 use Illuminate\Http\Request;
@@ -18,9 +19,11 @@ class TopicController extends Controller
     {
         //
         $scientists = Scientist::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
+        $roles = Role::orderBy('role_name', 'ASC')->select('id', 'role_name')->get();
         $lvtopics = Lvtopic::orderBy('lvtopic_name', 'ASC')->select('id', 'lvtopic_name')->get();
+        
         $topics = Topic::paginate(100);
-        return view('topic.index', compact('lvtopics', 'topics', 'scientists'));
+        return view('topic.index', compact('lvtopics', 'topics', 'scientists','roles'));
     }
 
     /**
@@ -43,6 +46,7 @@ class TopicController extends Controller
         $request->validate([
             'topic_name'     =>  'required',
             'profile_id'     =>  'required|exists:scientists,id',
+            'role_id'     =>  'required|exists:roles,id',
             'result'         =>  'required',
             'start_date'       =>  'required',
             'end_date'       =>  'required',
@@ -77,7 +81,8 @@ class TopicController extends Controller
         $topic = Topic::findOrFail($id);
         $lvtopics = Lvtopic::orderBy('lvtopic_name', 'ASC')->select('id', 'lvtopic_name')->get();
         $scientists = Scientist::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
-        return view('topic.index', compact('topic', 'lvtopics', 'scientists'));
+        $roles = Role::orderBy('role_name', 'ASC')->select('id', 'role_name')->get();
+        return view('topic.index', compact('topic', 'lvtopics', 'scientists','roles'));
 
 
         /**
@@ -90,6 +95,7 @@ class TopicController extends Controller
         $validatedData = $request->validate([
             'topic_name'     =>  'required',
             'profile_id'     =>  'required|exists:scientists,id',
+            'role_id'     =>  'required|exists:roles,id',
             'result'         =>  'required',
             'start_date'     =>  'required',
             'end_date'       =>  'required',

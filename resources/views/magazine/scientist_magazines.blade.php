@@ -1,4 +1,3 @@
-
 @extends('master.admin')
 
 @section('main')
@@ -56,12 +55,12 @@
             <ul class="nav navbar-nav">
                 
                 <li><a class="nav-link"href="{{ route('scientist.profile', ['scientist' => $scientist->id]) }}">Lý lịch <span class="sr-only">(current)</span></a></li>
-                <li class="active"><a href="{{ route('scientist.topics', ['scientist' => $scientist->id]) }}">Đề tài/Đề án</a></li>
+                <li><a href="{{ route('scientist.topics', ['scientist' => $scientist->id]) }}">Đề tài/Đề án</a></li>
               
                 <li><a href="#">Bài tham luận</a></li>
                
                 <li><a href="{{ route('scientist.curriculums', ['scientist' => $scientist->id]) }}">Sách tham khảo/Giáo trình</a></li>
-                <li><a href="{{ route('scientist.magazines', ['scientist' => $scientist->id]) }}">Bài báo</a></li>
+                <li class="active"><a href="{{ route('scientist.magazines', ['scientist' => $scientist->id]) }}">Bài báo</a></li>
                 <li><a href="#">Công trình áp dụng</a></li>
                 <li><a href="#">Giải thưởng</a></li>
                 <li><a href="#">Thành tựu</a></li>
@@ -73,38 +72,34 @@
 
 
 
-
 <table class="table table-hover table-bordered mt-3" id="myTable">
     <thead>
         <tr>
             <th>STT</th>
-            <th style="width:200px; text-align: center">Tên đề tài/đề án</th>
+            <th>Tên bài báo</th>
+            <th>Năm công bố</th>
+            <th>Tên tạp chí</th>
+            <th>Loại bài báo</th>
            
-            <th style="text-align: center">Cấp đề tài/đề án</th>
-            <th style="text-align: center">Vai trò</th>
-            <th style="text-align: center">Kết quả nghiệm thu</th>
-            <th style="text-align: center">Ngày bắt đầu</th>
-            <th style="text-align: center">Ngày kết thúc</th>
-            {{-- <th style="text-align: center">Thao Tác</th> --}}
+            <th>Vai trò</th>
+            
         </tr>
     </thead>
     <tbody>
-        @foreach ($topics as $topic)
+        @foreach ($magazines as $magazine)
             <tr>
-                <td>{{ $loop-> index + 1 }}</td>
-                <td>{{ $topic->topic_name }}</td>
-                
-                <td>{{ $topic->lvtopic->lvtopic_name }}</td>
-                <td>{{ $topic->role->role_name }}</td>
-                <td>{{ $topic->result }}</td>
-                <td>{{ $topic->start_date }}</td>
-                <td>{{ $topic->end_date }}</td>
-                
+                <td>{{ $loop->index + 1 }}</td>
+                <td>{{ $magazine->magazine_name }}</td>
+                <td>{{ $magazine->year }}</td>
+                <td>{{ $magazine->journal }}</td>
+                <td>{{ $magazine->paper->paper_name }}</td>
+               
+                <td>{{ $magazine->role->role_name }}</td>
+
             </tr>
         @endforeach
     </tbody>
 </table>
-
 
 
 @stop()
