@@ -79,6 +79,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   Route::delete('/topic/{id}', [TopicController::class, 'destroy'])->name('topic.destroy');
   Route::resource('topic', TopicController::class);
 
+  Route::get('/export', [TopicController::class, 'export'])->name('topics.export');
+
   Route::get('/scientist/{scientist}/topics', [TopicController::class, 'showTopicsByScientist'])->name('scientist.topics');
    
   Route::get('/conference', [ConferenceController::class, 'index'])->name('conference.index');

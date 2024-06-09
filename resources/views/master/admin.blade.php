@@ -34,6 +34,18 @@
 <style>
     body {
         font-family: 'Roboto', sans-serif;
+
+
+    }
+
+    .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050;
+        min-width: 350px;
+        max-width: 400px;
+        padding: 10px;
     }
 </style>
 
@@ -86,28 +98,56 @@
           </ul>
         </div> -->
 
+                <style>
+                    .navbar-custom-menu .dropdown-menu {
+                        display: none;
+                        right: 0;
+                        left: auto;
+                        min-width: 100px;
+                        padding: 0;
+                        /* Loại bỏ padding */
+                    }
+
+                    .navbar-custom-menu .dropdown:hover .dropdown-menu {
+                        display: block;
+                    }
+
+                    .navbar-custom-menu .dropdown-menu .user-footer {
+                        padding: 0;
+                        /* Loại bỏ padding */
+                        margin: 0;
+                        /* Loại bỏ margin */
+                        text-align: center;
+                        /* Căn giữa nội dung */
+                    }
+
+                    .navbar-custom-menu .dropdown-menu .user-footer .btn {
+                        width: 100%;
+                        /* Đặt nút "Logout" rộng 100% */
+                        border-radius: 0;
+                        /* Loại bỏ border-radius */
+                    }
+                </style>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        <!-- Messages: style can be found in dropdown.less-->
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-
-
                                 <i class="fa fa-solid fa-power-off"></i>
                                 <span class="hidden-xs">{{ auth()->user()->name }}</span>
                             </a>
+                            <ul class="dropdown-menu">
+                                <li class="user-footer">
 
+                                    <a href="{{ route('admin.logout') }}" class="btn btn-default btn-flat">Logout</a>
 
-
-
+                                </li>
+                            </ul>
                         </li>
-
-
-                        <!-- Control Sidebar Toggle Button -->
-
                     </ul>
                 </div>
+
+
 
             </nav>
         </header>
@@ -125,7 +165,7 @@
                     </div>
                     <div class="pull-left info">
                         <p>{{ auth()->user()->name }}</p>
-                        <a href="{{ route('admin.logout') }}"><i class="fa fa-circle text-success"></i> Logout</a>
+                        <a href=""><i class="fa fa-circle text-success"></i>Online</a>
                     </div>
                 </div>
 
@@ -201,7 +241,8 @@
                                 class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ route('profile.index') }}"><i class="fa fa-solid fa-user-tie"></i></i> Lý
+                            <li><a href="{{ route('profile.index') }}"><i class="fa fa-solid fa-user-tie"></i></i>
+                                    Lý
                                     lịch nhà khoa học</a></li>
                             <li><a href="{{ route('council.index') }}"><i class="fa fa-solid fa-users"></i></i> Chức
                                     vụ hội đồng</a></li>
@@ -228,7 +269,8 @@
                                     Loại sản phẩm</a></li>
                             <li><a href="{{ route('money.index') }}"><i
                                         class="fa fa-solid fa-money-check-dollar"></i> Nguồn kinh phí</a></li>
-                            <li><a href="{{ route('category.index') }}"><i class="fa fa-solid fa-chart-pie"></i> Loại hạng mục</a></li>
+                            <li><a href="{{ route('category.index') }}"><i class="fa fa-solid fa-chart-pie"></i>
+                                    Loại hạng mục</a></li>
                             <li><a href="{{ route('suggestion.index') }}"><i
                                         class="fa fa-solid fa-circle-half-stroke"></i> Trạng thái đề xuất</a></li>
                             <li><a href="{{ route('score.index') }}"><i class="fa fa-solid fa-snowflake"></i> Tiêu
@@ -275,23 +317,23 @@
                 <div class="box">
 
                     <div class="box-body">
-                        @if (Session::has('yes'))
-                            ;
-                            <div class="alert alert-success">
+                        @if (Session::has('ok'))
+                            <div class="alert alert-success notification" id="success-alert">
                                 <button type="button" class="close" data-dismiss="alert"
                                     aria-hidden="true">&times;</button>
-                                {{ Session::get('yes') }}
+                                {{ Session::get('ok') }}
                             </div>
                         @endif
 
                         @if (Session::has('no'))
-                            ;
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger notification" id="error-alert">
                                 <button type="button" class="close" data-dismiss="alert"
                                     aria-hidden="true">&times;</button>
                                 {{ Session::get('no') }}
                             </div>
                         @endif
+
+
 
 
 
@@ -340,8 +382,21 @@
     <script src="//cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
 
 
+
+
+
     <script>
         let table = new DataTable('#myTable');
+
+        $(document).ready(function() {
+            setTimeout(function() {
+                $("#success-alert").fadeOut("slow");
+            }, 1000); // 3 giây
+
+            setTimeout(function() {
+                $("#error-alert").fadeOut("slow");
+            }, 1000); // 3 giây
+        });
     </script>
 
 

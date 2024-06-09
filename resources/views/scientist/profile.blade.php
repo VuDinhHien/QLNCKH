@@ -21,12 +21,15 @@
 <style>
     /* Tùy chỉnh màu chữ cho các liên kết trong navbar */
     .navbar-default .navbar-nav>li>a {
-        color: blue;
+        color: rgb(0, 55, 255);
+        justify-content: space-between;
+        font-weight: bolder;
+        
     }
 
     .navbar-default .navbar-nav>li>a:hover,
     .navbar-default .navbar-nav>li>a:focus {
-        color: dark;
+        color:  rgb(139, 19, 0);
     }
 
     .navbar-default .navbar-nav>.active>a,

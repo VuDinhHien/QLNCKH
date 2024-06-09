@@ -15,15 +15,15 @@ class Topic extends Model
     //      return $this->hasOne(Lvtopic::class, 'id', 'lvtopic_id');
     // }
 
-    public function lvtopic()
-    {
-        return $this->belongsTo(Lvtopic::class);
-    }
-
-    
     public function scientist()
     {
         return $this->belongsTo(Scientist::class, 'profile_id');
+    }
+
+    // Quan hệ với Lvtopic
+    public function lvtopic()
+    {
+        return $this->belongsTo(Lvtopic::class, 'lvtopic_id');
     }
 
     public function role()

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Topic;
 
+use App\Exports\TopicsExport;
 use App\Http\Controllers\Controller;
+
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\Models\Lvtopic;
 use App\Models\Role;
@@ -119,5 +123,10 @@ class TopicController extends Controller
         $topic->delete();
 
         return redirect()->route('topic.index');
+    }
+
+    public function export() 
+    {
+        return Excel::download(new TopicsExport, 'topics.xlsx');
     }
 }

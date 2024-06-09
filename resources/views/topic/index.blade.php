@@ -29,6 +29,7 @@
     style="margin-bottom: 10px;">
     Thêm mới
 </button>
+<a href="{{ route('topics.export') }}" class="btn btn-success">Xuất dữ liệu</a>
 
 <table class="table table-hover table-bordered mt-3" id="myTable">
     <thead>
@@ -274,7 +275,7 @@
             modal.find('.modal-body #profile_id').val(profileId);
             modal.find('.modal-body #lvtopic_id').val(lvtopicId);
            
-            modal.find('.modal-body #result').val(result);
+            modal.find('.modal-body #result').val(result); // Correctly set the value for result
             modal.find('.modal-body #start_date').val(startDate);
             modal.find('.modal-body #end_date').val(endDate);
 
@@ -284,6 +285,7 @@
         });
     });
 </script>
+
 
 <!-- Confirm Delete Modal -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"

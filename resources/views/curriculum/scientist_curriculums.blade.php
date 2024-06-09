@@ -21,12 +21,13 @@
     .navbar-default .navbar-nav>li>a {
         color: rgb(0, 55, 255);
         justify-content: space-between;
+        font-weight: bolder;
         
     }
 
     .navbar-default .navbar-nav>li>a:hover,
     .navbar-default .navbar-nav>li>a:focus {
-        color: dark;
+        color:  rgb(139, 19, 0);
     }
 
     .navbar-default .navbar-nav>.active>a,
@@ -90,7 +91,7 @@
     <tbody>
         @foreach ($curriculums as $curriculum)
             <tr>
-                <td>{{ $curriculum->id }}</td>
+                <td>{{ $loop->index+1 }}</td>
                 <td>{{ $curriculum->name }}</td>
                 <td>{{ $curriculum->year }}</td>
                 <td>{{ $curriculum->publisher }}</td>
