@@ -79,7 +79,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   Route::delete('/topic/{id}', [TopicController::class, 'destroy'])->name('topic.destroy');
   Route::resource('topic', TopicController::class);
 
-  Route::get('/export', [TopicController::class, 'export'])->name('topics.export');
+  Route::get('/topics/export', [TopicController::class, 'export'])->name('topics.export');
 
   Route::get('/scientist/{scientist}/topics', [TopicController::class, 'showTopicsByScientist'])->name('scientist.topics');
    
@@ -87,6 +87,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   Route::post('/conference', [ConferenceController::class, 'store'])->name('conference.store');
   Route::delete('/conference/{id}', [ConferenceController::class, 'destroy'])->name('conference.destroy');
   Route::resource('conference', ConferenceController::class);
+  Route::get('/export', [ConferenceController::class, 'export'])->name('conferences.export');
  
   
   Route::get('/magazine', [MagazineController::class, 'index'])->name('magazine.index');

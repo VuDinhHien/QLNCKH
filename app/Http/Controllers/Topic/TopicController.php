@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Topic;
 use App\Exports\TopicsExport;
 use App\Http\Controllers\Controller;
 
-use App\Exports\UsersExport;
+
 use Maatwebsite\Excel\Facades\Excel;
 
 use App\Models\Lvtopic;
@@ -99,7 +99,6 @@ class TopicController extends Controller
         $validatedData = $request->validate([
             'topic_name'     =>  'required',
             'profile_id'     =>  'required|exists:scientists,id',
-            'role_id'     =>  'required|exists:roles,id',
             'result'         =>  'required',
             'start_date'     =>  'required',
             'end_date'       =>  'required',

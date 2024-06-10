@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Conference;
 
+use App\Exports\ConferencesExport;
 use App\Http\Controllers\Controller;
 use App\Models\Conference;
 use App\Models\Seminar;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ConferenceController extends Controller
 {
@@ -16,7 +18,7 @@ class ConferenceController extends Controller
     {
         //
         $seminars = Seminar::orderBy('seminar_name', 'ASC')->select('id', 'seminar_name')->get();
-        $conferences = Conference::paginate(5);
+        $conferences = Conference::paginate(100);
         return view('conference.index', compact('seminars', 'conferences'));
     }
 
@@ -102,5 +104,10 @@ class ConferenceController extends Controller
         $conference->delete();
 
         return redirect()->route('conference.index');
+    }
+
+    public function export() 
+    {
+        return Excel::download(new ConferencesExport, 'conferences.xlsx');
     }
 }

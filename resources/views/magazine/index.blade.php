@@ -164,7 +164,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header btn-warning">
-                <h4 class="modal-title" id="editTopicModalLabel">Sửa Đề tài/đề án</h4>
+                <h4 class="modal-title" id="editTopicModalLabel">Sửa Bài báo</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -269,7 +269,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h3>Bạn có chắc chắn muốn xóa tạp chí này</h3>
+                <h3>Bạn có chắc chắn muốn xóa bài báo này</h3>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary pull-left" data-dismiss="modal">Hủy</button>

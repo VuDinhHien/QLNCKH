@@ -26,10 +26,12 @@
 
 
 <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#createModal"
-    style="margin-bottom: 10px;">
+    style="margin-bottom: 10px; margin-left:10px"><i class="fa-solid fa-circle-plus"></i>
     Thêm mới
 </button>
-<a href="{{ route('topics.export') }}" class="btn btn-success">Xuất dữ liệu</a>
+<a href="{{ route('topics.export') }}" class="btn btn-success pull-right">
+    <i class="fa fa-file-excel" style="margin-right: 5px;"></i> Xuất Excel
+</a>
 
 <table class="table table-hover table-bordered mt-3" id="myTable">
     <thead>
@@ -188,7 +190,7 @@
 
 
 
-<!-- The Modal -->
+<!-- Modal -->
 <div class="modal fade" id="editscouncilModal" tabindex="-1" aria-labelledby="editscouncilModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -204,7 +206,7 @@
                 @method('PUT')
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="proposer">Tên đề tài/đề án</label>
+                        <label for="topic_name">Tên đề tài/đề án</label>
                         <input type="text" class="form-control" id="topic_name" name="topic_name" required>
                     </div>
 
@@ -216,8 +218,6 @@
                             @endforeach
                         </select>
                     </div>
-
-                   
 
                     <div class="form-group">
                         <label for="lvtopic_id">Cấp đề tài/đề án</label>
@@ -256,6 +256,72 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="editscouncilModal" tabindex="-1" aria-labelledby="editscouncilModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header btn-warning">
+                <h4 class="modal-title" id="editscouncilModalLabel">Sửa Đề tài/Đề án</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="" method="POST" id="editscouncilForm">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="topic_name">Tên đề tài/đề án</label>
+                        <input type="text" class="form-control" id="topic_name" name="topic_name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profile_id">Chủ nhiệm</label>
+                        <select class="form-control" name="profile_id" id="profile_id" required>
+                            @foreach ($scientists as $scientist)
+                                <option value="{{ $scientist->id }}">{{ $scientist->profile_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lvtopic_id">Cấp đề tài/đề án</label>
+                        <select class="form-control" name="lvtopic_id" id="lvtopic_id" required>
+                            @foreach ($lvtopics as $lvtopic)
+                                <option value="{{ $lvtopic->id }}">{{ $lvtopic->lvtopic_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="result">Kết quả nghiệm thu</label>
+                        <select name="result" id="result" class="form-control">
+                            <option value="Khá">Khá</option>
+                            <option value="Giỏi">Giỏi</option>
+                            <option value="Xuất sắc">Xuất sắc</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="start_date">Ngày bắt đầu</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="end_date">Ngày kết thúc</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function() {
         $('#editscouncilModal').on('show.bs.modal', function(event) {
@@ -264,7 +330,6 @@
             var topicName = button.data('topic-name');
             var profileId = button.data('profile-id');
             var lvtopicId = button.data('lvtopic-id');
-            
             var result = button.data('result');
             var startDate = button.data('start-date');
             var endDate = button.data('end-date');
@@ -274,17 +339,18 @@
             modal.find('.modal-body #topic_name').val(topicName);
             modal.find('.modal-body #profile_id').val(profileId);
             modal.find('.modal-body #lvtopic_id').val(lvtopicId);
-           
             modal.find('.modal-body #result').val(result); // Correctly set the value for result
             modal.find('.modal-body #start_date').val(startDate);
             modal.find('.modal-body #end_date').val(endDate);
 
             // Update the form action
             var form = modal.find('#editscouncilForm');
-            form.attr('action', '{{ url('admin/topic/') }}/' + topicId); // Adjust the URL as needed
+            console.log('{{ url('admin/topic') }}/' + topicId);
+            form.attr('action', '{{ url('admin/topic') }}/' + topicId); // Adjust the URL as needed
         });
     });
 </script>
+
 
 
 <!-- Confirm Delete Modal -->

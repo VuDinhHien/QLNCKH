@@ -38,7 +38,7 @@
         font-size: 20px;
     }
 
-   
+
 
 
 
@@ -63,19 +63,8 @@
 <div class="container">
 
     <div class="row">
-    <div class="col-md-3">
-            <a href="{{ route('profile.index') }}" class="dashboard-card-link">
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <i class="fa fa-solid fa-building-columns"></i>
-                    </div>
-                    <div class="card-body text-center">
-                        Thông tin nhà khoa học
-                    </div>
-                </div>
-            </a>
-        </div>
-      
+       
+
         <div class="col-md-3">
             <a href="{{ route('topic.index') }}" class="dashboard-card-link">
                 <div class="dashboard-card">
@@ -194,9 +183,9 @@
 
             </a>
         </div>
-        
 
-        
+
+
     </div>
 </div>
 

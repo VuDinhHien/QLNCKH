@@ -28,9 +28,13 @@
 <!-- Modal -->
 
 
-<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#createModal" style="margin-bottom: 10px;">
-    Thêm mới
+<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#createModal" style="margin-bottom: 10px;  margin-left:10px">
+    <i class="fa-solid fa-circle-plus"></i>Thêm mới
 </button>
+
+<a href="{{ route('conferences.export') }}" class="btn btn-success pull-right">
+    <i class="fa fa-file-excel" style="margin-right: 5px;"></i> Xuất Excel
+</a>
 
 <table class="table table-hover table-bordered mt-3" id="myTable">
     <thead>

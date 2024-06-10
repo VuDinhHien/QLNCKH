@@ -58,8 +58,14 @@ class TopicsExport implements FromCollection, WithHeadings, WithMapping, WithSty
     public function styles(Worksheet $sheet)
     {
         return [
-            // Làm đậm hàng đầu tiên
-            1 => ['font' => ['bold' => true]],
+            // Làm đậm và đổi nền màu vàng cho hàng đầu tiên
+            1 => [
+                'font' => ['bold' => true],
+                'fill' => [
+                    'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                    'startColor' => ['argb' => 'FFFF00'],
+                ],
+            ],
         ];
     }
 }

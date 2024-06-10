@@ -241,9 +241,7 @@
                                 class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ route('profile.index') }}"><i class="fa fa-solid fa-user-tie"></i></i>
-                                    Lý
-                                    lịch nhà khoa học</a></li>
+                           
                             <li><a href="{{ route('council.index') }}"><i class="fa fa-solid fa-users"></i></i> Chức
                                     vụ hội đồng</a></li>
                             <li><a href="{{ route('lvtopic.index') }}"><i class="fa fa-solid fa-message"></i> Cấp
