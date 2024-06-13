@@ -24,7 +24,7 @@ return new class extends Migration
            
 
             $table->foreign('paper_id')->references('id')->on('papers');
-            $table->foreign('profile_id')->references('id')->on('scientists');
+           
             $table->foreign('role_id')->references('id')->on('roles');
             $table->timestamps();
         });

@@ -9,21 +9,17 @@ class Magazine extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['magazine_name', 'year', 'journal', 'paper_id','profile_id','role_id'];
-
+    protected $fillable = ['magazine_name', 'year', 'journal', 'paper_id'];
 
     public function paper()
     {
         return $this->belongsTo(Paper::class);
     }
 
-    public function scientist()
+    public function scientists()
     {
-        return $this->belongsTo(Scientist::class, 'profile_id');
-    }
-
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
+        return $this->belongsToMany(Scientist::class, 'scientist_magazine_role')
+                    ->withPivot('role_id')
+                    ->withTimestamps();
     }
 }

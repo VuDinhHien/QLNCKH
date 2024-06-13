@@ -9,18 +9,17 @@ class Scientist extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['profile_id', 'profile_name', 'birthday', 'gender',    'birth_place',    'address',    'office_phone',    'house_phone',    'telephone',    'email',    'degree_id',    'investiture',    'scientific_title',     'research_major', 'research_title',    'research_position', 'office_id',    'address_office'];
+    protected $fillable = ['profile_name', 'birthday', 'gender', 'birth_place', 'address', 'office_phone', 'house_phone', 'telephone', 'email', 'degree_id', 'investiture', 'scientific_title', 'research_major', 'research_title', 'research_position', 'office_id', 'address_office'];
 
     public function degree()
     {
-        return $this->hasOne(Degree::class, 'id', 'degree_id');
+        return $this->belongsTo(Degree::class, 'degree_id');
     }
 
     public function office()
     {
-        return $this->hasOne(Office::class, 'id', 'office_id');
+        return $this->belongsTo(Office::class, 'office_id');
     }
-
 
     public function topics()
     {
@@ -34,6 +33,10 @@ class Scientist extends Model
 
     public function magazines()
     {
-        return $this->hasMany(Magazine::class, 'profile_id');
+        return $this->belongsToMany(Magazine::class, 'scientist_magazine_role')
+                    ->withPivot('role_id')
+                    ->withTimestamps();
     }
+
+    
 }

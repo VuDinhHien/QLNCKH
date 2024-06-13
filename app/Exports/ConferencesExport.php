@@ -7,10 +7,13 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use Maatwebsite\Excel\Events\AfterSheet;
 
 
-class ConferencesExport implements FromCollection, WithHeadings, WithMapping, WithStyles
+class ConferencesExport implements FromCollection, WithHeadings, WithMapping, WithStyles, WithEvents
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -40,7 +43,7 @@ class ConferencesExport implements FromCollection, WithHeadings, WithMapping, Wi
             'STT',
             'Tên hội nghị/hội thảo',
             'Loại hội thảo',
-            'cơ quan',
+            'Cơ quan',
             'Đơn vị',
             'Kinh phí',
             'Tên trạng thái',
@@ -59,6 +62,25 @@ class ConferencesExport implements FromCollection, WithHeadings, WithMapping, Wi
                     'startColor' => ['argb' => 'FFFF00'],
                 ],
             ],
+        ];
+    }
+
+    /**
+     * Register the events for setting column widths and alignment
+     *
+     * @return array
+     */
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class => function(AfterSheet $event) {
+                $sheet = $event->sheet->getDelegate();
+                // Thiết lập độ rộng của các cột
+                $sheet->getStyle('A')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                $sheet->getColumnDimension('B')->setWidth(100);
+                $sheet->getColumnDimension('C')->setWidth(40);
+                $sheet->getColumnDimension('H')->setWidth(40);
+            },
         ];
     }
 }

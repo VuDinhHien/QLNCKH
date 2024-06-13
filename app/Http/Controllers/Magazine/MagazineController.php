@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Magazine;
 
+use App\Exports\MagazinesExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Models\Magazine;
 use App\Models\Paper;
@@ -16,58 +18,64 @@ class MagazineController extends Controller
      */
     public function index()
     {
-        //
-        $scientists = Scientist::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
-        $roles = Role::orderBy('role_name', 'ASC')->select('id', 'role_name')->get();
-        $papers = Paper::orderBy('paper_name', 'ASC')->select('id', 'paper_name')->get();
-        $magazines = Magazine::paginate(100);
-        return view('magazine.index', compact('papers', 'magazines','roles','scientists'));
+
+        $magazines = Magazine::with(['scientists', 'scientists.magazines', 'paper'])->paginate(100);
+        $scientists = Scientist::all();
+        $roles = Role::all();
+        $papers = Paper::all();
+
+        return view('magazine.index', compact('magazines', 'scientists', 'roles', 'papers'));
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
-
-
     }
+
 
     /**
      * Store a newly created resource in storage.
      */
 
-    //
     public function store(Request $request)
     {
-        $request->validate([
-            'magazine_name'     =>  'required',
-            'year'              =>  'required',
-            'journal'           =>  'required',
-            'profile_id'     =>  'required|exists:scientists,id',
-            'role_id'     =>  'required|exists:roles,id',
-            'paper_id'          =>  'required|exists:papers,id',
+
+
+        $validatedData = $request->validate([
+            'magazine_name' => 'required|string|max:255',
+            'year' => 'required|integer',
+            'journal' => 'required|string|max:255',
+            'paper_id' => 'required|exists:papers,id',
+            'scientists' => 'required|array',
+            'scientists.*.id' => 'required|exists:scientists,id',
+            'scientists.*.role_id' => 'required|exists:roles,id',
         ]);
 
-        Magazine::create($request->all());
+        $magazine = Magazine::create([
+            'magazine_name' => $validatedData['magazine_name'],
+            'year' => $validatedData['year'],
+            'journal' => $validatedData['journal'],
+            'paper_id' => $validatedData['paper_id'],
+        ]);
 
-        return redirect()->route('magazine.index');
+        foreach ($validatedData['scientists'] as $scientist) {
+            $magazine->scientists()->attach($scientist['id'], ['role_id' => $scientist['role_id']]);
+        }
+
+        return redirect()->route('magazine.index')->with('success', 'Thêm bài báo thành công');
     }
-
     /**
      * Display the specified resource.
      */
-    public function show(Magazine $magazine)
-    {
-        //
-    }
-
+   
     public function showMagazinesByScientist(Scientist $scientist)
-     {
-         $magazines = $scientist->magazines()->paginate(10);
-         return view('magazine.scientist_magazines', compact('magazines', 'scientist'));
-     }
+    {
+        $magazines = $scientist->magazines()->paginate(10);
+        return view('magazine.scientist_magazines', compact('magazines', 'scientist'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -75,11 +83,7 @@ class MagazineController extends Controller
     public function edit(Magazine $id)
     {
         //
-        $magazines = Magazine::findOrFail($id);
-        $scientist = Scientist::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
-        $role = Role::orderBy('role_name', 'ASC')->select('id', 'role_name')->get();
-        $paper = Paper::orderBy('paper_name', 'ASC')->select('id', 'paper_name')->get();
-        return view('magazine.edit', compact('magazines', 'paper', 'role','scientist'));
+
     }
 
     /**
@@ -91,19 +95,29 @@ class MagazineController extends Controller
 
 
         $validatedData = $request->validate([
-            'magazine_name'     =>  'required',
-            'year'   =>  'required',
-            'journal'         =>  'required',
-            'paper_id'     =>  'required|exists:papers,id',
-            'profile_id'     =>  'required|exists:scientists,id',
-            'role_id'     =>  'required|exists:roles,id',
+            'magazine_name' => 'required|string|max:255',
+            'year' => 'required|integer',
+            'journal' => 'required|string|max:255',
+            'paper_id' => 'required|exists:papers,id',
+            'scientists' => 'required|array',
+            'scientists.*.id' => 'required|exists:scientists,id',
+            'scientists.*.role_id' => 'required|exists:roles,id',
         ]);
 
         $magazine = Magazine::findOrFail($id);
+        $magazine->update([
+            'magazine_name' => $validatedData['magazine_name'],
+            'year' => $validatedData['year'],
+            'journal' => $validatedData['journal'],
+            'paper_id' => $validatedData['paper_id'],
+        ]);
 
-        $magazine->update($validatedData);
+        $magazine->scientists()->detach();
+        foreach ($validatedData['scientists'] as $scientist) {
+            $magazine->scientists()->attach($scientist['id'], ['role_id' => $scientist['role_id']]);
+        }
 
-        return redirect()->route('magazine.index');
+        return redirect()->route('magazine.index')->with('success', 'Cập nhật bài báo thành công.');
     }
 
     /**
@@ -111,10 +125,15 @@ class MagazineController extends Controller
      */
     public function destroy($id)
     {
-
         $magazine = Magazine::findOrFail($id);
         $magazine->delete();
 
-        return redirect()->route('magazine.index');
+        return redirect()->route('magazine.index')->with('success', 'Xóa bài báo thành công');
+    }
+
+
+    public function export() 
+    {
+        return Excel::download(new MagazinesExport, 'magazines.xlsx');
     }
 }

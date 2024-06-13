@@ -25,15 +25,15 @@ class AdminController extends Controller
         $check = auth()->attempt($data);
 
         if ($check) {
-            return redirect()->route('admin.index')->with('ok','Welcome Back');
+            return redirect()->route('admin.index')->with('ok','Đăng nhập thành công');
         }
 
-        return redirect()->back()->with('no', 'your email or password is not true');
+        return redirect()->back()->with('no', 'Tài khoản hoặc mật khẩu không chính xác');
 
     }
 
     public function logout() {
         auth()->logout();
-        return redirect()->route('admin.login')->with('no','Logouted');
+        return redirect()->route('admin.login')->with('no','Đăng xuất thành công');
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArsearchController;
@@ -87,13 +88,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   Route::post('/conference', [ConferenceController::class, 'store'])->name('conference.store');
   Route::delete('/conference/{id}', [ConferenceController::class, 'destroy'])->name('conference.destroy');
   Route::resource('conference', ConferenceController::class);
-  Route::get('/export', [ConferenceController::class, 'export'])->name('conferences.export');
+  
+  Route::get('/conferences/export', [ConferenceController::class, 'export'])->name('conferences.export');
  
   
   Route::get('/magazine', [MagazineController::class, 'index'])->name('magazine.index');
   Route::post('/magazine', [MagazineController::class, 'store'])->name('magazine.store');
+  Route::put('/magazine/{magazine}', [MagazineController::class, 'update'])->name('magazine.update');
   Route::delete('/magazine/{id}', [MagazineController::class, 'destroy'])->name('magazine.destroy');
   Route::resource('magazine', MagazineController::class);
+
+  Route::get('/export', [MagazineController::class, 'export'])->name('magazines.export');
 
   Route::get('/scientist/{scientist}/magazines', [MagazineController::class, 'showMagazinesByScientist'])->name('scientist.magazines');
 

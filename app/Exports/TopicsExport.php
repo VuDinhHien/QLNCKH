@@ -16,7 +16,7 @@ class TopicsExport implements FromCollection, WithHeadings, WithMapping, WithSty
     */
     public function collection()
     {
-        // Lấy tất cả các topic cùng với profile và lvtopic liên quan
+        
         return Topic::with('scientist', 'lvtopic')->get();
     }
 

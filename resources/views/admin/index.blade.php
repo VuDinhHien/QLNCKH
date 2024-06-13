@@ -66,7 +66,7 @@
        
 
         <div class="col-md-3">
-            <a href="{{ route('topic.index') }}" class="dashboard-card-link">
+            <a href="{{ route('scientist.index') }}" class="dashboard-card-link">
                 <div class="dashboard-card">
                     <div class="card-header">
                         <i class="fa-solid fa-building-columns"></i>
@@ -79,7 +79,7 @@
             </a>
         </div>
         <div class="col-md-3">
-            <a href="{{ route('topic.index') }}" class="dashboard-card-link">
+            <a href="{{ route('offer.index') }}" class="dashboard-card-link">
                 <div class="dashboard-card">
                     <div class="card-header">
                         <i class="fa-solid fa-building-columns"></i>

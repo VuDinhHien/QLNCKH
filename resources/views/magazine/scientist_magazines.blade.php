@@ -81,23 +81,29 @@
             <th>Năm công bố</th>
             <th>Tên tạp chí</th>
             <th>Loại bài báo</th>
+            <th>Cán bộ tham gia</th>
+      
            
-            <th>Vai trò</th>
-            
         </tr>
     </thead>
     <tbody>
         @foreach ($magazines as $magazine)
-            <tr>
-                <td>{{ $loop->index + 1 }}</td>
-                <td>{{ $magazine->magazine_name }}</td>
-                <td>{{ $magazine->year }}</td>
-                <td>{{ $magazine->journal }}</td>
-                <td>{{ $magazine->paper->paper_name }}</td>
-               
-                <td>{{ $magazine->role->role_name }}</td>
-
-            </tr>
+        <tr>
+            <td>{{ $loop->index + 1 }}</td>
+            <td>{{ $magazine->magazine_name }}</td>
+            <td>{{ $magazine->year }}</td>
+            <td>{{ $magazine->journal }}</td>
+            <td>{{ $magazine->paper->paper_name }}</td>
+            <td>
+                @foreach ($magazine->scientists as $scientist)
+                    {{ $scientist->profile_name }} ({{ \App\Models\Role::find($scientist->pivot->role_id)->role_name }})
+                    @if (!$loop->last)
+                        ;
+                    @endif
+                @endforeach
+            </td>
+           
+        </tr>
         @endforeach
     </tbody>
 </table>
