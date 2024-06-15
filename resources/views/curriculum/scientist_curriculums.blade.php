@@ -78,12 +78,13 @@
     <thead>
         <tr>
             <th>STT</th>
-            <th style="width:200px; text-align: center">Tên sách tham khảo</th>
-            <th style="text-align: center">Năm XB</th>
-            <th style="text-align: center">Nhà XB</th>
+            <th>Tên sách tham khảo</th>
+            <th>Năm XB</th>
+            <th>Nhà XB</th>
            
-            <th style="text-align: center">Loại sách</th>
-            <th style="text-align: center">Trình độ đào tạo</th>
+            <th>Loại sách</th>
+            <th>Trình độ đào tạo</th>
+            <th>Vai trò</th>
 
            
         </tr>
@@ -98,6 +99,13 @@
               
                 <td>{{ $curriculum->book->book_name }}</td>
                 <td>{{ $curriculum->training->training_name }}</td>
+                <td>
+                    @foreach ($curriculum->scientists as $sci)
+                        @if ($sci->id == $scientist->id)
+                            {{ \App\Models\Role::find($sci->pivot->role_id)->role_name }}
+                        @endif
+                    @endforeach
+                </td>
 
                 
             </tr>

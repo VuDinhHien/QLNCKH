@@ -73,7 +73,7 @@ class MagazineController extends Controller
    
     public function showMagazinesByScientist(Scientist $scientist)
     {
-        $magazines = $scientist->magazines()->paginate(10);
+        $magazines = $scientist->magazines()->with(['scientists'])->paginate(10);
         return view('magazine.scientist_magazines', compact('magazines', 'scientist'));
     }
 

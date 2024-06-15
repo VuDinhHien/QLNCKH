@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Curriculum;
 
+use App\Exports\CurriculumsExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Curriculum;
 use App\Models\Scientist;
 use App\Models\Training;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class CurriculumController extends Controller
@@ -17,11 +20,15 @@ class CurriculumController extends Controller
     public function index()
     {
         //
-        $scientists = Scientist::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
-        $trainings = Training::orderBy('training_name', 'ASC')->select('id', 'training_name')->get();
-        $books = Book::orderBy('book_name', 'ASC')->select('id', 'book_name')->get();
-        $curriculums = Curriculum::paginate(100);
-        return view('curriculum.index', compact('scientists', 'trainings', 'books', 'curriculums'));
+
+
+        $curriculums = Curriculum::with(['scientists', 'scientists.curriculums', 'book', 'training'])->paginate(100);
+        $scientists = Scientist::all();
+        $roles = Role::all();
+        $books = Book::all();
+        $trainings = Training::all();
+
+        return view('curriculum.index', compact('curriculums', 'scientists', 'roles', 'books', 'trainings'));
     }
 
     /**
@@ -30,7 +37,7 @@ class CurriculumController extends Controller
     public function create()
     {
         //
-        
+
 
     }
 
@@ -39,22 +46,30 @@ class CurriculumController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $request->validate([
+        $validatedData = $request->validate([
             'name'     =>  'required',
             'year'         =>  'required',
             'publisher'         =>  'required',
-            'profile_id'     =>  'required|exists:scientists,id',
-            
-            'book_id'     =>  'required|exists:books,id',
-            
-            'training_id'     =>  'required|exists:trainings,id',
+            'book_id' => 'required|exists:books,id',
+            'training_id' => 'required|exists:trainings,id',
+            'scientists' => 'required|array',
+            'scientists.*.id' => 'required|exists:scientists,id',
+            'scientists.*.role_id' => 'required|exists:roles,id',
         ]);
 
+        $curriculum =  Curriculum::create([
+            'name' => $validatedData['name'],
+            'year' => $validatedData['year'],
+            'publisher' => $validatedData['publisher'],
+            'book_id' => $validatedData['book_id'],
+            'training_id' => $validatedData['training_id'],
+        ]);
 
-        Curriculum::create($request->all());
+        foreach ($validatedData['scientists'] as $scientist) {
+            $curriculum->scientists()->attach($scientist['id'], ['role_id' => $scientist['role_id']]);
+        }
 
-        return redirect()->route('curriculum.index');
+        return redirect()->route('curriculum.index')->with('success', 'Thêm giáo trình/sách tham khảo thành công');
     }
 
     /**
@@ -67,7 +82,7 @@ class CurriculumController extends Controller
 
     public function showCurriculumsByScientist(Scientist $scientist)
     {
-        $curriculums = $scientist->curriculums()->paginate(10);
+        $curriculums = $scientist->curriculums()->with(['scientists'])->paginate(10);
         return view('curriculum.scientist_curriculums', compact('curriculums', 'scientist'));
     }
 
@@ -77,12 +92,7 @@ class CurriculumController extends Controller
     public function edit(Curriculum $id)
     {
         //
-        $curriculum = Curriculum::findOrFail($id);
-        $scientists = Scientist::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
-        $trainings = Training::orderBy('training_name', 'ASC')->select('id', 'training_name')->get();
-        $books = Book::orderBy('book_name', 'ASC')->select('id', 'book_name')->get();
-        
-        return view('curriculum.index', compact('scientists', 'trainings', 'books', 'curriculum'));
+
     }
 
     /**
@@ -90,23 +100,40 @@ class CurriculumController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Validate the incoming request data
         $validatedData = $request->validate([
-            'name'     =>  'required',
-            'year'         =>  'required',
-            'publisher'         =>  'required',
-            'profile_id'     =>  'required|exists:scientists,id',
-            
-            'book_id'     =>  'required|exists:books,id',
-            
-            'training_id'     =>  'required|exists:trainings,id',
-
+            'name' => 'required|string|max:255',
+            'year' => 'required|integer|min:1900|max:' . date('Y'),
+            'publisher' => 'required|string|max:255',
+            'book_id' => 'required|exists:books,id',
+            'training_id' => 'required|exists:trainings,id',
+            'scientists' => 'required|array',
+            'scientists.*.id' => 'required|exists:scientists,id',
+            'scientists.*.role_id' => 'required|exists:roles,id',
         ]);
 
+        // Find the curriculum by ID
         $curriculum = Curriculum::findOrFail($id);
-        $curriculum->update($validatedData);
 
-        return redirect()->route('curriculum.index');
+        // Update the curriculum with validated data
+        $curriculum->update([
+            'name' => $validatedData['name'],
+            'year' => $validatedData['year'],
+            'publisher' => $validatedData['publisher'],
+            'book_id' => $validatedData['book_id'],
+            'training_id' => $validatedData['training_id'],
+        ]);
+
+        // Sync scientists
+        // Instead of detaching and attaching, use sync to avoid redundant operations
+        $scientistsSyncData = [];
+        foreach ($validatedData['scientists'] as $scientist) {
+            $scientistsSyncData[$scientist['id']] = ['role_id' => $scientist['role_id']];
+        }
+        $curriculum->scientists()->sync($scientistsSyncData);
+
+        // Redirect with a success message
+        return redirect()->route('curriculum.index')->with('success', 'Cập nhật giáo trình/sách tham khảo thành công');
     }
 
     /**
@@ -118,6 +145,10 @@ class CurriculumController extends Controller
         $curriculum = Curriculum::findOrFail($id);
         $curriculum->delete();
 
-        return redirect()->route('curriculum.index');
+        return redirect()->route('curriculum.index')->with('success', 'Xóa giáo trình/sách tham khảo thành công.');
     }
+
+   public function export(){
+     return Excel::download(new CurriculumsExport, 'curriculums.xlsx');
+   }
 }

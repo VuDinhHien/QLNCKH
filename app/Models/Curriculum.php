@@ -11,7 +11,7 @@ class Curriculum extends Model
 
     protected $table = 'curriculums'; // Chỉ định tên bảng
 
-    protected $fillable = ['name', 'year', 'publisher', 'book_id', 'training_id', 'profile_id'];
+    protected $fillable = ['name', 'year', 'publisher', 'book_id', 'training_id'];
 
    
 
@@ -26,8 +26,10 @@ class Curriculum extends Model
     }
 
     
-    public function scientist()
+    public function scientists()
     {
-        return $this->belongsTo(Scientist::class, 'profile_id');
+        return $this->belongsToMany(Scientist::class, 'scientist_curriculum_role')
+                    ->withPivot('role_id')
+                    ->withTimestamps();
     }
 }

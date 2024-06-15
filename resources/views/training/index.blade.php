@@ -15,19 +15,11 @@
 
 <form action="" method="POST" class="form-inline" role="form">
 
-    <div class="form-group">
-        <label class="sr-only" for="">label</label>
-        <input type="email" class="form-control" id="" placeholder="Input field">
-    </div>
-
-
-
-    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
     <a href="{{ route('training.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Thêm mới</a>
 </form>
 
 
-<table class="table table-hover">
+<table class="table table-hover" id="myTable">
     <thead>
         <tr>
             <th>Tên loại sản phẩm</th>

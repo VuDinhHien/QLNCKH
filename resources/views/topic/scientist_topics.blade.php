@@ -79,14 +79,16 @@
     <thead>
         <tr>
             <th>STT</th>
-            <th style="width:200px; text-align: center">Tên đề tài/đề án</th>
+            <th>Tên đề tài/đề án</th>
            
-            <th style="text-align: center">Cấp đề tài/đề án</th>
-            <th style="text-align: center">Vai trò</th>
-            <th style="text-align: center">Kết quả nghiệm thu</th>
-            <th style="text-align: center">Ngày bắt đầu</th>
-            <th style="text-align: center">Ngày kết thúc</th>
-            {{-- <th style="text-align: center">Thao Tác</th> --}}
+            <th>Cấp đề tài/đề án</th>
+      
+            <th>Kết quả nghiệm thu</th>
+            <th>Vai trò</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
+           
+           
         </tr>
     </thead>
     <tbody>
@@ -96,10 +98,19 @@
                 <td>{{ $topic->topic_name }}</td>
                 
                 <td>{{ $topic->lvtopic->lvtopic_name }}</td>
-                <td>{{ $topic->role->role_name }}</td>
+                
                 <td>{{ $topic->result }}</td>
+
+                <td>
+                    @foreach ($topic->scientists as $sci)
+                        @if ($sci->id == $scientist->id)
+                            {{ \App\Models\Role::find($sci->pivot->role_id)->role_name }}
+                        @endif
+                    @endforeach
+                </td>
                 <td>{{ $topic->start_date }}</td>
                 <td>{{ $topic->end_date }}</td>
+               
                 
             </tr>
         @endforeach

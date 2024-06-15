@@ -9,25 +9,25 @@
         @csrf
         <div class="col-md-3">
             <div class="form-group">
-                <label for="profile_id">Mã cán bộ</label>
+                <label for="profile_id">Mã cán bộ <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="profile_id" placeholder="Input field" required>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label for="profile_name">Họ và Tên</label>
+                <label for="profile_name">Họ và Tên <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="profile_name" placeholder="Input field" required>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label for="birthday">Ngày sinh</label>
+                <label for="birthday">Ngày sinh <span class="text-danger">*</span></label>
                 <input type="date" class="form-control" name="birthday" placeholder="Input field" required>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label for="gender">Giới tính</label>
+                <label for="gender">Giới tính <span class="text-danger">*</span></label>
                 <select name="gender" id="gender" class="form-control" required>
                     <option value="Nữ">Nữ</option>
                     <option value="Nam">Nam</option>
@@ -36,7 +36,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label for="birth_place">Nơi sinh</label>
+                <label for="birth_place">Nơi sinh <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="birth_place" placeholder="Input field" required>
             </div>
         </div>
@@ -60,20 +60,20 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label for="telephone">Điện thoại di động</label>
+                <label for="telephone">Điện thoại di động <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="telephone" placeholder="Input field" required>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email">Email <span class="text-danger">*</span></label>
                 <input type="email" class="form-control" name="email" placeholder="Input field" required>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label for="degree_id">Học vị</label>
+                <label for="degree_id">Học vị <span class="text-danger">*</span></label>
                 <select class="form-control" name="degree_id" required>
                     @foreach ($degrees as $degree)
                     <option value="{{ $degree->id }}">{{ $degree->degree_name }}</option>
@@ -113,7 +113,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label for="office_id">Tên tổ chức</label>
+                <label for="office_id">Tên tổ chức <span class="text-danger">*</span></label>
                 <select class="form-control" name="office_id" required>
                     @foreach ($offices as $office)
                     <option value="{{ $office->id }}">{{ $office->office_name }}</option>
@@ -123,7 +123,7 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <label for="address_office">Địa chỉ tổ chức</label>
+                <label for="address_office">Địa chỉ tổ chức <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="address_office" placeholder="Input field" required>
             </div>
         </div>

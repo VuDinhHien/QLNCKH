@@ -81,7 +81,7 @@
             <th>Năm công bố</th>
             <th>Tên tạp chí</th>
             <th>Loại bài báo</th>
-            <th>Cán bộ tham gia</th>
+            <th>Vai trò</th>
       
            
         </tr>
@@ -95,10 +95,9 @@
             <td>{{ $magazine->journal }}</td>
             <td>{{ $magazine->paper->paper_name }}</td>
             <td>
-                @foreach ($magazine->scientists as $scientist)
-                    {{ $scientist->profile_name }} ({{ \App\Models\Role::find($scientist->pivot->role_id)->role_name }})
-                    @if (!$loop->last)
-                        ;
+                @foreach ($magazine->scientists as $sci)
+                    @if ($sci->id == $scientist->id)
+                        {{ \App\Models\Role::find($sci->pivot->role_id)->role_name }}
                     @endif
                 @endforeach
             </td>

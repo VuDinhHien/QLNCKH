@@ -10,8 +10,12 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
+
 class MagazinesExport implements FromCollection, WithHeadings, WithMapping, WithStyles
 {
+    private $rowNumber = 1; // Biến đếm hàng
+
+
     /**
      * @return \Illuminate\Support\Collection
      */
@@ -28,7 +32,7 @@ class MagazinesExport implements FromCollection, WithHeadings, WithMapping, With
         })->implode('; ');
 
         return [
-            $magazine->id,
+            $this->rowNumber++, 
             $magazine->magazine_name,
             $magazine->year,
             $magazine->journal,
@@ -54,7 +58,7 @@ class MagazinesExport implements FromCollection, WithHeadings, WithMapping, With
     public function styles(Worksheet $sheet)
     {
         // Làm đậm và đổi nền màu vàng cho hàng đầu tiên
-        $sheet->getStyle('A1:Z1')->applyFromArray([
+        $sheet->getStyle('A1:G1')->applyFromArray([
             'font' => ['bold' => true],
             'fill' => [
                 'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
@@ -64,11 +68,11 @@ class MagazinesExport implements FromCollection, WithHeadings, WithMapping, With
 
         // Thiết lập độ rộng cho cột A và B
         $sheet->getColumnDimension('A')->setAutoSize(true);
-        $sheet->getColumnDimension('B')->setWidth(100);
+        $sheet->getColumnDimension('B')->setWidth(80);
         $sheet->getColumnDimension('C')->setAutoSize(true);
         $sheet->getColumnDimension('D')->setWidth(40);
         $sheet->getColumnDimension('E')->setWidth(40);
-        $sheet->getColumnDimension('F')->setWidth(100);
+        $sheet->getColumnDimension('F')->setWidth(80);
         // Đặt độ rộng cụ thể cho cột B
 
 
@@ -77,5 +81,9 @@ class MagazinesExport implements FromCollection, WithHeadings, WithMapping, With
 
         // Căn giữa số trong cột C
         $sheet->getStyle('C')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle('B')->getAlignment()->setWrapText(true);
+
+        return [];
     }
 }

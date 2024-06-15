@@ -21,12 +21,11 @@ class TopicController extends Controller
      */
     public function index()
     {
-        //
-        $scientists = Scientist::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
-        $roles = Role::orderBy('role_name', 'ASC')->select('id', 'role_name')->get();
-        $lvtopics = Lvtopic::orderBy('lvtopic_name', 'ASC')->select('id', 'lvtopic_name')->get();
         
-        $topics = Topic::paginate(100);
+        $topics = Topic::with(['scientists', 'scientists.topics', 'lvtopic'])->paginate(100);
+        $scientists = Scientist::all();
+        $roles = Role::all();
+        $lvtopics = Lvtopic::all();
         return view('topic.index', compact('lvtopics', 'topics', 'scientists','roles'));
     }
 
@@ -47,20 +46,33 @@ class TopicController extends Controller
     //
     public function store(Request $request)
     {
-        $request->validate([
-            'topic_name'     =>  'required',
-            'profile_id'     =>  'required|exists:scientists,id',
-            'role_id'     =>  'required|exists:roles,id',
+    
+
+        $validatedData = $request->validate([
+            'topic_name' => 'required|string|max:255',
+            'lvtopic_id'     =>  'required|exists:lvtopics,id',
             'result'         =>  'required',
             'start_date'       =>  'required',
             'end_date'       =>  'required',
-            'lvtopic_id'     =>  'required|exists:lvtopics,id',
+            
+            'scientists' => 'required|array',
+            'scientists.*.id' => 'required|exists:scientists,id',
+            'scientists.*.role_id' => 'required|exists:roles,id',
         ]);
 
+        $topic = Topic::create([
+            'topic_name' => $validatedData['topic_name'],
+            'result' => $validatedData['result'],
+            'start_date' => $validatedData['start_date'],
+            'end_date' => $validatedData['end_date'],
+            'lvtopic_id' => $validatedData['lvtopic_id'],
+        ]);
 
-        Topic::create($request->all());
+        foreach ($validatedData['scientists'] as $scientist) {
+            $topic->scientists()->attach($scientist['id'], ['role_id' => $scientist['role_id']]);
+        }
 
-        return redirect()->route('topic.index');
+        return redirect()->route('topic.index')->with('success', 'Thêm đề tài thành công');
     }
 
 
@@ -70,7 +82,7 @@ class TopicController extends Controller
 
      public function showTopicsByScientist(Scientist $scientist)
      {
-         $topics = $scientist->topics()->paginate(10);
+        $topics = $scientist->topics()->with(['scientists'])->paginate(10);
          return view('topic.scientist_topics', compact('topics', 'scientist'));
      }
  
@@ -80,36 +92,38 @@ class TopicController extends Controller
      */
     public function edit(Topic $id)
     {
-        //
-        //
-        $topic = Topic::findOrFail($id);
-        $lvtopics = Lvtopic::orderBy('lvtopic_name', 'ASC')->select('id', 'lvtopic_name')->get();
-        $scientists = Scientist::orderBy('profile_name', 'ASC')->select('id', 'profile_name')->get();
-        $roles = Role::orderBy('role_name', 'ASC')->select('id', 'role_name')->get();
-        return view('topic.index', compact('topic', 'lvtopics', 'scientists','roles'));
-
-
-        /**
-         * Update the specified resource in storage.
-         */
+        
+      
     }
     public function update(Request $request, $id)
     {
-        //
+     
         $validatedData = $request->validate([
-            'topic_name'     =>  'required',
-            'profile_id'     =>  'required|exists:scientists,id',
+           'topic_name' => 'required|string|max:255',
             'result'         =>  'required',
-            'start_date'     =>  'required',
+            'start_date'       =>  'required',
             'end_date'       =>  'required',
             'lvtopic_id'     =>  'required|exists:lvtopics,id',
-
+            'scientists' => 'required|array',
+            'scientists.*.id' => 'required|exists:scientists,id',
+            'scientists.*.role_id' => 'required|exists:roles,id',
         ]);
 
         $topic = Topic::findOrFail($id);
-        $topic->update($validatedData);
+        $topic->update([
+            'topic_name' => $validatedData['topic_name'],
+            'result' => $validatedData['result'],
+            'start_date' => $validatedData['start_date'],
+            'end_date' => $validatedData['end_date'],
+            'lvtopic_id' => $validatedData['lvtopic_id'],
+        ]);
 
-        return redirect()->route('topic.index');
+        $topic->scientists()->detach();
+        foreach ($validatedData['scientists'] as $scientist) {
+            $topic->scientists()->attach($scientist['id'], ['role_id' => $scientist['role_id']]);
+        }
+
+        return redirect()->route('topic.index')->with('success', 'Cập nhật đề tài thành công.');
     }
 
     /**
@@ -121,7 +135,7 @@ class TopicController extends Controller
         $topic = Topic::findOrFail($id);
         $topic->delete();
 
-        return redirect()->route('topic.index');
+        return redirect()->route('topic.index')->with('success', 'Xóa đề tài thành công');
     }
 
     public function export() 

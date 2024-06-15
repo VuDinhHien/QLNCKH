@@ -23,12 +23,16 @@ class Scientist extends Model
 
     public function topics()
     {
-        return $this->hasMany(Topic::class, 'profile_id');
+        return $this->belongsToMany(Topic::class, 'scientist_topic_role')
+                    ->withPivot('role_id')
+                    ->withTimestamps();
     }
 
     public function curriculums()
     {
-        return $this->hasMany(Curriculum::class, 'profile_id');
+        return $this->belongsToMany(Curriculum::class, 'scientist_curriculum_role')
+                    ->withPivot('role_id')
+                    ->withTimestamps();
     }
 
     public function magazines()

@@ -15,6 +15,10 @@ use Maatwebsite\Excel\Events\AfterSheet;
 
 class ConferencesExport implements FromCollection, WithHeadings, WithMapping, WithStyles, WithEvents
 {
+
+
+    private $rowNumber = 1; // Biến đếm hàng
+
     /**
      * @return \Illuminate\Support\Collection
      */
@@ -26,7 +30,7 @@ class ConferencesExport implements FromCollection, WithHeadings, WithMapping, Wi
     public function map($conference): array
     {
         return [
-            $conference->id,
+            $this->rowNumber++, 
             $conference->conference_name,
             $conference->seminar->seminar_name,
             $conference->office,
@@ -77,10 +81,14 @@ class ConferencesExport implements FromCollection, WithHeadings, WithMapping, Wi
                 $sheet = $event->sheet->getDelegate();
                 // Thiết lập độ rộng của các cột
                 $sheet->getStyle('A')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('C')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('H')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
                 $sheet->getColumnDimension('B')->setWidth(100);
-                $sheet->getColumnDimension('C')->setWidth(40);
-                $sheet->getColumnDimension('H')->setWidth(40);
+                $sheet->getColumnDimension('C')->setWidth(30);
+                $sheet->getColumnDimension('H')->setWidth(30);
             },
         ];
+
+       
     }
 }

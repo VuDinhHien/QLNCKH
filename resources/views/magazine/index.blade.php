@@ -64,7 +64,7 @@
             <th>Năm công bố</th>
             <th>Tên tạp chí</th>
             <th>Loại bài báo</th>
-            <th>Cán bộ tham gia</th>
+            <th>Cán bộ tham gia (Vai trò)</th>
 
             <th>Thao Tác</th>
         </tr>

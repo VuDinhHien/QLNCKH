@@ -77,6 +77,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
   Route::get('/topic', [TopicController::class, 'index'])->name('topic.index');
   Route::post('/topic', [TopicController::class, 'store'])->name('topic.store');
+  Route::put('/topic/{topic}', [TopicController::class, 'update'])->name('topic.update');
   Route::delete('/topic/{id}', [TopicController::class, 'destroy'])->name('topic.destroy');
   Route::resource('topic', TopicController::class);
 
@@ -120,8 +121,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   
   Route::get('/curriculum', [CurriculumController::class, 'index'])->name('curriculum.index');
   Route::post('/curriculum', [CurriculumController::class, 'store'])->name('curriculum.store');
+  Route::put('/curriculum/{curriculum}', [CurriculumController::class, 'update'])->name('curriculum.update');
   Route::delete('/curriculum/{id}', [CurriculumController::class, 'destroy'])->name('curriculum.destroy');
   Route::resource('curriculum', CurriculumController::class);
+  Route::get('/curriculums/export', [CurriculumController::class, 'export'])->name('curriculums.export');
 
   Route::get('/scientist/{scientist}/curriculums', [CurriculumController::class, 'showCurriculumsByScientist'])->name('scientist.curriculums');
 
