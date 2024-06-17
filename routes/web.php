@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArsearchController;
@@ -127,5 +127,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   Route::get('/curriculums/export', [CurriculumController::class, 'export'])->name('curriculums.export');
 
   Route::get('/scientist/{scientist}/curriculums', [CurriculumController::class, 'showCurriculumsByScientist'])->name('scientist.curriculums');
+
+
+  Route::get('/projects/progress-report', [ProjectController::class, 'progressReport'])->name('projects.progress-report');
 
 });

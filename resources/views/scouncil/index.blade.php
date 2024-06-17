@@ -165,7 +165,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header btn-warning">
-                <h4 class="modal-title" id="editscouncilModalLabel">Sửa Hội thảo/hội nghị</h4>
+                <h4 class="modal-title" id="editscouncilModalLabel">Chỉnh sửa</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -261,7 +261,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h3>Bạn có chắc chắn muốn xóa đề tài/đề án này</h3>
+                <h3>Bạn có chắc chắn muốn xóa hội đồng này</h3>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary pull-left" data-dismiss="modal">Hủy</button>

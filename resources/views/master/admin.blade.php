@@ -229,9 +229,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{ route('projects.progress-report') }}">
                             <i class="fa fa-solid fa-pager"></i> <span>Báo cáo tiến độ</span>
-
                         </a>
                     </li>
 
