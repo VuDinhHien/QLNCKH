@@ -12,4 +12,9 @@ class ScientistTopicRole extends Model
     protected $table = 'scientist_topic_role';
 
     protected $fillable = ['scientist_id', 'topic_id', 'role_id'];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
 }

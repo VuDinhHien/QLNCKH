@@ -15,10 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+           
             $table->string('password');
-        
+            $table->boolean('is_admin')->default(false); // Cột is_admin để xác định người dùng là admin
+            $table->rememberToken();
             $table->timestamps();
         });
+
+
     }
 
     /**

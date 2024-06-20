@@ -2,7 +2,7 @@
 
 @section('main')
 
-<!-- @section('title', 'Dashboard') -->
+@section('title', 'Dashboard') 
 
 
 

@@ -64,7 +64,7 @@
 
 
                 @if (Session::has('no'))
-                    <div class="alert alert-danger notification" id="error-alert">
+                    <div class="alert alert-success notification" id="error-alert">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         {{ Session::get('no') }}
                     </div>

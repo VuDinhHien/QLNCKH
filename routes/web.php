@@ -10,6 +10,7 @@ use App\Http\Controllers\Conference\ConferenceController;
 use App\Http\Controllers\Topic\TopicController;
 use App\Http\Controllers\Magazine\MagazineController;
 use App\Http\Controllers\Scientist\ScientistController;
+use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\CouncilController;
 use App\Http\Controllers\Curriculum\CurriculumController;
@@ -45,10 +46,12 @@ use App\Http\Controllers\TrainingController;
 
 
 Route::get('/', [AdminController::class, 'login'])->name('admin.login');
-Route::post('/', [AdminController::class, 'check_login']);
+Route::post('/', [AdminController::class, 'check_login'])->name('admin.check_login');
 
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+
+// Route group bảo vệ bởi middleware 'auth' và 'admin'
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
   Route::get('/', [AdminController::class, 'index'])->name('admin.index');
   Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
@@ -131,4 +134,25 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
   Route::get('/projects/progress-report', [ProjectController::class, 'progressReport'])->name('projects.progress-report');
 
+});
+
+
+
+// Route cho trang đăng nhập
+Route::get('/login', [UserController::class, 'login'])->name('login');
+Route::post('/check_login', [UserController::class, 'check_login'])->name('check_login');
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
+// Bảo vệ các route của người dùng thông thường
+Route::middleware(['auth', 'user'])->group(function () {
+  Route::get('/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+  Route::get('/profile', [UserController::class, 'profile'])->name('user.profile.show');
+  Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('user.profile.edit');
+  Route::put('/profile', [UserController::class, 'updateProfile'])->name('user.profile.update');
+  Route::get('/projects', [UserController::class, 'projects'])->name('user.projects.index'); // Thêm route này
+  Route::put('/user/topics/{topic}', [UserController::class, 'update'])->name('user.topic.update');
+  Route::get('/magazines', [UserController::class, 'magazines'])->name('user.magazines.index'); // Thêm route này
+  Route::put('/user/magazines/{magazine}', [UserController::class, 'updateMagazine'])->name('user.magazine.updateMagazine');
+  Route::get('/curriculums', [UserController::class, 'curriculums'])->name('user.curriculums.index'); // Thêm route này
+  Route::put('/user/curriculums/{curriculum}', [UserController::class, 'updateCurriculum'])->name('user.magazine.updateCurriculum');
 });
