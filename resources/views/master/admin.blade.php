@@ -223,7 +223,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{ route('report.index')}}">
                             <i class="fa fa-th"></i> <span>Báo cáo thống kê</span>
 
                         </a>

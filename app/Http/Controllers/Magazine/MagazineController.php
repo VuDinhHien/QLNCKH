@@ -9,6 +9,7 @@ use App\Models\Magazine;
 use App\Models\Paper;
 use App\Models\Role;
 use App\Models\Scientist;
+use App\Exports\MagazinesArticlesExport;
 use Illuminate\Http\Request;
 
 class MagazineController extends Controller
@@ -136,4 +137,7 @@ class MagazineController extends Controller
     {
         return Excel::download(new MagazinesExport, 'magazines.xlsx');
     }
+
+
+   
 }

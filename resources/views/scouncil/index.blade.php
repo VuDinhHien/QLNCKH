@@ -2,7 +2,7 @@
 
 @section('main')
 
-<!-- @section('title', 'Dashboard') -->
+@section('title', 'Dashboard') 
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">

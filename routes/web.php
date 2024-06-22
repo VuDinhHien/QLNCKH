@@ -11,6 +11,14 @@ use App\Http\Controllers\Topic\TopicController;
 use App\Http\Controllers\Magazine\MagazineController;
 use App\Http\Controllers\Scientist\ScientistController;
 use App\Http\Controllers\UserController;
+use App\Exports\PapersExport;
+
+
+use App\Http\Controllers\ReportController;
+
+
+use App\Exports\MagazinesArticlesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\Http\Controllers\CouncilController;
 use App\Http\Controllers\Curriculum\CurriculumController;
@@ -56,7 +64,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
   Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 
-  
+
   Route::resource('scientist', ScientistController::class);
   Route::get('/scientist/{scientist}/profile', [ScientistController::class, 'showProfile'])->name('scientist.profile');
 
@@ -76,7 +84,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
   Route::resource('tpcouncil', TpcouncilController::class);
   Route::resource('score', ScoreController::class);
   Route::resource('profile', ProfileController::class);
-  
+
 
   Route::get('/topic', [TopicController::class, 'index'])->name('topic.index');
   Route::post('/topic', [TopicController::class, 'store'])->name('topic.store');
@@ -87,15 +95,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
   Route::get('/topics/export', [TopicController::class, 'export'])->name('topics.export');
 
   Route::get('/scientist/{scientist}/topics', [TopicController::class, 'showTopicsByScientist'])->name('scientist.topics');
-   
+
   Route::get('/conference', [ConferenceController::class, 'index'])->name('conference.index');
   Route::post('/conference', [ConferenceController::class, 'store'])->name('conference.store');
   Route::delete('/conference/{id}', [ConferenceController::class, 'destroy'])->name('conference.destroy');
   Route::resource('conference', ConferenceController::class);
-  
+
   Route::get('/conferences/export', [ConferenceController::class, 'export'])->name('conferences.export');
- 
-  
+
+
   Route::get('/magazine', [MagazineController::class, 'index'])->name('magazine.index');
   Route::post('/magazine', [MagazineController::class, 'store'])->name('magazine.store');
   Route::put('/magazine/{magazine}', [MagazineController::class, 'update'])->name('magazine.update');
@@ -103,6 +111,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
   Route::resource('magazine', MagazineController::class);
 
   Route::get('/export', [MagazineController::class, 'export'])->name('magazines.export');
+
 
   Route::get('/scientist/{scientist}/magazines', [MagazineController::class, 'showMagazinesByScientist'])->name('scientist.magazines');
 
@@ -121,7 +130,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
   Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
   Route::resource('category', CategoryController::class);
 
-  
+
   Route::get('/curriculum', [CurriculumController::class, 'index'])->name('curriculum.index');
   Route::post('/curriculum', [CurriculumController::class, 'store'])->name('curriculum.store');
   Route::put('/curriculum/{curriculum}', [CurriculumController::class, 'update'])->name('curriculum.update');
@@ -134,6 +143,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
 
   Route::get('/projects/progress-report', [ProjectController::class, 'progressReport'])->name('projects.progress-report');
 
+
+
+
+  Route::get('/report', [ReportController::class, 'index'])->name('report.index');
+  Route::get('/report/export-combined', [ReportController::class, 'exportCombined'])->name('report.export.combined');
+
+
+  Route::get('/export-papers', function () {
+    return Excel::download(new PapersExport, 'papers_by_magazine.xlsx');
+  })->name('report.export.papers');
 });
 
 
