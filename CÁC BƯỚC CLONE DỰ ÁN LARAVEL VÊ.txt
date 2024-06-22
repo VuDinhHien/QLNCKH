@@ -4,7 +4,7 @@ CÁC BƯỚC CLONE DỰ ÁN LARAVEL VỀ MÁY TÍNH
 
 -Chạy các lệnh trong git bash 
 
-git clone......link
+git clone......link github
 
 cd (thư mục clone)
 
@@ -17,10 +17,24 @@ composer update --no-scripts
 
  php artisan key:generate
 
--coppy file .env.example ra 1 file nữa, doi tên thành .env
+-coppy file .env.example ra 1 file nữa, đổi tên thành .env 
+cấu hình file .env 
+
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=datn
+DB_USERNAME=root
+DB_PASSWORD=
+
 
 ----------------------------------------------
-(Nếu chưa có CSDL trên máy thì 
-tạo csdl  rỗng rồi cấu hình file .env
- import csdl
+chạy code ở terminal 
+câu lệnh: php artisan serve , click vào đường link 
+
+TÀI KHOẢN CHO ADMIN : admin@gmail.com
+                      admin 
+TÀI KHOẢN CHO USER :  bthn@gmail.com
+                      user
 
