@@ -121,17 +121,36 @@ class UserController extends Controller
         $scientist = Scientist::where('profile_name', $user->name)->first();
 
         if ($scientist) {
-            $projects = $scientist->topics()->with(['lvtopic', 'scientists' => function ($query) {
+            $topics = $scientist->topics()->with(['lvtopic', 'scientists' => function ($query) {
                 $query->withPivot('role_id');
             }])->get();
             $lvtopics = Lvtopic::all();
             $roles = Role::all();
+            $scientists = Scientist::all();
 
-            return view('user.projects.index', compact('projects', 'scientist', 'lvtopics', 'roles'));
+            return view('user.projects.index', compact('topics', 'scientist', 'scientists', 'lvtopics', 'roles'));
         } else {
             return redirect()->route('user.dashboard')->with('no', 'Không tìm thấy thông tin nhà khoa học');
         }
     }
+
+    public function storeProject(Request $request)
+    {
+        $topic = new Topic();
+        $topic->topic_name = $request->input('topic_name');
+        $topic->lvtopic_id = $request->input('lvtopic_id');
+        $topic->result = $request->input('result');
+        $topic->start_date = $request->input('start_date');
+        $topic->end_date = $request->input('end_date');
+        $topic->save();
+
+        foreach ($request->input('scientists') as $scientist) {
+            $topic->scientists()->attach($scientist['id'], ['role_id' => $scientist['role_id']]);
+        }
+
+        return redirect()->back()->with('success', 'Đề tài mới đã được thêm thành công!');
+    }
+
 
     public function update(Request $request, Topic $topic)
     {
@@ -160,6 +179,12 @@ class UserController extends Controller
         return redirect()->route('user.projects.index')->with('success', 'Đề tài đã được cập nhật thành công.');
     }
 
+    public function destroyProject(Topic $topic)
+    {
+        $topic->delete();
+        return redirect()->back()->with('success', 'Đề tài đã được xóa thành công!');
+    }
+
     public function magazines()
     {
         $user = Auth::user();
@@ -171,11 +196,29 @@ class UserController extends Controller
             }])->get();
             $papers = Paper::all();
             $roles = Role::all();
+            $scientists = Scientist::all();
 
-            return view('user.magazines.index', compact('magazines', 'scientist', 'papers', 'roles'));
+            return view('user.magazines.index', compact('magazines', 'scientist', 'scientists', 'papers', 'roles'));
         } else {
             return redirect()->route('user.dashboard')->with('no', 'Không tìm thấy thông tin nhà khoa học');
         }
+    }
+
+    public function storeMagazine(Request $request)
+    {
+        $magazine = new Magazine();
+        $magazine->magazine_name = $request->input('magazine_name');
+        $magazine->year = $request->input('year');
+        $magazine->journal = $request->input('journal');
+        $magazine->paper_id = $request->input('paper_id');
+       
+        $magazine->save();
+
+        foreach ($request->input('scientists') as $scientist) {
+            $magazine->scientists()->attach($scientist['id'], ['role_id' => $scientist['role_id']]);
+        }
+
+        return redirect()->back()->with('success', 'Bài báo mới đã được thêm thành công!');
     }
 
     public function updateMagazine(Request $request, Magazine $magazine)
@@ -203,6 +246,12 @@ class UserController extends Controller
         return redirect()->route('user.magazines.index')->with('success', 'Bài báo đã được cập nhật thành công.');
     }
 
+    public function destroyMagazine(Magazine $magazine)
+    {
+        $magazine->delete();
+        return redirect()->back()->with('success', 'Đề tài đã được xóa thành công!');
+    }
+
     public function curriculums()
     {
         $user = Auth::user();
@@ -215,11 +264,30 @@ class UserController extends Controller
             $trainings = Training::all();
             $roles = Role::all();
             $books = Book::all();
+            $scientists = Scientist::all();
 
-            return view('user.curriculums.index', compact('curriculums', 'scientist', 'trainings', 'roles', 'books'));
+            return view('user.curriculums.index', compact('curriculums', 'scientist','scientists', 'trainings', 'roles', 'books'));
         } else {
             return redirect()->route('user.dashboard')->with('no', 'Không tìm thấy thông tin nhà khoa học');
         }
+    }
+
+    public function storeCurriculum(Request $request)
+    {
+        $curriculum = new Curriculum();
+        $curriculum->name = $request->input('name');
+        $curriculum->year = $request->input('year');
+        $curriculum->publisher = $request->input('publisher');
+        $curriculum->book_id = $request->input('book_id');
+        $curriculum->training_id = $request->input('training_id');
+       
+        $curriculum->save();
+
+        foreach ($request->input('scientists') as $scientist) {
+            $curriculum->scientists()->attach($scientist['id'], ['role_id' => $scientist['role_id']]);
+        }
+
+        return redirect()->back()->with('success', 'Bài báo mới đã được thêm thành công!');
     }
 
     public function updateCurriculum(Request $request, Curriculum $curriculum)
@@ -229,7 +297,7 @@ class UserController extends Controller
             'year' => 'required',
             'publisher' => 'required|string',
             'book_id' => 'required|exists:books,id',
-            'paper_id' => 'required|exists:papers,id',
+            'training_id' => 'required|exists:trainings,id',
             'role_id' => 'required|exists:roles,id',
         ]);
 
@@ -247,6 +315,12 @@ class UserController extends Controller
         $scientist = Scientist::where('profile_name', $user->name)->first();
         $curriculum->scientists()->updateExistingPivot($scientist->id, ['role_id' => $request->role_id]);
 
-        return redirect()->route('user.magazines.index')->with('success', 'Bài báo đã được cập nhật thành công.');
+        return redirect()->route('user.curriculums.index')->with('success', 'Bài báo đã được cập nhật thành công.');
+    }
+
+    public function destroyCurriculum(Curriculum $curriculum)
+    {
+        $curriculum->delete();
+        return redirect()->back()->with('success', 'giáo trình/sách tham khảo đã được xóa thành công!');
     }
 }

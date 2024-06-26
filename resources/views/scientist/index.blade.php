@@ -32,9 +32,10 @@
         @foreach ($data as $model)
             <tr>
                 <td>{{ $model->profile_name }}</td>
-                <td>{{ $model->office->office_name }}</td>
-                <td>{{ $model->degree->degree_name }}</td>
+                <td>{{ $model->office->office_name ?? '' }}</td>
+                <td>{{ $model->degree->degree_name ?? '' }}</td>
                 <td>{{ $model->research_major }}</td>
+            
                 <td>
                     
                     

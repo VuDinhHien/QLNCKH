@@ -12,6 +12,8 @@ use App\Http\Controllers\Magazine\MagazineController;
 use App\Http\Controllers\Scientist\ScientistController;
 use App\Http\Controllers\UserController;
 use App\Exports\PapersExport;
+use App\Http\Controllers\Auth\RegisterController;
+
 
 
 use App\Http\Controllers\ReportController;
@@ -51,10 +53,16 @@ use App\Http\Controllers\TrainingController;
 */
 
 
-
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [RegisterController::class, 'register']);
 
 Route::get('/', [AdminController::class, 'login'])->name('admin.login');
 Route::post('/', [AdminController::class, 'check_login'])->name('admin.check_login');
+
+
+
+Route::get('auth/google', [AdminController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [AdminController::class, 'handleGoogleCallback']);
 
 
 
@@ -172,6 +180,21 @@ Route::middleware(['auth', 'user'])->group(function () {
   Route::put('/user/topics/{topic}', [UserController::class, 'update'])->name('user.topic.update');
   Route::get('/magazines', [UserController::class, 'magazines'])->name('user.magazines.index'); // Thêm route này
   Route::put('/user/magazines/{magazine}', [UserController::class, 'updateMagazine'])->name('user.magazine.updateMagazine');
+
   Route::get('/curriculums', [UserController::class, 'curriculums'])->name('user.curriculums.index'); // Thêm route này
-  Route::put('/user/curriculums/{curriculum}', [UserController::class, 'updateCurriculum'])->name('user.magazine.updateCurriculum');
+  Route::put('/user/curriculums/{curriculum}', [UserController::class, 'updateCurriculum'])->name('user.curriculum.updateCurriculum');
+
+  Route::post('/user/projects', [UserController::class, 'storeProject'])->name('user.projects.store'); //thêm mới của user Topic
+  Route::delete('/user/projects/{topic}', [UserController::class, 'destroyProject'])->name('user.projects.destroy'); // xóa của user Topic
+
+  Route::post('/user/magazines', [UserController::class, 'storeMagazine'])->name('user.magazines.store'); //thêm mới của user Magzine
+  Route::delete('/user/magazines/{magazine}', [UserController::class, 'destroyMagazine'])->name('user.magazines.destroy'); // xóa của user magazine
+
+  Route::post('/user/curriculums', [UserController::class, 'storeCurriculum'])->name('user.curriculums.store'); //thêm mới của user curriculum
+  Route::delete('/user/curriculums/{curriculum}', [UserController::class, 'destroyCurriculum'])->name('user.curriculums.destroy'); // xóa của user Curriculum
+
+
+
+
 });
+

@@ -3,27 +3,45 @@
 namespace App\Exports;
 
 use App\Models\Magazine;
-use Illuminate\Contracts\View\View;
-use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class PapersExport implements FromView, WithTitle, WithStyles
+class PapersExport implements FromArray, WithTitle, WithHeadings, WithStyles, WithColumnWidths
 {
     protected $magazines;
 
     public function __construct()
     {
-        // Lấy tất cả các magazine và nhóm theo paper_id
-        $this->magazines = Magazine::with(['scientists' => function($query) {
+        $this->magazines = Magazine::with(['paper', 'scientists' => function($query) {
             $query->withPivot('role_id');
         }])->get()->groupBy('paper_id');
     }
 
-    public function view(): View
+    public function array(): array
     {
-        return view('exports.papers', ['magazines' => $this->magazines]);
+        $data = [];
+        $counter = 1;
+        foreach ($this->magazines as $paperId => $magazineGroup) {
+            $rowHeader = [
+                $this->intToRoman($counter) . ' ' . $magazineGroup->first()->paper->paper_name, '', '', ''
+            ];
+            $data[] = $rowHeader;
+            $data[] = ['Tên bài báo', 'Năm', 'Loại bài báo', 'Tên cán bộ và vai trò'];
+
+            foreach ($magazineGroup as $magazine) {
+                $scientists = implode(', ', $magazine->scientists->map(function ($scientist) {
+                    return $scientist->profile_name . ' (' . \App\Models\Role::find($scientist->pivot->role_id)->role_name . ')';
+                })->toArray());
+                $data[] = [$magazine->magazine_name, $magazine->year, $magazine->journal, $scientists];
+            }
+            $data[] = ['', '', '', ''];
+            $counter++;
+        }
+        return $data;
     }
 
     public function title(): string
@@ -31,39 +49,68 @@ class PapersExport implements FromView, WithTitle, WithStyles
         return 'Magazines by Paper';
     }
 
+    public function headings(): array
+    {
+        return [];
+    }
+
     public function styles(Worksheet $sheet)
     {
-        // Bắt đầu từ hàng đầu tiên
-        $row = 1;
-        $counter = 1;
+        // Đặt wrap text cho tất cả các cột
+        $sheet->getStyle('A:Z')->getAlignment()->setWrapText(true);
 
-        // Áp dụng định dạng cho tiêu đề của mỗi bảng
-        foreach ($this->magazines as $paperId => $magazineGroup) {
-            $headerRow = $row + 1; // Tiêu đề luôn ở hàng tiếp theo
+        // Bôi nền vàng cho tiêu đề bảng
+        $sheet->getStyle('A2:D2')->applyFromArray([
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'color' => ['argb' => 'FFFF00'],
+            ],
+            'font' => [
+                'bold' => true,
+            ],
+        ]);
 
-            // Tiêu đề của bảng hiện tại
-            $sheet->setCellValue("A{$row}", $this->intToRoman($counter) . ". Paper ID: {$paperId}");
-            $sheet->mergeCells("A{$row}:D{$row}");
-            $sheet->getStyle("A{$row}")->getFont()->setBold(true);
-            $counter++;
+        $sheet->getStyle('A8:D8')->applyFromArray([
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'color' => ['argb' => 'FFFF00'],
+            ],
+            'font' => [
+                'bold' => true,
+            ],
+        ]);
 
-            // Áp dụng định dạng nền màu vàng và in đậm cho tiêu đề của bảng hiện tại
-            $sheet->getStyle("A{$headerRow}:D{$headerRow}")->applyFromArray([
-                'fill' => [
-                    'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                    'color' => ['argb' => 'FFFF00'],
-                ],
-            ]);
-            $sheet->getStyle("A{$headerRow}:D{$headerRow}")->getFont()->setBold(true);
+        $sheet->getStyle('A14:D14')->applyFromArray([
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'color' => ['argb' => 'FFFF00'],
+            ],
+            'font' => [
+                'bold' => true,
+            ],
+        ]);
 
-            // Tăng số hàng lên bằng số lượng bản ghi trong nhóm cộng thêm 3 (1 cho tiêu đề bảng, 1 cho tiêu đề cột, 1 cho khoảng cách)
-            $row = $headerRow + count($magazineGroup) + 2;
-        }
+        $sheet->getStyle('A19:D19')->applyFromArray([
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'color' => ['argb' => 'FFFF00'],
+            ],
+            'font' => [
+                'bold' => true,
+            ],
+        ]);
 
-        // Đặt chiều rộng cột
-        foreach (range('A', 'D') as $columnID) {
-            $sheet->getColumnDimension($columnID)->setAutoSize(true);
-        }
+        return [];
+    }
+
+    public function columnWidths(): array
+    {
+        return [
+            'A' => 40,  // Tên bài báo
+            'B' => 15,  // Năm
+            'C' => 20,  // Loại bài báo
+            'D' => 50,  // Tên cán bộ và vai trò
+        ];
     }
 
     private function intToRoman($num)

@@ -131,7 +131,7 @@ class ScientistController extends Controller
 
         // Gán giá trị từ request vào các thuộc tính của Profile
         $scientist->profile_id = $request->profile_id;
-        $scientist->profile_name = $request->profile_name; // Sửa thành profile_name thay vì product_name
+        $scientist->profile_name = $request->profile_name;
         $scientist->birthday = $request->birthday;
         $scientist->gender = $request->gender;
         $scientist->birth_place = $request->birth_place;

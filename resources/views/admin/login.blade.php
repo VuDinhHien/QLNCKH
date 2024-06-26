@@ -90,16 +90,27 @@
                 <input type="checkbox"> Remember Me
               </label>
             </div> -->
+                      
                     </div>
                     <!-- /.col -->
                     <div class="col-xs-4">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">Đăng nhập</button>
                     </div>
-                    <!-- /.col -->
+
+
                 </div>
             </form>
 
+           
 
+            
+
+            <div class="social-auth-links text-center">
+                <p>- OR -</p>
+                <a href="{{ url('auth/google') }}" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Đăng nhập bằng google</a>
+                <a href="{{ route('register') }}" class="btn btn-block btn-social btn-facebook btn-flat" style="text-align: center"> Đăng ký</a>
+               
+              </div>
 
         </div>
         <!-- /.login-box-body -->
@@ -109,18 +120,19 @@
 
 </body>
 
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-  <script>
+<script>
     $(document).ready(function() {
-            setTimeout(function() {
-                $("#danger-alert").fadeOut("slow");
-            }, 1000); 
+        setTimeout(function() {
+            $("#danger-alert").fadeOut("slow");
+        }, 1000);
 
-            setTimeout(function() {
-                $("#error-alert").fadeOut("slow");
-            }, 1000); 
-        });
-  </script>
+        setTimeout(function() {
+            $("#error-alert").fadeOut("slow");
+        }, 1000);
+    });
+</script>
+
 </html>

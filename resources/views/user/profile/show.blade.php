@@ -100,7 +100,7 @@
             <div class="form-group">
                 <label for="degree_id">Học vị <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" style="font-weight: bold;" name="degree_name"
-                    value="{{ $scientist->degree->degree_name }}" readonly>
+                    value="{{ $scientist->degree ? $scientist->degree->degree_name : '' }}" readonly>
                 <input type="hidden" name="degree_id" value="{{ $scientist->degree_id }}">
             </div>
         </div>
@@ -145,7 +145,7 @@
             <div class="form-group">
                 <label for="office_id">Tên tổ chức <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" style="font-weight: bold;" name="office_name"
-                    value="{{ $scientist->office->office_name }}" readonly>
+                    value="{{ $scientist->office ? $scientist->office->office_name : '' }}" readonly>
                 <input type="hidden" name="office_id" value="{{ $scientist->office_id }}">
             </div>
         </div>
@@ -167,17 +167,23 @@
     <a href="{{ route('user.profile.edit') }}" class="btn btn-warning">Chỉnh sửa</a>
 </div>
 
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function() {
         setTimeout(function() {
-            $("#success-alert").fadeOut("slow");
+            $(".alert-success").fadeOut("slow");
         }, 2000);
         setTimeout(function() {
-            $("#error-alert").fadeOut("slow");
+            $(".alert-danger").fadeOut("slow");
         }, 2000);
     });
 </script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 
 @stop()

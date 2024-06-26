@@ -94,7 +94,7 @@
         </div>
        
         <div class="col-md-3">
-            <a href="{{ route('magazine.index') }}" class="dashboard-card-link">
+            <a href="{{ route('user.magazines.index') }}" class="dashboard-card-link">
                 <div class="dashboard-card">
                     <div class="card-header">
                         <i class="fa-solid fa-building-columns"></i>
@@ -107,7 +107,7 @@
             </a>
         </div>
         <div class="col-md-3">
-            <a href="{{ route('topic.index') }}" class="dashboard-card-link">
+            <a href="{{ route('user.curriculums.index') }}" class="dashboard-card-link">
                 <div class="dashboard-card">
                     <div class="card-header">
                         <i class="fa-solid fa-building-columns"></i>
