@@ -117,6 +117,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
   Route::put('/magazine/{magazine}', [MagazineController::class, 'update'])->name('magazine.update');
   Route::delete('/magazine/{id}', [MagazineController::class, 'destroy'])->name('magazine.destroy');
   Route::resource('magazine', MagazineController::class);
+  Route::get('download/{magazine}', [MagazineController::class, 'download'])->name('magazine.download');
 
   Route::get('/export', [MagazineController::class, 'export'])->name('magazines.export');
 
@@ -145,6 +146,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
   Route::delete('/curriculum/{id}', [CurriculumController::class, 'destroy'])->name('curriculum.destroy');
   Route::resource('curriculum', CurriculumController::class);
   Route::get('/curriculums/export', [CurriculumController::class, 'export'])->name('curriculums.export');
+  Route::get('curriculums/{curriculum}/download', [CurriculumController::class, 'download'])->name('curriculum.download');
+
+  
 
   Route::get('/scientist/{scientist}/curriculums', [CurriculumController::class, 'showCurriculumsByScientist'])->name('scientist.curriculums');
 

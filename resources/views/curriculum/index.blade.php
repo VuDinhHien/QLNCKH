@@ -69,6 +69,7 @@
             <th>Loại sách</th>
             <th>Trình độ đào tạo</th>
             <th>Cán bộ tham gia (Vai trò)</th>
+            <th>Tệp đính kèm</th>
 
             <th>Thao Tác</th>
         </tr>
@@ -92,6 +93,16 @@
                         @endif
                     @endforeach
                 </td>
+
+                <td>
+                    @if ($curriculum->file)
+                        <a href="{{ route('curriculum.download', $curriculum->id) }}" target="_blank">Xem tệp</a>
+                    @else
+                        Không có tệp
+                    @endif
+                </td>
+                
+                
 
                 <td>
                     <div class="action" style="display: flex">
@@ -138,7 +149,7 @@
                 <h4 class="modal-title" id="createModalLabel">Thêm mới</h4>
             </div>
             <div class="modal-body">
-                <form id="createForm" action="{{ route('curriculum.store') }}" method="POST">
+                <form id="createForm" action="{{ route('curriculum.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="name">Tên sách tham khảo/ giáo trình</label>
@@ -171,6 +182,7 @@
                         </select>
                     </div>
 
+                  
                     <div class="form-group">
                         <label for="profile_id">Cán bộ tham gia</label>
                         <div id="create-authors-container">

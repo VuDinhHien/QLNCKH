@@ -7,7 +7,7 @@
 <div class="container" style="max-width: 1300px;margin: 0 auto;">
     <div class="row">
         <div class="col-md-6 col-md-offset-3 form-container">
-            <h2 class="text-center">Update Item</h2>
+            <h2 class="text-center">Cập nhật</h2>
 
             <form method="post" action="{{ route('suggestion.update', $suggestion->id) }}" enctype="multipart/form-data">
             @csrf
@@ -27,7 +27,7 @@
 
                 <div class="text-center">
                     <input type="hidden" name="hidden_id" value="{{ $suggestion->id }}" />
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Thêm</button>
                 </div>
             </form>
         </div>

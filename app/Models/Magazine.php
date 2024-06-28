@@ -9,7 +9,7 @@ class Magazine extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['magazine_name', 'year', 'journal', 'paper_id'];
+    protected $fillable = ['magazine_name', 'year', 'journal', 'paper_id', 'file_path'];
 
     public function paper()
     {

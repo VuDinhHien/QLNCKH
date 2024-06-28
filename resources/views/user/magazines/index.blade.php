@@ -58,26 +58,27 @@
                 <td>
                     @foreach ($magazine->scientists as $sci)
                         @if ($sci->id == $scientist->id)
-                        <div style="display: flex">
-                            <div style="margin-right: 5px">
-                                <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal"
-                                data-target="#editModal" data-magazine-id="{{ $magazine->id }}"
-                                data-magazine-name="{{ $magazine->magazine_name }}" data-year="{{ $magazine->year }}"
-                                data-journal="{{ $magazine->journal }}" data-paper-id="{{ $magazine->paper->id }}"
-                                data-role-id="{{ $magazine->pivot->role_id }}">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            </div>
-                            <div>
+                            <div style="display: flex">
+                                <div style="margin-right: 5px">
+                                    <button type="button" class="btn btn-warning btn-sm edit-button"
+                                        data-toggle="modal" data-target="#editModal"
+                                        data-magazine-id="{{ $magazine->id }}"
+                                        data-magazine-name="{{ $magazine->magazine_name }}"
+                                        data-year="{{ $magazine->year }}" data-journal="{{ $magazine->journal }}"
+                                        data-paper-id="{{ $magazine->paper->id }}"
+                                        data-file="{{ $magazine->file_path }}"
+                                        data-role-id="{{ $magazine->pivot->role_id }}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </div>
+                                <div>
 
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                data-target="#deleteModal" data-magazine-id="{{ $magazine->id }}">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                        data-target="#deleteModal" data-magazine-id="{{ $magazine->id }}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                            
-
                         @endif
                     @endforeach
                 </td>
@@ -98,7 +99,8 @@
                 <h4 class="modal-title" id="createModalLabel">Thêm mới</h4>
             </div>
             <div class="modal-body">
-                <form id="createForm" action="{{ route('user.magazines.store') }}" method="POST">
+                <form id="createForm" action="{{ route('user.magazines.store') }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="magazine_name">Tên bài báo</label>
@@ -120,7 +122,10 @@
                             @endforeach
                         </select>
                     </div>
-
+                    <div class="form-group">
+                        <label for="file">Tải tài liệu</label>
+                        <input type="file" class="form-control" id="file" name="file">
+                    </div>
                     <div class="form-group">
                         <label for="profile_id">Cán bộ tham gia</label>
                         <div id="create-authors-container">
@@ -175,7 +180,7 @@
             </div>
             <div class="modal-body">
                 <form id="editForm" action="{{ route('user.magazine.updateMagazine', ['magazine' => 0]) }}"
-                    method="POST">
+                    method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -207,6 +212,13 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="edit_file">Tệp tài liệu</label>
+                        <input type="file" class="form-control" id="edit_file" name="file">
+                        <p id="current_file"></p>
+                        <a href="#" id="download_file" target="_blank" style="display: none;">Tải tệp hiện
+                            tại</a>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -219,7 +231,6 @@
 
 
 
-
 <!-- Modal delete-->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
     <div class="modal-dialog" role="document">
@@ -227,7 +238,7 @@
             <div class="modal-header btn-danger">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="deleteModalLabel">Xóa đề tài</h4>
+                <h4 class="modal-title" id="deleteModalLabel">Xóa Bài Báo</h4>
             </div>
             <div class="modal-body">
                 <p>Bạn có chắc chắn muốn xóa bài báo này không?</p>
@@ -297,7 +308,6 @@
         });
 
 
-        // Handle edit button click to populate modal with data
         $('.edit-button').click(function() {
             var magazineId = $(this).data('magazine-id');
             var magazineName = $(this).data('magazine-name');
@@ -305,12 +315,23 @@
             var journal = $(this).data('journal');
             var paperId = $(this).data('paper-id');
             var roleId = $(this).data('role-id');
+            var file = $(this).data('file'); // Lấy đường dẫn file từ data-file
+
+            console.log("File path: " + file); // Kiểm tra xem có lấy được đường dẫn file chưa
 
             $('#edit_magazine_name').val(magazineName);
             $('#edit_year').val(year);
             $('#edit_journal').val(journal);
             $('#edit_paper_id').val(paperId);
             $('#edit_role_id').val(roleId);
+
+            if (file) {
+                $('#current_file').text("Tệp hiện tại: " + file);
+                $('#download_file').attr('href', '/uploads/magazines/' + file).show();
+            } else {
+                $('#current_file').text("Không có tệp");
+                $('#download_file').hide();
+            }
 
             var action = "{{ route('user.magazine.updateMagazine', ['magazine' => ':id']) }}";
             action = action.replace(':id', magazineId);
@@ -320,7 +341,6 @@
         $('#updateButton').click(function() {
             $('#editForm').submit();
         });
-
         $('[data-target="#deleteModal"]').click(function() {
             var topicId = $(this).data('magazine-id');
             var action = "{{ route('user.magazines.destroy', ['magazine' => ':id']) }}";

@@ -70,7 +70,7 @@
                                 data-name="{{ $curriculum->name }}" data-year="{{ $curriculum->year }}"
                                 data-publisher="{{ $curriculum->publisher }}"
                                 data-book-id="{{ $curriculum->book->id }}"
-                                data-training-id="{{ $curriculum->training->id }}"
+                                data-training-id="{{ $curriculum->training->id }}" data-file="{{ $curriculum->file }}"
                                 data-role-id="{{ $curriculum->pivot->role_id }}">
                                 <i class="fas fa-edit"></i>
                             </button>
@@ -89,6 +89,9 @@
 </table>
 
 
+
+
+<!-- Modal create-->
 <!-- Modal create-->
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel">
     <div class="modal-dialog" role="document">
@@ -99,7 +102,7 @@
                 <h4 class="modal-title" id="createModalLabel">Thêm mới</h4>
             </div>
             <div class="modal-body">
-                <form id="createForm" action="{{ route('user.curriculums.store') }}" method="POST">
+                <form id="createForm" action="{{ route('user.curriculums.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="name">Tên sách tham khảo/ giáo trình</label>
@@ -132,6 +135,10 @@
                         </select>
                     </div>
 
+                    <div class="form-group">
+                        <label for="file">Tải tài liệu</label>
+                        <input type="file" class="form-control" id="file" name="file">
+                    </div>
 
                     <div class="form-group">
                         <label for="profile_id">Cán bộ tham gia</label>
@@ -176,6 +183,10 @@
 
 
 
+
+
+
+
 <!-- Modal edit-->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
     <div class="modal-dialog" role="document">
@@ -187,7 +198,7 @@
             </div>
             <div class="modal-body">
                 <form id="editForm" action="{{ route('user.curriculum.updateCurriculum', ['curriculum' => 0]) }}"
-                    method="POST">
+                    method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -227,6 +238,14 @@
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <label for="edit_file">Tệp tài liệu</label>
+                        <input type="file" class="form-control" id="edit_file" name="file">
+                        <p id="current_file"></p>
+                        <a href="#" id="download_file" target="_blank" style="display: none;">Tải tệp hiện
+                            tại</a>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -250,11 +269,13 @@
                 <p>Bạn có chắc chắn muốn xóa giáo trình/ sách tham khảo này không?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+               
                 <form id="deleteForm" action="{{ route('user.curriculums.destroy', ['curriculum' => 0]) }}"
-                    method="POST" style="display:inline;">
+                    method="POST">
                     @csrf
                     @method('DELETE')
+                    
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                     <button type="submit" class="btn btn-danger">Xóa</button>
                 </form>
             </div>
@@ -274,7 +295,7 @@
     $(document).ready(function() {
 
 
-        
+
         var createAuthorCount = 1; // Biến đếm số lượng tác giả đã thêm
 
         $('#create-add-author').click(function() {
@@ -314,8 +335,6 @@
             $('#createForm').submit();
         });
 
-
-
         // Handle edit button click to populate modal with data
         $('.edit-button').click(function() {
             var curriculumId = $(this).data('curriculum-id');
@@ -325,6 +344,9 @@
             var bookId = $(this).data('book-id');
             var trainingId = $(this).data('training-id');
             var roleId = $(this).data('role-id');
+            var file = $(this).data('file'); // Lấy đường dẫn file từ data-file
+
+            console.log("File path: " + file); // Kiểm tra xem có lấy được đường dẫn file chưa
 
             $('#edit_name').val(name);
             $('#edit_year').val(year);
@@ -332,6 +354,14 @@
             $('#edit_book_id').val(bookId);
             $('#edit_training_id').val(trainingId);
             $('#edit_role_id').val(roleId);
+
+            if (file) {
+                $('#current_file').text("Tệp hiện tại: " + file);
+                $('#download_file').attr('href', '/uploads/magazines/' + file).show();
+            } else {
+                $('#current_file').text("Không có tệp");
+                $('#download_file').hide();
+            }
 
             var action = "{{ route('user.curriculum.updateCurriculum', ['curriculum' => ':id']) }}";
             action = action.replace(':id', curriculumId);

@@ -72,6 +72,22 @@ class CurriculumController extends Controller
         return redirect()->route('curriculum.index')->with('success', 'Thêm giáo trình/sách tham khảo thành công');
     }
 
+    public function download(Curriculum $curriculum)
+    {
+        if ($curriculum->file) {
+            $filePath = storage_path('app/public/uploads/curriculums/' . $curriculum->file);
+
+            if (file_exists($filePath)) {
+                return response()->download($filePath, $curriculum->file);
+            } else {
+                return redirect()->back()->with('error', 'File not found.');
+            }
+        }
+
+        return redirect()->back()->with('error', 'File not found.');
+    }
+
+
     /**
      * Display the specified resource.
      */
@@ -148,7 +164,8 @@ class CurriculumController extends Controller
         return redirect()->route('curriculum.index')->with('success', 'Xóa giáo trình/sách tham khảo thành công.');
     }
 
-   public function export(){
-     return Excel::download(new CurriculumsExport, 'curriculums.xlsx');
-   }
+    public function export()
+    {
+        return Excel::download(new CurriculumsExport, 'curriculums.xlsx');
+    }
 }

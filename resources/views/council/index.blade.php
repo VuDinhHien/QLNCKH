@@ -27,7 +27,7 @@
 <table class="table table-hover" id="myTable">
     <thead>
         <tr>
-            <th>Mã chức vụ</th>
+           
             <th>Tên chức vụ</th>
            
             <th>Action</th>
@@ -39,7 +39,7 @@
 
         <tr>
 
-            <td>{{ $row->id }}</td>
+          
             <td>{{ $row->position_name }}</td>
           
             <td>

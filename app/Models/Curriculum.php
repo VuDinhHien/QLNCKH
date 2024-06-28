@@ -11,7 +11,7 @@ class Curriculum extends Model
 
     protected $table = 'curriculums'; // Chỉ định tên bảng
 
-    protected $fillable = ['name', 'year', 'publisher', 'book_id', 'training_id'];
+    protected $fillable = ['name', 'year', 'publisher', 'book_id', 'training_id', 'file'];
 
    
 

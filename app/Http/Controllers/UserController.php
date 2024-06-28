@@ -206,12 +206,27 @@ class UserController extends Controller
 
     public function storeMagazine(Request $request)
     {
+        $request->validate([
+            'magazine_name' => 'required|string|max:255',
+            'year' => 'required|integer',
+            'journal' => 'required|string|max:255',
+            'paper_id' => 'required|integer',
+            'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048', // Kiểm tra file upload
+        ]);
+
         $magazine = new Magazine();
         $magazine->magazine_name = $request->input('magazine_name');
         $magazine->year = $request->input('year');
         $magazine->journal = $request->input('journal');
         $magazine->paper_id = $request->input('paper_id');
-       
+
+        // Xử lý file upload nếu có
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $originalFileName = $file->getClientOriginalName();
+            $filePath = $file->storeAs('uploads/magazines', $originalFileName, 'public');
+            $magazine->file_path = $originalFileName; // Lưu tên file vào cơ sở dữ liệu
+        }
         $magazine->save();
 
         foreach ($request->input('scientists') as $scientist) {
@@ -220,7 +235,6 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Bài báo mới đã được thêm thành công!');
     }
-
     public function updateMagazine(Request $request, Magazine $magazine)
     {
         $request->validate([
@@ -229,7 +243,16 @@ class UserController extends Controller
             'journal' => 'required|string',
             'paper_id' => 'required|exists:papers,id',
             'role_id' => 'required|exists:roles,id',
+            'file' => 'nullable|mimes:doc,docx,pdf|max:2048', // Kiểm tra định dạng và kích thước file
         ]);
+
+        // Xử lý file upload
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = $file->getClientOriginalName(); // Lấy tên gốc của tệp
+            $file->move(public_path('uploads/magazines'), $filename);
+            $magazine->file_path = $filename;
+        }
 
         $magazine->update([
             'magazine_name' => $request->magazine_name,
@@ -266,7 +289,7 @@ class UserController extends Controller
             $books = Book::all();
             $scientists = Scientist::all();
 
-            return view('user.curriculums.index', compact('curriculums', 'scientist','scientists', 'trainings', 'roles', 'books'));
+            return view('user.curriculums.index', compact('curriculums', 'scientist', 'scientists', 'trainings', 'roles', 'books'));
         } else {
             return redirect()->route('user.dashboard')->with('no', 'Không tìm thấy thông tin nhà khoa học');
         }
@@ -274,13 +297,31 @@ class UserController extends Controller
 
     public function storeCurriculum(Request $request)
     {
+        // Validate the incoming request
+        $request->validate([
+            'name' => 'required|string',
+            'year' => 'required|integer',
+            'publisher' => 'required|string',
+            'book_id' => 'required|exists:books,id',
+            'training_id' => 'required|exists:trainings,id',
+            'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048', // Kiểm tra file upload
+        ]);
+
         $curriculum = new Curriculum();
         $curriculum->name = $request->input('name');
         $curriculum->year = $request->input('year');
         $curriculum->publisher = $request->input('publisher');
         $curriculum->book_id = $request->input('book_id');
         $curriculum->training_id = $request->input('training_id');
-       
+
+        // Xử lý file upload nếu có
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $originalFileName = $file->getClientOriginalName();
+            $filePath = $file->storeAs('uploads/curriculums', $originalFileName, 'public');
+            $curriculum->file = $originalFileName; // Lưu tên file vào cơ sở dữ liệu
+        }
+
         $curriculum->save();
 
         foreach ($request->input('scientists') as $scientist) {
@@ -299,10 +340,20 @@ class UserController extends Controller
             'book_id' => 'required|exists:books,id',
             'training_id' => 'required|exists:trainings,id',
             'role_id' => 'required|exists:roles,id',
+            'file' => 'nullable|mimes:doc,docx,pdf|max:2048', // Kiểm tra định dạng và kích thước file
         ]);
+
+        // Xử lý file upload
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = $file->getClientOriginalName(); // Lấy tên gốc của tệp
+            $file->move(public_path('uploads/curriculums'), $filename);
+            $curriculum->file = $filename;
+        }
 
         $curriculum->update([
             'name' => $request->name,
+            'year' => $request->year,
             'publisher' => $request->publisher,
             'journal' => $request->journal,
             'book_id' => $request->book_id,

@@ -20,8 +20,9 @@
 </style>
 
 <div class="container mt-5">
-    <h1>Báo cáo tiến độ</h1>
-    <table class="table table-bordered">
+    <h2 style="text-align:center; font-weight:bold">Danh sách tiến độ các đề tài nghiên cứu
+    </h2>
+    <table class="table table-bordered" id="myTable">
         <thead>
             <tr>
                 <th>Tên đề tài</th>
