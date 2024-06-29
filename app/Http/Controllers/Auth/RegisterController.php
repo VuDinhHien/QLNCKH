@@ -31,18 +31,31 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        // Tạo giá trị cho profile_id
+        $profile_id = $this->generateProfileId();
+
         // Thêm người dùng vào danh sách nhà khoa học
         Scientist::create([
             'user_id' => $user->id,
             'profile_name' => $request->name,
             'email' => $request->email,
-            'profile_id' => $request->profile_id,
-           
+            'profile_id' => $profile_id, // Thêm profile_id vào đây
             // Thêm các trường khác nếu cần thiết
         ]);
 
         auth()->login($user);
 
         return redirect()->route('user.dashboard')->with('success', 'Đăng ký thành công!');
+    }
+
+    // Hàm để tạo profile_id
+    protected function generateProfileId()
+    {
+        do {
+            // Tạo một số ngẫu nhiên gồm 4 chữ số
+            $profile_id = rand(1000, 9999);
+        } while (Scientist::where('profile_id', $profile_id)->exists());
+
+        return $profile_id;
     }
 }

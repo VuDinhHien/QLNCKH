@@ -54,11 +54,10 @@ class AdminController extends Controller
             // Nếu chưa có bản ghi scientist, tạo mới và lưu thông tin từ Google
             $scientist = Scientist::create([
                 'user_id' => $user->id,
-                'profile_id' => 'generated_profile_id_here', // Thay bằng mã cần tạo tự động
+                'profile_id' => $this->generateProfileId(), // Gọi phương thức generateProfileId để tạo mã tự động
                 'profile_name' => $user->name,
                 'email' => $user->email,
                 'gender' => $googleUser->user['gender'] ?? null, // Lấy giới tính từ dữ liệu Google nếu có
-               
                 // Các trường thông tin khác của scientist
             ]);
         }
@@ -71,6 +70,17 @@ class AdminController extends Controller
         } else {
             return redirect()->route('user.dashboard')->with('ok', 'Đăng nhập thành công');
         }
+    }
+
+    // Hàm để tạo profile_id
+    protected function generateProfileId()
+    {
+        do {
+            // Tạo một số ngẫu nhiên gồm 4 chữ số
+            $profile_id = rand(1000, 9999);
+        } while (Scientist::where('profile_id', $profile_id)->exists());
+
+        return $profile_id;
     }
 
 

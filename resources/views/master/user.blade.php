@@ -56,9 +56,9 @@
         <header class="main-header">
             <!-- Logo -->
             <a href="{{ route('user.dashboard') }}" class="logo">
-             
+
                 <span class="logo-mini"><b>TLU</b></span>
-             
+
                 <span class="logo-lg"><b>Đại học Thủy Lợi</b></span>
             </a>
 
@@ -173,20 +173,20 @@
 
                 <ul class="sidebar-menu">
                     <li>
-                        <a href="{{ route('user.profile.show')}}">
+                        <a href="{{ route('user.profile.show') }}">
                             <i class="fa fa-solid fa-id-card"></i> <span>Thông tin Nhà Khoa Học</span>
 
                         </a>
                     </li>
 
-                   
+
                     <li>
                         <a href="{{ route('user.projects.index') }}">
                             <i class="fa fa-solid fa-file-lines"></i> <span> Đề tài/Đề án</span>
 
                         </a>
                     </li>
-                   
+
                     <li>
                         <a href="{{ route('user.magazines.index') }}">
                             <i class="fa fa-solid fa-newspaper"></i> <span>Bài báo khoa học</span>
@@ -200,8 +200,8 @@
                         </a>
                     </li>
 
-                   
-                   
+
+
 
                 </ul>
 
@@ -308,16 +308,54 @@
 
 
     <script>
-        let table = new DataTable('#myTable');
+        let table = new DataTable('#myTable', {
+            language: {
+                "decimal": "",
+                "emptyTable": "Không có dữ liệu",
+                "info": "Hiển thị _START_ đến _END_ của _TOTAL_ mục",
+                "infoEmpty": "Hiển thị 0 đến 0 của 0 mục",
+                "infoFiltered": "(lọc từ _MAX_ mục)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Hiển thị _MENU_ mục",
+                "loadingRecords": "Đang tải...",
+                "processing": "Đang xử lý...",
+                "search": "Tìm kiếm:",
+                "zeroRecords": "Không tìm thấy kết quả",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Tiếp",
+                    "previous": "Trước"
+                },
+                "aria": {
+                    "sortAscending": ": kích hoạt để sắp xếp cột tăng dần",
+                    "sortDescending": ": kích hoạt để sắp xếp cột giảm dần"
+                }
+            }
+        });
 
         $(document).ready(function() {
             setTimeout(function() {
                 $("#success-alert").fadeOut("slow");
-            }, 1000); // 3 giây
+            }, 2000); // 3 giây
 
             setTimeout(function() {
                 $("#error-alert").fadeOut("slow");
-            }, 1000); // 3 giây
+            }, 2000); // 3 giây
+        });
+
+        $('#myTable tbody').on('click', 'tr', function() {
+            var currentPageIndex = table.page.info().page; // Lấy số trang hiện tại
+            localStorage.setItem('currentPageIndex', currentPageIndex); // Lưu vào localStorage
+        });
+
+        $('#updateButton').click(function() {
+            // Xử lý cập nhật dữ liệu ở đây
+
+            // Sau khi hoàn thành, khôi phục lại trang
+            var currentPageIndex = localStorage.getItem('currentPageIndex');
+            table.page(currentPageIndex).draw('page'); // Quay lại trang trước đó
         });
     </script>
 

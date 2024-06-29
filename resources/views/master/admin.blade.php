@@ -223,7 +223,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('report.index')}}">
+                        <a href="{{ route('report.index') }}">
                             <i class="fa fa-th"></i> <span>Báo cáo thống kê</span>
 
                         </a>
@@ -240,7 +240,7 @@
                                 class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                           
+
                             <li><a href="{{ route('council.index') }}"><i class="fa fa-solid fa-users"></i></i> Chức
                                     vụ hội đồng</a></li>
                             <li><a href="{{ route('lvtopic.index') }}"><i class="fa fa-solid fa-message"></i> Cấp
@@ -383,7 +383,32 @@
 
 
     <script>
-        let table = new DataTable('#myTable');
+        let table = new DataTable('#myTable', {
+            language: {
+                "decimal": "",
+                "emptyTable": "Không có dữ liệu",
+                "info": "Hiển thị _START_ đến _END_ của _TOTAL_ mục",
+                "infoEmpty": "Hiển thị 0 đến 0 của 0 mục",
+                "infoFiltered": "(lọc từ _MAX_ mục)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Hiển thị _MENU_ mục",
+                "loadingRecords": "Đang tải...",
+                "processing": "Đang xử lý...",
+                "search": "Tìm kiếm:",
+                "zeroRecords": "Không tìm thấy kết quả",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Tiếp",
+                    "previous": "Trước"
+                },
+                "aria": {
+                    "sortAscending": ": kích hoạt để sắp xếp cột tăng dần",
+                    "sortDescending": ": kích hoạt để sắp xếp cột giảm dần"
+                }
+            }
+        });
 
         $(document).ready(function() {
             setTimeout(function() {
@@ -393,6 +418,11 @@
             setTimeout(function() {
                 $("#error-alert").fadeOut("slow");
             }, 1000); // 3 giây
+        });
+
+        $('#myTable tbody').on('click', 'tr', function() {
+            var currentPageIndex = table.page.info().page; // Lấy số trang hiện tại
+            localStorage.setItem('currentPageIndex', currentPageIndex); // Lưu vào localStorage
         });
     </script>
 

@@ -135,21 +135,50 @@ class UserController extends Controller
     }
 
     public function storeProject(Request $request)
-    {
-        $topic = new Topic();
-        $topic->topic_name = $request->input('topic_name');
-        $topic->lvtopic_id = $request->input('lvtopic_id');
-        $topic->result = $request->input('result');
-        $topic->start_date = $request->input('start_date');
-        $topic->end_date = $request->input('end_date');
-        $topic->save();
+   {
+    // Log dữ liệu request để kiểm tra
+   
 
-        foreach ($request->input('scientists') as $scientist) {
-            $topic->scientists()->attach($scientist['id'], ['role_id' => $scientist['role_id']]);
-        }
+    $request->validate([
+        'topic_name' => 'required|string|max:255',
+        'lvtopic_id' => 'required|exists:lvtopics,id',
+        'result' => 'required|string',
+        'start_date' => 'required|date',
+        'end_date' => 'required|date',
+        'scientists.*.id' => 'required|exists:scientists,id',
+        'scientists.*.role_id' => 'required|exists:roles,id',
+        'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048', // Kiểm tra file upload
+    ]);
 
-        return redirect()->back()->with('success', 'Đề tài mới đã được thêm thành công!');
+   
+
+    $topic = new Topic();
+    $topic->topic_name = $request->input('topic_name');
+    $topic->lvtopic_id = $request->input('lvtopic_id');
+    $topic->result = $request->input('result');
+    $topic->start_date = $request->input('start_date');
+    $topic->end_date = $request->input('end_date');
+
+    if ($request->hasFile('file')) {
+        $file = $request->file('file');
+        $originalFileName = $file->getClientOriginalName();
+        $filePath = $file->storeAs('uploads/topics', $originalFileName, 'public');
+        $topic->file = $originalFileName; // Lưu đường dẫn đầy đủ vào cơ sở dữ liệu
     }
+
+    
+
+    $topic->save();
+
+
+    foreach ($request->input('scientists') as $scientist) {
+        $topic->scientists()->attach($scientist['id'], ['role_id' => $scientist['role_id']]);
+    }
+
+
+
+    return redirect()->back()->with('success', 'Đề tài mới đã được thêm thành công!');
+  }
 
 
     public function update(Request $request, Topic $topic)
@@ -161,7 +190,18 @@ class UserController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'role_id' => 'required|exists:roles,id',
+            'file' => 'nullable|mimes:doc,docx,pdf|max:2048', // Kiểm tra định dạng và kích thước file
         ]);
+
+        // Xử lý file upload
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = $file->getClientOriginalName(); // Lấy tên gốc của tệp
+            $file->move(public_path('uploads/topics'), $filename);
+            $topic->file = $filename;
+        }
+
+
 
         $topic->update([
             'topic_name' => $request->topic_name,

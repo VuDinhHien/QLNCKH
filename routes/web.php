@@ -99,6 +99,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
   Route::put('/topic/{topic}', [TopicController::class, 'update'])->name('topic.update');
   Route::delete('/topic/{id}', [TopicController::class, 'destroy'])->name('topic.destroy');
   Route::resource('topic', TopicController::class);
+  Route::get('topics/{topic}/download', [TopicController::class, 'download'])->name('topic.download');
 
   Route::get('/topics/export', [TopicController::class, 'export'])->name('topics.export');
 

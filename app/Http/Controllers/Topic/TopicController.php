@@ -75,6 +75,21 @@ class TopicController extends Controller
         return redirect()->route('topic.index')->with('success', 'Thêm đề tài thành công');
     }
 
+    public function download(Topic $topic)
+    {
+        if ($topic->file) {
+            $filePath = storage_path('app/public/uploads/topics/' . $topic->file);
+
+            if (file_exists($filePath)) {
+                return response()->download($filePath, $topic->file);
+            } else {
+                return redirect()->back()->with('error', 'File not found.');
+            }
+        }
+
+        return redirect()->back()->with('error', 'File not found.');
+    }
+
 
     /**
      * Display the specified resource.

@@ -9,7 +9,7 @@ class Topic extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['topic_name', 'lvtopic_id', 'result', 'start_date', 'end_date',];
+    protected $fillable = ['topic_name', 'lvtopic_id', 'result', 'start_date', 'end_date','file'];
 
 
 

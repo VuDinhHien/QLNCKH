@@ -2,7 +2,7 @@
 
 @section('main')
 
-@section('title', 'Dashboard') 
+@section('title', 'Dashboard')
 
 
 
@@ -100,7 +100,7 @@
                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                 data-target="#editModal" data-magazine-id="{{ $magazine->id }}"
                                 data-magazine-name="{{ $magazine->magazine_name }}" data-year="{{ $magazine->year }}"
-                                data-journal="{{ $magazine->journal }}" data-paper-id="{{ $magazine->paper_id }}"
+                                data-journal="{{ $magazine->journal }}" data-paper-id="{{ $magazine->paper->id }}"
                                 data-scientists='@json($magazine->scientists)'>
                                 <i class="fa fa-edit"></i>
                             </button>
@@ -129,7 +129,8 @@
                 <h4 class="modal-title" id="createModalLabel">Thêm mới</h4>
             </div>
             <div class="modal-body">
-                <form id="createForm" action="{{ route('magazine.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="createForm" action="{{ route('magazine.store') }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="magazine_name">Tên bài báo</label>
@@ -165,7 +166,8 @@
                                     <div class="col-xs-5">
                                         <select class="form-control" name="scientists[0][id]" required>
                                             @foreach ($scientists as $scientist)
-                                                <option value="{{ $scientist->id }}">{{ $scientist->profile_name }}</option>
+                                                <option value="{{ $scientist->id }}">{{ $scientist->profile_name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>

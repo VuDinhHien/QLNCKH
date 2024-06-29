@@ -55,7 +55,7 @@
                                         data-topic-name="{{ $topic->topic_name }}"
                                         data-lvtopic-id="{{ $topic->lvtopic_id }}" data-result="{{ $topic->result }}"
                                         data-start-date="{{ $topic->start_date }}"
-                                        data-end-date="{{ $topic->end_date }}"
+                                        data-end-date="{{ $topic->end_date }}" data-file="{{ $topic->file }}"
                                         data-role-id="{{ $sci->pivot->role_id }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
@@ -85,7 +85,8 @@
                 <h4 class="modal-title" id="createModalLabel">Thêm mới</h4>
             </div>
             <div class="modal-body">
-                <form id="createForm" action="{{ route('user.projects.store') }}" method="POST">
+                <form id="createForm" action="{{ route('user.projects.store') }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="topic_name">Tên đề tài</label>
@@ -117,6 +118,11 @@
                     <div class="form-group">
                         <label for="end_date">Ngày kết thúc</label>
                         <input type="date" class="form-control" id="end_date" name="end_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="file">Tải tài liệu</label>
+                        <input type="file" class="form-control" id="file" name="file">
                     </div>
 
                     <div class="form-group">
@@ -171,7 +177,7 @@
                 <h4 class="modal-title" id="editModalLabel">Chỉnh sửa đề tài</h4>
             </div>
             <div class="modal-body">
-                <form id="editForm" action="{{ route('user.topic.update', ['topic' => 0]) }}" method="POST">
+                <form id="editForm" action="{{ route('user.topic.update', ['topic' => 0]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -209,6 +215,14 @@
                                 <option value="{{ $role->id }}">{{ $role->role_name }}</option>
                             @endforeach
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit_file">Tệp tài liệu</label>
+                        <input type="file" class="form-control" id="edit_file" name="file">
+                        <p id="current_file"></p>
+                        <a href="#" id="download_file" target="_blank" style="display: none;">Tải tệp hiện
+                            tại</a>
                     </div>
                 </form>
             </div>
@@ -301,6 +315,9 @@
             var startDate = $(this).data('start-date');
             var endDate = $(this).data('end-date');
             var roleId = $(this).data('role-id');
+            var file = $(this).data('file'); // Lấy đường dẫn file từ data-file
+
+            console.log("File path: " + file); // Kiểm tra xem có lấy được đường dẫn file chưa
 
             $('#edit_topic_name').val(topicName);
             $('#edit_lvtopic_id').val(lvtopicId);
@@ -308,6 +325,14 @@
             $('#edit_start_date').val(startDate);
             $('#edit_end_date').val(endDate);
             $('#edit_role_id').val(roleId);
+
+            if (file) {
+                $('#current_file').text("Tệp hiện tại: " + file);
+                $('#download_file').attr('href', 'storage/uploads/topics/' + file).show();
+            } else {
+                $('#current_file').text("Không có tệp");
+                $('#download_file').hide();
+            }
 
             var action = "{{ route('user.topic.update', ['topic' => ':id']) }}";
             action = action.replace(':id', topicId);

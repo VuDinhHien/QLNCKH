@@ -70,6 +70,7 @@
             <th>Ngày bắt đầu</th>
             <th>Ngày kết thúc</th>
             <th>Cán bộ tham gia (Vai trò)</th>
+            <th>Tệp đính kèm</th>
             <th>Thao Tác</th>
         </tr>
     </thead>
@@ -91,18 +92,27 @@
                         @endif
                     @endforeach
                 </td>
+                <td>
+                    @if ($topic->file)
+                        <a href="{{ route('topic.download', $topic->id) }}" target="_blank">Xem tệp</a>
+                    @else
+                        Không có tệp
+                    @endif
+                </td>
 
                 <td>
                     <div class="action" style="display: flex">
                         <div>
                             <div>
-                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editModal" 
-                                    data-topic-id="{{ $topic->id }}" data-topic-name="{{ $topic->topic_name }}" 
-                                    data-lvtopic-id="{{ $topic->lvtopic_id }}" data-result="{{ $topic->result }}" 
-                                    data-start-date="{{ $topic->start_date }}" data-end-date="{{ $topic->end_date }}" 
-                                    data-scientists='@json($topic->scientists)'>
-                                    <i class="fa fa-edit"></i>
-                                </button>
+                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                data-target="#editModal" data-target="#editModal" data-topic-id="{{ $topic->id }}"
+                                data-topic-name="{{ $topic->topic_name }}"
+                                data-lvtopic-id="{{ $topic->lvtopic_id }}" data-result="{{ $topic->result }}"
+                                data-start-date="{{ $topic->start_date }}"
+                                data-end-date="{{ $topic->end_date }}"
+                                data-scientists='@json($topic->scientists)'>
+                                <i class="fa fa-edit"></i>
+                            </button>
                             </div>
                             
                         </div>

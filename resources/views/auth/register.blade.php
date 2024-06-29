@@ -61,12 +61,7 @@
                     @enderror
                 </div>
 
-                <!-- Thêm các trường thông tin nhà khoa học (tuỳ chọn) -->
-                <div class="form-group has-feedback">
-                    <input type="text" id="profile_id" name="profile_id" class="form-control"
-                        placeholder="Mã nhà khoa học" value="{{ old('profile_id') }}">
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                </div>
+               
 
                 <!-- Các trường khác nếu cần thiết -->
 

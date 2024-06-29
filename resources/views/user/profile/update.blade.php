@@ -3,33 +3,33 @@
 @section('main')
 
 
-
+<h1 style="text-align:center; font-weight:bold">Chỉnh sửa thông tin nhà khoa học</h1>
 <div class="row">
-    <h1>Chỉnh sửa thông tin nhà khoa học</h1>
+   
     <form class="align-items-center" method="post" action="{{ route('user.profile.update') }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="col-md-3">
             <div class="form-group">
-                <label for="profile_id">Mã cán bộ</label>
+                <label for="profile_id">Mã cán bộ<span class="text-danger">*</label>
                 <input type="text" class="form-control" name="profile_id" value="{{ $scientist->profile_id }}" placeholder="Input field" required>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label for="profile_name">Họ và Tên</label>
+                <label for="profile_name">Họ và Tên<span class="text-danger">*</label>
                 <input type="text" class="form-control" name="profile_name" value="{{ $scientist->profile_name }}" placeholder="Input field" required>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label for="birthday">Ngày sinh</label>
+                <label for="birthday">Ngày sinh<span class="text-danger">*</label>
                 <input type="date" class="form-control" name="birthday" value="{{ $scientist->birthday }}" placeholder="Input field" required>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label for="gender">Giới tính</label>
+                <label for="gender">Giới tính<span class="text-danger">*</label>
                 <select name="gender" id="gender" class="form-control" required>
                     <option value="Nữ" {{ $scientist->gender == 'Nữ' ? 'selected' : '' }}>Nữ</option>
                     <option value="Nam" {{ $scientist->gender == 'Nam' ? 'selected' : '' }}>Nam</option>
@@ -38,7 +38,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label for="birth_place">Nơi sinh</label>
+                <label for="birth_place">Nơi sinh<span class="text-danger">*</label>
                 <input type="text" class="form-control" name="birth_place" value="{{ $scientist->birth_place }}" placeholder="Input field" required>
             </div>
         </div>
@@ -62,20 +62,20 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label for="telephone">Điện thoại di động</label>
+                <label for="telephone">Điện thoại di động<span class="text-danger">*</label>
                 <input type="text" class="form-control" name="telephone" value="{{ $scientist->telephone }}" placeholder="Input field" required>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email">Email<span class="text-danger">*</label>
                 <input type="email" class="form-control" name="email" value="{{ $scientist->email }}" placeholder="Input field" required>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label for="degree_id">Học vị</label>
+                <label for="degree_id">Học vị<span class="text-danger">*</label>
                 <select class="form-control" name="degree_id" required>
                     @foreach ($degrees as $degree)
                     <option value="{{ $degree->id }}" {{ $degree->id == $scientist->degree_id ? 'selected' : ''}}>{{ $degree->degree_name }}</option>
@@ -115,7 +115,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label for="office_id">Tên tổ chức</label>
+                <label for="office_id">Tên tổ chức<span class="text-danger">*</label>
                 <select class="form-control" name="office_id" required>
                     @foreach ($offices as $office)
                     <option value="{{ $office->id }}" {{ $office->id == $scientist->office_id ? 'selected' : ''}}>{{ $office->office_name }}</option>
@@ -125,7 +125,7 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <label for="address_office">Địa chỉ tổ chức</label>
+                <label for="address_office">Địa chỉ tổ chức<span class="text-danger">*</label>
                 <input type="text" class="form-control" name="address_office" value="{{ $scientist->address_office }}" placeholder="Input field" required>
             </div>
         </div>
