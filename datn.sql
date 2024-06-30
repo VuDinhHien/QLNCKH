@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 22, 2024 lúc 05:58 PM
+-- Thời gian đã tạo: Th6 30, 2024 lúc 03:17 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -169,7 +169,7 @@ INSERT INTO `conferences` (`id`, `conference_name`, `seminar_id`, `office`, `uni
 (1, 'Tọa đàm khoa học Viện Hồ Chí Minh và các lãnh tụ của Đảng nhân dịp kỷ niệm 129 năm Ngày sinh Chủ Tịch Hồ Chí Minh(19/5/1890-19/5/2019)', 2, NULL, NULL, NULL, NULL, '2024-05-17', NULL, '2024-05-17 09:56:47'),
 (2, 'Hội thảo khoa học Kỷ niệm ngày sinh Chủ tịch Hồ Chí Minh(19/5/1890-19/5/2019)', 2, NULL, NULL, NULL, NULL, '2024-05-05', '2024-05-17 09:58:44', '2024-05-28 04:21:27'),
 (3, 'Hội thảo khoa học Học viện chính trị khu vực I', 2, NULL, NULL, NULL, NULL, '2024-05-20', '2024-05-18 09:06:00', '2024-05-18 09:06:00'),
-(4, 'Kỷ yếu hội thảo khoa học', 2, NULL, NULL, NULL, NULL, '2024-06-05', '2024-05-18 09:06:19', '2024-06-08 21:08:32'),
+(4, 'Kỷ yếu hội thảo khoa học1', 2, NULL, NULL, NULL, NULL, '2024-06-05', '2024-05-18 09:06:19', '2024-06-26 04:02:09'),
 (5, 'Hội thảo khoa học Học viện Chính trị khu vực I, Kỷ niệm 128 năm ngày sinh Chủ tịch Hồ Chí Minh', 2, NULL, NULL, NULL, NULL, '2024-05-17', '2024-05-18 09:07:53', '2024-05-21 01:44:41'),
 (6, 'Tọa đàm khoa học Viện Hồ Chí Minh và các lãnh tụ củaĐảng nhân dịp kỷ niệm 129 năm Ngày sinh Chủ Tịch Hồ Chí Minh(19/5/1890-19/5/2019)', 2, NULL, NULL, NULL, NULL, '2024-05-13', '2024-05-18 09:08:12', '2024-05-18 09:08:12'),
 (7, 'Hội thảo khoa học Kỷ niệm ngày sinh Chủ tịch Hồ Chí Minh(19/5/1890-19/5/2019)', 2, NULL, NULL, NULL, NULL, '2024-05-16', '2024-05-26 02:39:14', '2024-05-26 02:39:14'),
@@ -212,20 +212,23 @@ CREATE TABLE `curriculums` (
   `book_id` bigint(20) UNSIGNED NOT NULL,
   `training_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `file` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `curriculums`
 --
 
-INSERT INTO `curriculums` (`id`, `name`, `year`, `publisher`, `book_id`, `training_id`, `created_at`, `updated_at`) VALUES
-(1, 'Xây dựng mô hình nông thôn mới vùng đồng bằng dân tộc thiểu số ở Tây Bắc nước ta hiện nay', 2024, 'Chính trị quốc gia', 1, 2, NULL, NULL),
-(5, 'Hợp tác Công - Tư ở Việt Nam trong điều kiện kinh tế thị trường và hội nhập Quốc tế', 2016, 'Chính trị quốc gia', 2, 2, '2024-06-13 20:37:18', '2024-06-13 20:37:18'),
-(9, 'Thực trạng và giải pháp đầu tư công, dịch vụ công trong nông nghiệp ở Việt Nam', 2024, 'Khoa học kỹ thuật', 2, 2, '2024-06-14 18:37:16', '2024-06-14 18:37:16'),
-(10, 'Lý thuyết và kinh nghiệm quốc tế về cơ chế chính sách tài chính nhằm huy động, quản lý  và sử dụng nguồn lực tài chính trong ứng phó với biến đổi khí hậu ở Việt Nam', 2024, 'Khoa học kỹ thuật', 2, 2, '2024-06-15 06:44:17', '2024-06-15 06:44:17'),
-(11, 'Lịch sử Đảng bộ xấ Thái Học(1930-2020). NXB Thông tin truyền thông. Hà Nội 2023', 2023, 'Thông tin truyền thông', 2, 2, '2024-06-16 14:58:37', '2024-06-16 14:58:37'),
-(12, 'Đảng Cộng sản Việt Nam - những tìm tồi và đổi mới trên con đường lên CNXH(1986-2011)', 2014, 'NXB Lý luận chính trị', 2, 2, '2024-06-16 15:00:18', '2024-06-16 15:00:18');
+INSERT INTO `curriculums` (`id`, `name`, `year`, `publisher`, `book_id`, `training_id`, `created_at`, `updated_at`, `file`) VALUES
+(1, 'Xây dựng mô hình nông thôn mới vùng đồng bằng dân tộc thiểu số ở Tây Bắc nước ta hiện nay', 2024, 'Chính trị quốc gia', 1, 2, NULL, NULL, NULL),
+(5, 'Hợp tác Công - Tư ở Việt Nam trong điều kiện kinh tế thị trường và hội nhập Quốc tế', 2016, 'Chính trị quốc gia', 2, 2, '2024-06-13 20:37:18', '2024-06-13 20:37:18', NULL),
+(9, 'Thực trạng và giải pháp đầu tư công, dịch vụ công trong nông nghiệp ở Việt Nam', 2024, 'Khoa học kỹ thuật', 2, 2, '2024-06-14 18:37:16', '2024-06-14 18:37:16', NULL),
+(10, 'Lý thuyết và kinh nghiệm quốc tế về cơ chế chính sách tài chính nhằm huy động, quản lý  và sử dụng nguồn lực tài chính trong ứng phó với biến đổi khí hậu ở Việt Nam', 2024, 'Khoa học kỹ thuật', 2, 2, '2024-06-15 06:44:17', '2024-06-15 06:44:17', NULL),
+(11, 'Lịch sử Đảng bộ xấ Thái Học(1930-2020). NXB Thông tin truyền thông. Hà Nội 2023', 2023, 'Thông tin truyền thông', 2, 2, '2024-06-16 14:58:37', '2024-06-27 00:45:00', 'file-sample_150kB.pdf'),
+(12, 'Đảng Cộng sản Việt Nam - những tìm tồi và đổi mới trên con đường lên CNXH(1986-2011)', 2014, 'NXB Lý luận chính trị', 2, 2, '2024-06-16 15:00:18', '2024-06-16 15:00:18', NULL),
+(16, 'Phát triển hệ thống điều khiển thiết bị điện trong phạm vi một trường đại học', 2024, 'Chính trị quốc gia', 1, 2, '2024-06-27 01:12:49', '2024-06-27 01:25:46', NULL),
+(17, 'Ứng dụng một số giải thuật data mining vào kết quả học tập', 2024, 'Chính trị quốc gia', 1, 2, '2024-06-27 01:14:30', '2024-06-27 01:26:06', 'file-sample_150kB.pdf');
 
 -- --------------------------------------------------------
 
@@ -332,23 +335,26 @@ CREATE TABLE `magazines` (
   `journal` varchar(255) NOT NULL,
   `paper_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `file_path` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `magazines`
 --
 
-INSERT INTO `magazines` (`id`, `magazine_name`, `year`, `journal`, `paper_id`, `created_at`, `updated_at`) VALUES
-(1, 'Phát triển thương mại điện tử ở Việt Nam', 2024, 'Tạp chí Nghiên cứu Tài chính kế toán số 08', 1, NULL, '2024-06-22 08:26:52'),
-(2, 'Định hướng của Đảng và nhà nước về thực hiện thúc đẩy chuyển đổi số quốc gia', 2023, 'Tạp chí nghiên cứu tài chính kế toán', 1, NULL, '2024-06-21 06:32:29'),
-(7, 'Những bằng chứng thép phản bác những luận điệu xuyên tạc về vấn đề tôn giáo ở VN', 2024, 'Báo điện tử Bình Phước', 14, '2024-06-11 03:59:08', '2024-06-21 06:32:43'),
-(8, 'Green economy in renovating the growth model in Vietnam nowadays', 2021, '1st Internation conference on Contemporary issues in Econnomics Management and Business', 2, '2024-06-11 08:50:12', '2024-06-22 08:26:29'),
-(9, 'Đảng viên là \"Người có Đạo\'\"- bằng chứng thép phản bác những luận điệu xuyên tạc về vấn đề tôn giáo ở Việt Nam', 2024, 'Báo điện tử', 14, '2024-06-11 08:57:00', '2024-06-21 06:32:57'),
-(11, 'Bàn về giải pháp phát triển kinh tế số trong bối cảnh hiện nay', 2024, 'Tạp chí kinh tế và dự báo', 1, '2024-06-11 09:10:59', '2024-06-11 09:10:59'),
-(12, 'Sử dụng học sâu để phát triển hệ thống trả lời câu hỏi du lịch dựa trên bản đồ Việt Nam', 2024, 'Tạp chí quốc tế danh mục Scopus Q2.', 2, '2024-06-12 02:31:26', '2024-06-12 02:31:40'),
-(14, 'Đánh giá sơ bộ sự ô nhiễm và xu hướng biến đổi của DDT trong đất tại Hà Nội', 2008, 'Tạp chí khoa học Thủy Lợi và môi trường', 14, '2024-06-21 01:30:18', '2024-06-22 08:26:38'),
-(15, 'Từ vài nét về đào tạo giáo viên ở Pháp đến đề xuất vòng tròn đào tạo giáo viên phổ thông đáp ứng yêu cầu đổi mới giáo dục.', 2024, 'Kỉ yếu hội thảo khoa học quốc tế phát triển năng lực sư phạm đội ngũ giáo viên khoa học tự nhiên đáp ứng yêu cầu đổi mới giáo dục phổ thông', 13, '2024-06-21 06:29:48', '2024-06-21 06:31:13');
+INSERT INTO `magazines` (`id`, `magazine_name`, `year`, `journal`, `paper_id`, `created_at`, `updated_at`, `file_path`) VALUES
+(2, 'Định hướng của Đảng và nhà nước về thực hiện thúc đẩy chuyển đổi số quốc gia', 2023, 'Tạp chí nghiên cứu tài chính kế toán', 1, NULL, '2024-06-21 06:32:29', NULL),
+(8, 'Green economy in renovating the growth model in Vietnam nowadays', 2021, '1st Internation conference on Contemporary issues in Econnomics Management and Business', 2, '2024-06-11 08:50:12', '2024-06-22 08:26:29', NULL),
+(9, 'Đảng viên là \"Người có Đạo\'\"- bằng chứng thép phản bác những luận điệu xuyên tạc về vấn đề tôn giáo ở Việt Nam', 2024, 'Báo điện tử', 14, '2024-06-11 08:57:00', '2024-06-21 06:32:57', NULL),
+(11, 'Bàn về giải pháp phát triển kinh tế số trong bối cảnh hiện nay', 2024, 'Tạp chí kinh tế và dự báo', 1, '2024-06-11 09:10:59', '2024-06-11 09:10:59', NULL),
+(12, 'Sử dụng học sâu để phát triển hệ thống trả lời câu hỏi du lịch dựa trên bản đồ Việt Nam', 2024, 'Tạp chí quốc tế danh mục Scopus Q2.', 2, '2024-06-12 02:31:26', '2024-06-26 09:43:52', 'file-sample_150kB.pdf'),
+(14, 'Đánh giá sơ bộ sự ô nhiễm và xu hướng biến đổi của DDT trong đất tại Hà Nội', 2008, 'Tạp chí khoa học Thủy Lợi và môi trường', 14, '2024-06-21 01:30:18', '2024-06-22 08:26:38', NULL),
+(15, 'Từ vài nét về đào tạo giáo viên ở Pháp đến đề xuất vòng tròn đào tạo giáo viên phổ thông đáp ứng yêu cầu đổi mới giáo dục.', 2024, 'Kỉ yếu hội thảo khoa học quốc tế phát triển năng lực sư phạm đội ngũ giáo viên khoa học tự nhiên đáp ứng yêu cầu đổi mới giáo dục phổ thông', 13, '2024-06-21 06:29:48', '2024-06-21 06:31:13', NULL),
+(20, 'Phát triển thương mại điện tử ở Việt Nam', 2024, 'Xây dựng Đảng', 12, '2024-06-26 07:07:28', '2024-06-26 07:07:28', NULL),
+(23, 'GIẢI PHÁP XÂY DỰNG HỆ THỐNG BẦU CỬ EVB DỰA TRÊN CÔNG NGHỆ BLOCKCHAIN', 2024, 'Tạp chí Nghiên cứu Tài chính kế toán số 08', 2, '2024-06-26 08:52:20', '2024-06-26 09:43:29', 'Demo_PTTK.docx'),
+(24, 'Phát triển dịch vụ Logistics tại Tổng công ty Bưu điện Việt Nam', 2024, 'TC nghiên cứu Châu Âu Trung Đông / Viện Hàn lâm Khoa học Xã hội Việt Nam', 2, '2024-06-27 00:47:14', '2024-06-27 01:30:30', 'Demo_PTTK.docx'),
+(25, 'Phát triển thương mại điện tử ở Việt Nam1', 2024, 'Tạp chí Nghiên cứu Tài chính kế toán số 08', 3, '2024-06-30 06:10:10', '2024-06-30 06:10:10', 'Demo_PTTK (6).docx');
 
 -- --------------------------------------------------------
 
@@ -429,7 +435,15 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (78, '2024_06_14_104306_remove_profile_id_from_topics_table', 60),
 (79, '2024_06_14_104454_remove_role_id_from_topics_table', 61),
 (80, '2024_06_14_104634_create_scientist_topic_role_table', 62),
-(81, '2024_06_17_091137_create_users_table', 63);
+(81, '2024_06_17_091137_create_users_table', 63),
+(82, '2024_06_23_143632_add_google_id_to_users_table', 64),
+(83, '2024_06_25_153626_add_foreign_key_to_scientists_table', 65),
+(84, '2024_06_26_132041_add_file_path_to_magazines_table', 66),
+(85, '2024_06_29_145834_add_user_id', 67),
+(86, '2024_06_29_161329_drop_suggestion_id_foreign_from_offers_table', 67),
+(87, '2024_06_29_162453_create_scientist_offer_role', 67),
+(88, '2024_06_29_162847_drop_user_id_foreign_from_offers_table', 67),
+(89, '2024_06_30_070414_create_scientist_offer_role', 68);
 
 -- --------------------------------------------------------
 
@@ -462,12 +476,11 @@ INSERT INTO `money` (`id`, `money_name`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `offers` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `proposer` varchar(255) NOT NULL,
   `year` int(11) NOT NULL,
   `offer_name` varchar(255) NOT NULL,
   `propose_id` bigint(20) UNSIGNED NOT NULL,
-  `suggestion_id` bigint(20) UNSIGNED NOT NULL,
   `note` varchar(255) DEFAULT NULL,
+  `status` varchar(255) NOT NULL DEFAULT 'pending',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -476,9 +489,9 @@ CREATE TABLE `offers` (
 -- Đang đổ dữ liệu cho bảng `offers`
 --
 
-INSERT INTO `offers` (`id`, `proposer`, `year`, `offer_name`, `propose_id`, `suggestion_id`, `note`, `created_at`, `updated_at`) VALUES
-(2, 'Hoàng Văn Hoan', 2024, 'Vận dụng kinh nghiệm lãnh đạo phát  triển kinh tế tư nhân của Đảng thời kỳ 1986-2020 vào việc đưa kinh tế tư nhân trở thành động lực quan trọng của nền kinh tế giai đoạn hiện nay', 4, 2, NULL, '2024-05-23 10:15:24', '2024-05-28 08:32:31'),
-(3, 'Hoàng Văn Hoan', 2024, 'Phân tích các nhân tố ảnh hưởng đến hiệu quả kinh doanh của các ngân hàng thương mại cổ phần Việt Nam', 8, 3, NULL, '2024-05-23 19:47:07', '2024-06-01 06:15:17');
+INSERT INTO `offers` (`id`, `year`, `offer_name`, `propose_id`, `note`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2024, 'Hệ thống cảnh báo hạn mặn thời gian thực dựa trên mô hình đa tác tử kết hợp dữ liệu cảm biến', 4, NULL, 'chờ duyệt', NULL, '2024-06-30 01:25:36'),
+(4, 2024, 'Nghiên cứu triển khai ứng dụng CNTT dựa trên nền tảng Moodle trong thi trắc nghiệm Olympic các môn Khoa học chính trị và Tư tưởng Hồ Chí Minh', 4, NULL, 'chờ duyệt', '2024-06-30 00:37:02', '2024-06-30 01:24:23');
 
 -- --------------------------------------------------------
 
@@ -727,24 +740,25 @@ INSERT INTO `roles` (`id`, `role_name`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `scientists` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `profile_id` varchar(255) NOT NULL,
   `profile_name` varchar(255) NOT NULL,
-  `birthday` date NOT NULL,
-  `gender` enum('Nam','Nữ') NOT NULL,
-  `birth_place` varchar(255) NOT NULL,
+  `birthday` date DEFAULT NULL,
+  `gender` enum('Nam','Nữ') DEFAULT NULL,
+  `birth_place` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `office_phone` int(11) DEFAULT NULL,
   `house_phone` int(11) DEFAULT NULL,
-  `telephone` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `degree_id` bigint(20) UNSIGNED NOT NULL,
+  `telephone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `degree_id` bigint(20) UNSIGNED DEFAULT NULL,
   `investiture` varchar(255) DEFAULT NULL,
   `scientific_title` varchar(255) DEFAULT NULL,
   `research_major` varchar(255) DEFAULT NULL,
   `research_title` varchar(255) DEFAULT NULL,
   `research_position` varchar(255) DEFAULT NULL,
-  `office_id` bigint(20) UNSIGNED NOT NULL,
-  `address_office` varchar(255) NOT NULL,
+  `office_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `address_office` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -753,18 +767,18 @@ CREATE TABLE `scientists` (
 -- Đang đổ dữ liệu cho bảng `scientists`
 --
 
-INSERT INTO `scientists` (`id`, `profile_id`, `profile_name`, `birthday`, `gender`, `birth_place`, `address`, `office_phone`, `house_phone`, `telephone`, `email`, `degree_id`, `investiture`, `scientific_title`, `research_major`, `research_title`, `research_position`, `office_id`, `address_office`, `created_at`, `updated_at`) VALUES
-(1, '2024.01', 'Biện Thị Hoàng Ngọc', '1998-03-04', 'Nữ', 'Hà Nội', NULL, NULL, NULL, '0314748364', 'bthn@gmail.com', 2, NULL, NULL, 'Lịch Sử Việt Nam', NULL, NULL, 3, 'Hà Nội', NULL, '2024-06-21 02:50:36'),
-(2, '112.345', 'Hoàng Văn Quân', '2024-05-08', 'Nam', 'Hà Nội', NULL, NULL, NULL, '0913445621', 'hvquan@gmail.com', 2, NULL, NULL, 'Lịch sử việt nam', NULL, NULL, 3, '23-Huỳnh Thúc Kháng-Hà Nội', '2024-05-21 19:12:00', '2024-05-22 19:39:47'),
-(4, '12.4446.234', 'Bùi Lê Dũng', '2000-07-03', 'Nam', 'Thái Bình', NULL, NULL, NULL, '0912668540', 'bldung@gmail.com', 3, NULL, NULL, NULL, NULL, NULL, 5, 'Đại học Thủy Lợi', '2024-05-22 19:47:12', '2024-05-22 19:47:12'),
-(5, '112.234.222', 'Bùi Quốc Tuấn', '1992-12-06', 'Nam', 'Hưng Yên', NULL, NULL, NULL, '0966981226', 'bqtuan@gmail.com', 2, NULL, NULL, NULL, NULL, NULL, 6, 'Hà Nội', '2024-05-22 19:49:05', '2024-05-22 19:49:05'),
-(6, '12.2223.001', 'Cao Phan Giang', '1982-02-04', 'Nam', 'Hà Giang', NULL, NULL, NULL, '0913664278', 'cpgiang@gmail.com', 2, NULL, NULL, NULL, NULL, NULL, 6, 'Cầu giấy', '2024-05-22 19:51:32', '2024-05-22 19:51:32'),
-(7, '12.2225.002', 'Cao Thị Thu Hằng', '1992-12-05', 'Nữ', 'Nam Định', NULL, NULL, NULL, '981223517', 'ctthang@gmail.com', 3, NULL, NULL, NULL, NULL, NULL, 7, 'Đống Đa', '2024-05-22 19:53:16', '2024-05-22 19:53:16'),
-(8, '11234', 'Vũ Thị Hồng Trang', '1992-05-08', 'Nữ', 'Nam Định', NULL, NULL, NULL, '912668340', 'vthtrang@gmail.com', 1, NULL, NULL, NULL, NULL, NULL, 3, 'Cầu giấy', '2024-05-25 13:20:28', '2024-05-25 13:20:28'),
-(9, '123.556', 'Nguyễn Thị Huệ', '1983-05-11', 'Nữ', 'Bắc Giang', NULL, NULL, NULL, '912783450', 'nthue@gmail.com', 1, NULL, NULL, NULL, NULL, NULL, 3, 'Hà Nội', '2024-05-25 13:23:13', '2024-05-25 13:23:13'),
-(10, '123.890', 'Nguyễn Đình Quỳnh', '1991-12-05', 'Nam', 'Hà Nội', NULL, NULL, NULL, '966712563', 'ndquynh@gmail.com', 1, NULL, NULL, NULL, NULL, NULL, 3, 'Hà Nội', '2024-05-25 13:24:41', '2024-05-25 13:24:41'),
-(11, '11111', 'Nguyễn Văn Anh', '1991-11-03', 'Nam', 'Nam Định', NULL, NULL, NULL, '123889231', 'dqb@gmail.com', 1, NULL, NULL, NULL, NULL, NULL, 6, 'Hà Nội', '2024-05-31 21:17:37', '2024-06-17 08:32:28'),
-(12, '11111', 'Đào Đình Bá', '1991-11-03', 'Nam', 'Nam Định', NULL, NULL, NULL, '123889231', 'dqb@gmail.com', 1, NULL, NULL, NULL, NULL, NULL, 2, 'Hà Nội', '2024-06-01 02:08:39', '2024-06-01 02:08:39');
+INSERT INTO `scientists` (`id`, `user_id`, `profile_id`, `profile_name`, `birthday`, `gender`, `birth_place`, `address`, `office_phone`, `house_phone`, `telephone`, `email`, `degree_id`, `investiture`, `scientific_title`, `research_major`, `research_title`, `research_position`, `office_id`, `address_office`, `created_at`, `updated_at`) VALUES
+(1, NULL, '2024.01', 'Biện Thị Hoàng Ngọc', '1998-03-04', 'Nữ', 'Hà Nội', NULL, NULL, NULL, '0314748364', 'bthn@gmail.com', 2, NULL, NULL, 'Lịch Sử Việt Nam', NULL, NULL, 3, 'Hà Nội', NULL, '2024-06-24 23:29:21'),
+(16, 14, '2024.2', 'Bùi Lê Ngọc', '1990-12-09', 'Nữ', 'Hà Nội', NULL, NULL, NULL, '0223456789', 'blngoc1234@gmail.com', 2, NULL, NULL, NULL, NULL, NULL, 4, 'Hà Nội', '2024-06-25 09:08:58', '2024-06-26 01:46:45'),
+(18, 9, '120', 'hien vu', '1990-12-02', 'Nam', 'fasdfasdfasdf', NULL, NULL, NULL, '01234567', 'vudinhhien689@gmail.com', 3, NULL, NULL, NULL, NULL, NULL, 4, 'sdfg', '2024-06-25 10:15:36', '2024-06-25 10:16:32'),
+(19, 18, '2024.3', 'Bùi Quang Thuấn', '1991-12-12', 'Nam', 'Nam Định', NULL, NULL, NULL, '0922668511', 'bqt@gmail.com', 2, NULL, NULL, NULL, NULL, NULL, 5, 'Hà Nội', '2024-06-26 02:01:05', '2024-06-26 02:14:53'),
+(20, 19, '2024.4', 'Trần Đình Tân', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'tdt@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-26 02:55:25', '2024-06-26 02:55:25'),
+(21, 20, '2024.5', 'Bùi Thúy Hằng', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'bth@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-26 02:56:31', '2024-06-26 02:56:31'),
+(22, 21, '2024.6', 'Hoàng Ngọc Linh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'hnl@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-26 02:57:37', '2024-06-26 02:57:37'),
+(23, 22, '2024.7', 'Cao Quang Đạt', '1991-01-12', 'Nam', 'Nam Định', NULL, NULL, NULL, '0912668540', 'cqd@gmail.com', 2, NULL, NULL, NULL, NULL, NULL, 2, 'Hà Nội', '2024-06-26 02:58:35', '2024-06-26 03:35:02'),
+(24, 23, '2024.8', 'Bùi Minh Hải', '2000-01-23', 'Nam', 'Bắc Giang', NULL, NULL, NULL, '0912668540', 'bmh@gmail.com', 2, NULL, NULL, NULL, NULL, NULL, 3, 'Hà Nội', '2024-06-26 02:59:40', '2024-06-26 03:33:49'),
+(25, 24, '2024.9', 'Vũ Minh Thắng', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'vmt@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-26 03:00:19', '2024-06-26 03:00:19'),
+(26, 25, 'generated_profile_id_here', 'Hien Vu Dinh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'vudinhhienf@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-26 08:38:15', '2024-06-26 08:38:15');
 
 -- --------------------------------------------------------
 
@@ -786,14 +800,18 @@ CREATE TABLE `scientist_curriculum_role` (
 --
 
 INSERT INTO `scientist_curriculum_role` (`id`, `scientist_id`, `curriculum_id`, `role_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 4, NULL, '2024-06-14 18:35:59'),
-(2, 2, 5, 4, '2024-06-13 20:37:18', '2024-06-14 09:18:44'),
-(3, 4, 5, 6, '2024-06-13 20:37:18', '2024-06-14 09:18:44'),
-(8, 4, 9, 4, '2024-06-14 18:37:16', '2024-06-14 18:37:16'),
-(9, 1, 10, 4, '2024-06-15 06:44:17', '2024-06-19 19:36:19'),
-(10, 2, 11, 2, '2024-06-16 14:58:37', '2024-06-19 20:39:37'),
-(11, 5, 12, 2, '2024-06-16 15:00:18', '2024-06-16 15:00:18'),
-(12, 7, 10, 5, '2024-06-19 19:36:19', '2024-06-19 19:36:19');
+(14, 1, 1, 4, '2024-06-26 03:41:43', '2024-06-26 03:41:43'),
+(15, 16, 5, 4, '2024-06-26 03:42:01', '2024-06-26 03:42:01'),
+(16, 19, 5, 5, '2024-06-26 03:42:01', '2024-06-26 03:42:01'),
+(17, 25, 9, 4, '2024-06-26 03:42:13', '2024-06-26 03:42:13'),
+(18, 24, 10, 4, '2024-06-26 03:46:16', '2024-06-26 03:46:16'),
+(19, 1, 10, 5, '2024-06-26 03:46:16', '2024-06-26 03:46:16'),
+(20, 21, 11, 4, '2024-06-26 03:46:25', '2024-06-27 00:41:16'),
+(21, 22, 12, 4, '2024-06-26 03:46:39', '2024-06-26 03:46:39'),
+(22, 24, 12, 4, '2024-06-26 03:46:39', '2024-06-26 03:46:39'),
+(24, 23, 11, 4, '2024-06-27 00:41:16', '2024-06-27 00:45:00'),
+(26, 23, 16, 1, '2024-06-27 01:12:49', '2024-06-27 01:25:46'),
+(27, 23, 17, 4, '2024-06-27 01:14:30', '2024-06-27 01:26:07');
 
 -- --------------------------------------------------------
 
@@ -815,20 +833,45 @@ CREATE TABLE `scientist_magazine_role` (
 --
 
 INSERT INTO `scientist_magazine_role` (`id`, `scientist_id`, `magazine_id`, `role_id`, `created_at`, `updated_at`) VALUES
-(25, 6, 11, 1, '2024-06-12 02:55:33', '2024-06-12 02:55:33'),
-(42, 2, 8, 4, '2024-06-16 05:46:32', '2024-06-16 05:46:32'),
-(43, 1, 8, 4, '2024-06-16 05:46:32', '2024-06-22 08:26:29'),
-(46, 1, 14, 4, '2024-06-21 01:30:18', '2024-06-22 08:26:38'),
-(50, 2, 15, 1, '2024-06-21 06:31:13', '2024-06-21 06:31:13'),
-(51, 1, 1, 1, '2024-06-21 06:32:19', '2024-06-22 08:26:53'),
-(52, 10, 1, 4, '2024-06-21 06:32:19', '2024-06-21 06:32:19'),
-(53, 2, 2, 2, '2024-06-21 06:32:29', '2024-06-21 06:32:29'),
-(54, 9, 2, 4, '2024-06-21 06:32:29', '2024-06-21 06:32:29'),
-(55, 4, 7, 4, '2024-06-21 06:32:43', '2024-06-21 06:32:43'),
-(56, 5, 7, 5, '2024-06-21 06:32:43', '2024-06-21 06:32:43'),
-(57, 1, 9, 4, '2024-06-21 06:32:57', '2024-06-21 06:32:57'),
-(58, 9, 9, 2, '2024-06-21 06:32:57', '2024-06-21 06:32:57'),
-(59, 4, 12, 4, '2024-06-21 06:33:08', '2024-06-21 06:33:08');
+(64, 16, 2, 1, '2024-06-26 03:39:00', '2024-06-26 03:39:00'),
+(65, 19, 2, 2, '2024-06-26 03:39:00', '2024-06-26 03:39:00'),
+(67, 23, 8, 4, '2024-06-26 03:39:26', '2024-06-26 03:39:26'),
+(68, 24, 8, 5, '2024-06-26 03:39:26', '2024-06-26 03:39:26'),
+(69, 25, 9, 1, '2024-06-26 03:39:35', '2024-06-26 03:39:35'),
+(70, 21, 11, 4, '2024-06-26 03:40:42', '2024-06-26 03:40:42'),
+(71, 23, 12, 4, '2024-06-26 03:40:55', '2024-06-26 09:43:52'),
+(72, 16, 12, 5, '2024-06-26 03:40:55', '2024-06-26 03:40:55'),
+(73, 19, 14, 4, '2024-06-26 03:41:03', '2024-06-26 03:41:03'),
+(74, 25, 15, 4, '2024-06-26 03:41:19', '2024-06-26 03:41:19'),
+(75, 1, 15, 2, '2024-06-26 03:41:19', '2024-06-26 03:41:19'),
+(79, 23, 20, 1, '2024-06-26 07:07:28', '2024-06-26 09:18:08'),
+(82, 23, 23, 2, '2024-06-26 08:52:20', '2024-06-26 09:43:29'),
+(83, 23, 24, 4, '2024-06-27 00:47:14', '2024-06-27 01:30:44'),
+(84, 26, 25, 4, '2024-06-30 06:10:10', '2024-06-30 06:10:10');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `scientist_offer_role`
+--
+
+CREATE TABLE `scientist_offer_role` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `scientist_id` bigint(20) UNSIGNED NOT NULL,
+  `offer_id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `scientist_offer_role`
+--
+
+INSERT INTO `scientist_offer_role` (`id`, `scientist_id`, `offer_id`, `role_id`, `created_at`, `updated_at`) VALUES
+(1, 23, 1, 6, NULL, '2024-06-30 01:25:36'),
+(3, 21, 4, 7, '2024-06-30 00:37:02', '2024-06-30 01:24:23'),
+(5, 19, 4, 6, '2024-06-30 01:19:40', '2024-06-30 01:24:23');
 
 -- --------------------------------------------------------
 
@@ -850,23 +893,20 @@ CREATE TABLE `scientist_topic_role` (
 --
 
 INSERT INTO `scientist_topic_role` (`id`, `scientist_id`, `topic_id`, `role_id`, `created_at`, `updated_at`) VALUES
-(11, 10, 20, 6, '2024-06-14 19:16:47', '2024-06-14 19:16:47'),
-(12, 11, 20, 7, '2024-06-14 19:16:47', '2024-06-14 19:16:47'),
-(13, 9, 19, 6, '2024-06-14 21:13:08', '2024-06-14 21:13:08'),
-(14, 5, 22, 6, '2024-06-15 06:32:41', '2024-06-15 06:32:41'),
-(15, 6, 23, 6, '2024-06-15 06:35:59', '2024-06-15 06:35:59'),
-(16, 10, 24, 6, '2024-06-15 06:36:50', '2024-06-15 06:36:50'),
-(17, 8, 24, 7, '2024-06-15 06:36:50', '2024-06-15 06:36:50'),
-(18, 7, 25, 6, '2024-06-15 06:37:46', '2024-06-15 06:37:46'),
-(19, 11, 26, 6, '2024-06-15 06:38:42', '2024-06-15 06:38:42'),
-(21, 4, 18, 6, '2024-06-15 06:52:52', '2024-06-15 06:52:52'),
-(22, 11, 18, 7, '2024-06-15 06:52:52', '2024-06-15 06:52:52'),
-(23, 2, 28, 6, '2024-06-16 01:42:45', '2024-06-16 01:42:45'),
-(24, 4, 28, 7, '2024-06-16 01:42:45', '2024-06-16 01:42:45'),
-(25, 1, 1, 6, '2024-06-18 22:56:44', '2024-06-18 23:07:03'),
-(26, 2, 1, 7, '2024-06-18 22:56:44', '2024-06-18 22:56:44'),
-(27, 1, 27, 6, '2024-06-18 22:57:13', '2024-06-18 22:58:38'),
-(28, 7, 27, 2, '2024-06-18 22:57:13', '2024-06-18 22:57:13');
+(35, 1, 1, 6, '2024-06-25 09:32:46', '2024-06-25 09:32:46'),
+(36, 16, 1, 4, '2024-06-25 09:32:46', '2024-06-25 09:32:46'),
+(37, 19, 33, 6, '2024-06-26 02:02:34', '2024-06-26 02:15:49'),
+(38, 16, 33, 7, '2024-06-26 02:02:34', '2024-06-26 02:02:34'),
+(41, 24, 20, 6, '2024-06-26 03:35:58', '2024-06-26 03:35:58'),
+(42, 25, 20, 2, '2024-06-26 03:35:58', '2024-06-26 03:55:50'),
+(44, 19, 23, 6, '2024-06-26 03:36:24', '2024-06-26 03:36:24'),
+(48, 21, 26, 6, '2024-06-26 03:37:07', '2024-06-26 03:37:07'),
+(49, 1, 26, 7, '2024-06-26 03:37:07', '2024-06-26 03:37:07'),
+(51, 1, 25, 6, '2024-06-26 03:37:50', '2024-06-26 03:37:50'),
+(53, 23, 34, 6, '2024-06-27 01:26:58', '2024-06-27 01:27:28'),
+(55, 23, 35, 6, '2024-06-29 09:55:25', '2024-06-29 09:55:25'),
+(56, 1, 35, 7, '2024-06-29 09:55:25', '2024-06-29 09:55:25'),
+(57, 26, 36, 6, '2024-06-30 06:09:40', '2024-06-30 06:09:40');
 
 -- --------------------------------------------------------
 
@@ -978,25 +1018,24 @@ CREATE TABLE `topics` (
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `file` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `topics`
 --
 
-INSERT INTO `topics` (`id`, `topic_name`, `result`, `lvtopic_id`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES
-(1, 'Phát huy dân chủ trong hoạt động của bộ máy nhà nước cấp Trung ương ở Việt Nam hiện nay', 'Giỏi', 3, '2024-01-10', '2024-10-21', NULL, '2024-06-18 23:07:03'),
-(18, 'Giải pháp nâng cao hiệu quả công tác xây dựng cấp xã đạt chuẩn tiếp cận pháp luật tại tỉnh Nam Định', 'Khá', 3, '2021-01-12', '2021-10-12', '2024-06-14 08:47:50', '2024-06-15 06:52:52'),
-(19, 'Cấu trúc an ninh khu vực Châu á- Thái Bình Dương hiện nay và những tác động đến Việt Nam', 'Xuất sắc', 3, '2024-01-12', '2024-10-12', '2024-06-14 18:38:04', '2024-06-14 21:13:08'),
-(20, 'Nghiên cứu thực trạng, đề xuất giải pháp nâng cao chất lượng công tác tham mưu, tổng hợp phục vụ cấp ủy của Văn phòng Tỉnh ủy Hòa Bình giai đoạn 2021-2025', 'Khá', 3, '2024-01-10', '2024-10-10', '2024-06-14 18:42:32', '2024-06-14 19:16:47'),
-(22, 'Quá trình đổi mới tư duy đối ngoại của Đảng , Nhà nước Việt Nam trong quan hệ hợp tác với các quốc gia láng giềng giai đoạn hiện nay', 'Giỏi', 3, '2024-01-21', '2024-10-21', '2024-06-15 06:32:41', '2024-06-15 06:32:41'),
-(23, 'Nghiên cứu IOT, xây dựng hệ thống nhúng cảnh báo cháy qua điện thoại di động', 'Giỏi', 3, '2024-01-23', '2024-11-23', '2024-06-15 06:35:59', '2024-06-15 06:35:59'),
-(24, 'Nghiên cứu xây dựng trợ lý  ảo sử dụng ngôn ngữ lập  trình Python', 'Giỏi', 3, '2023-01-25', '2024-12-26', '2024-06-15 06:36:50', '2024-06-15 06:36:50'),
-(25, 'Xây dựng ứng dụng tra cứu và cảnh báo dịch bệnh Covid -19 tại Việt Nam', 'Giỏi', 3, '2024-03-21', '2024-12-21', '2024-06-15 06:37:46', '2024-06-15 06:37:46'),
-(26, 'Thiết kế máy rửa tay sát khuẩn tự động sử dụng mạch Arduino', 'Khá', 3, '2024-01-21', '2024-10-21', '2024-06-15 06:38:42', '2024-06-15 06:38:42'),
-(27, 'Giải pháp nâng cao hiệu quả công tác xây dựng cấp xã đạt chuẩn tiếp cận pháp luật tại tỉnh Nam Định', 'Xuất sắc', 3, '2023-01-21', '2023-12-21', '2024-06-15 06:39:20', '2024-06-18 22:58:38'),
-(28, 'Nghiên cứu xây dựng quy trình cấp phát và kiểm soát hộ chiếu điện tử Việt Nam', 'Xuất sắc', 3, '2023-12-23', '2024-06-23', '2024-06-16 01:42:45', '2024-06-16 01:42:45');
+INSERT INTO `topics` (`id`, `topic_name`, `result`, `lvtopic_id`, `start_date`, `end_date`, `created_at`, `updated_at`, `file`) VALUES
+(1, 'Phát huy dân chủ trong hoạt động của bộ máy nhà nước cấp Trung ương ở Việt Nam hiện nay', 'Khá', 3, '2024-01-10', '2024-10-21', NULL, '2024-06-25 09:32:46', ''),
+(20, 'Nghiên cứu thực trạng, đề xuất giải pháp nâng cao chất lượng công tác tham mưu, tổng hợp phục vụ cấp ủy của Văn phòng Tỉnh ủy Hòa Bình giai đoạn 2021-2025', 'Khá', 3, '2024-01-10', '2024-10-10', '2024-06-14 18:42:32', '2024-06-26 03:35:58', ''),
+(23, 'Nghiên cứu IOT, xây dựng hệ thống nhúng cảnh báo cháy qua điện thoại di động', 'Khá', 3, '2024-01-23', '2024-11-23', '2024-06-15 06:35:59', '2024-06-26 03:36:24', ''),
+(25, 'Xây dựng ứng dụng tra cứu và cảnh báo dịch bệnh Covid -19 tại Việt Nam', 'Giỏi', 3, '2024-03-21', '2024-12-21', '2024-06-15 06:37:46', '2024-06-26 03:37:50', ''),
+(26, 'Thiết kế máy rửa tay sát khuẩn tự động sử dụng mạch Arduino', 'Khá', 3, '2024-01-21', '2024-10-21', '2024-06-15 06:38:42', '2024-06-26 03:37:07', ''),
+(33, 'Cấu trúc an ninh khu vực Châu á- Thái Bình Dương hiện nay và những tác động đến Việt Nam', 'Khá', 3, '2023-12-21', '2024-10-21', '2024-06-26 02:02:34', '2024-06-26 02:15:49', ''),
+(34, 'Dự báo qua hành vi mua sắm của người tiêu dùng trong hoạt động kinh doanh hàng tiêu dùng', 'Khá', 3, '2024-01-21', '2024-10-21', '2024-06-27 01:26:58', '2024-06-27 01:27:28', ''),
+(35, 'Nghiên cứu IOT, xây dựng hệ thống nhúng cảnh báo cháy qua điện thoại di động', 'Khá', 3, '2024-02-23', '2024-09-23', '2024-06-29 09:52:35', '2024-06-29 09:55:25', 'Demo_PTTK (6).docx'),
+(36, 'Giải pháp nâng cao hiệu quả công tác xây dựng cấp xã đạt chuẩn tiếp cận pháp luật tại tỉnh Nam Định', 'Khá', 3, '2024-02-01', '2024-09-01', '2024-06-30 06:09:40', '2024-06-30 06:09:40', 'Demo_PTTK.docx');
 
 -- --------------------------------------------------------
 
@@ -1060,16 +1099,27 @@ CREATE TABLE `users` (
   `is_admin` tinyint(1) NOT NULL DEFAULT 0,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `google_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `is_admin`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Phong Dao Tao', 'admin@gmail.com', '$2y$12$pivoVKIJFOMvq66jpl0A0.LQA6V.3cSIeasp3e8MfkHdNnOM58Xmu', 1, NULL, '2024-06-17 02:21:30', '2024-06-17 02:21:30'),
-(2, 'Biện Thị Hoàng Ngọc', 'bthn@gmail.com', '$2y$12$qnvQq9v7E9vvxuGZJDdYjOmqOAhODIyaCVR4ng8.48.N0KEx6.XXe', 0, NULL, '2024-06-17 02:21:30', '2024-06-17 02:21:30');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `is_admin`, `remember_token`, `created_at`, `updated_at`, `google_id`) VALUES
+(8, 'dsafdfasd', 'ddddd@gmail.com', '$2y$12$qpPj6wfkf.xAAS65UWOu2elGkgPGoovtnJFuh0YjL0dcp2cFXCTnu', 0, NULL, '2024-06-24 23:19:58', '2024-06-24 23:19:58', NULL),
+(9, 'hien vu', 'vudinhhien689@gmail.com', '$2y$12$QBeeSF3EUGVXNo1xLJmmHeX.ccSKYRjcE86kheOtXMsiAl6E7uAja', 0, '09JhSX7aVfLS361EbQeaZZiFCdgxwjH0xRjIZthnRuTvWdBht5MHLXEMsWHd', '2024-06-25 08:38:15', '2024-06-25 08:38:15', NULL),
+(10, 'Phong Dao Tao', 'pdt@gmail.com', '$2y$12$m4/w7Y5yfVMyazQPK5qd0.A0NfEnafzcAvSilybWk3FXimhfZOrie', 1, NULL, '2024-06-25 08:41:43', '2024-06-25 08:41:43', NULL),
+(14, 'Bùi Lê Ngọc', 'blngoc1234@gmail.com', '$2y$12$gxEt4kqXoxdt2sVSW8vpsuijbBEYj2cIjL7d6preeJR.GMGF1EWLS', 0, NULL, '2024-06-25 09:08:58', '2024-06-25 09:08:58', NULL),
+(18, 'Bùi Quang Thuấn', 'bqt@gmail.com', '$2y$12$PGf54MTCK9EpW3FPNJhyPuxuQL6PeakWGD1tYdMs3JJQbcMDx6Y0y', 0, NULL, '2024-06-26 02:01:05', '2024-06-26 02:01:05', NULL),
+(19, 'Trần Đình Tân', 'tdt@gmail.com', '$2y$12$PFWChR.5z215N6QFApG3dub3Z1lBR870KrAph2sRUFxdmcbar47Fq', 0, NULL, '2024-06-26 02:55:25', '2024-06-26 02:55:25', NULL),
+(20, 'Bùi Thúy Hằng', 'bth@gmail.com', '$2y$12$QfABAavdy7CDGwVx6jsg8.olnOGwK5gU1iGVA90cKfFUF4e/Z0Fy6', 0, NULL, '2024-06-26 02:56:31', '2024-06-26 02:56:31', NULL),
+(21, 'Hoàng Ngọc Linh', 'hnl@gmail.com', '$2y$12$DJkiaAYMyQxIzfwP.tWzBuafNMOJbQko0Kv4CS.KbRkzeGrWtamwS', 0, NULL, '2024-06-26 02:57:37', '2024-06-26 02:57:37', NULL),
+(22, 'Cao Quang Đạt', 'cqd@gmail.com', '$2y$12$Y9q0Dv5bw1Wyrm9Yz7RenuOd0dzig2yr4dA1eKzt.hBq2hYo5.7ci', 0, NULL, '2024-06-26 02:58:35', '2024-06-26 02:58:35', NULL),
+(23, 'Bùi Minh Hải', 'bmh@gmail.com', '$2y$12$XAOGNQsq/jD0tMWKmdvlVOmBjrzCpQ1AKcp2IBaaero4qy0ZzRaKa', 0, NULL, '2024-06-26 02:59:40', '2024-06-26 02:59:40', NULL),
+(24, 'Vũ Minh Thắng', 'vmt@gmail.com', '$2y$12$qIWYM2xiuen6MSYtx5rG3uLhGkxp98Iny2sudEymQZ/4ckJALGKMu', 0, NULL, '2024-06-26 03:00:19', '2024-06-26 03:00:19', NULL),
+(25, 'Hien Vu Dinh', 'vudinhhienf@gmail.com', '$2y$12$yasxuV1vZUnFNl0U/UtrLuq38s0g831CqZfwOlXl5ObmH.4hFNMcq', 0, '1DRruttzD2ldBRPalM3eXIZO8y77oGe7rS4XoWmpAkr4IwYo1L47aRMqcqJg', '2024-06-26 08:38:15', '2024-06-26 08:38:15', NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -1177,8 +1227,7 @@ ALTER TABLE `money`
 --
 ALTER TABLE `offers`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `offers_propose_id_foreign` (`propose_id`),
-  ADD KEY `offers_suggestion_id_foreign` (`suggestion_id`);
+  ADD KEY `offers_propose_id_foreign` (`propose_id`);
 
 --
 -- Chỉ mục cho bảng `offices`
@@ -1251,7 +1300,8 @@ ALTER TABLE `roles`
 ALTER TABLE `scientists`
   ADD PRIMARY KEY (`id`),
   ADD KEY `scientists_degree_id_foreign` (`degree_id`),
-  ADD KEY `scientists_office_id_foreign` (`office_id`);
+  ADD KEY `scientists_office_id_foreign` (`office_id`),
+  ADD KEY `scientists_user_id_foreign` (`user_id`);
 
 --
 -- Chỉ mục cho bảng `scientist_curriculum_role`
@@ -1270,6 +1320,15 @@ ALTER TABLE `scientist_magazine_role`
   ADD KEY `scientist_magazine_role_scientist_id_foreign` (`scientist_id`),
   ADD KEY `scientist_magazine_role_magazine_id_foreign` (`magazine_id`),
   ADD KEY `scientist_magazine_role_role_id_foreign` (`role_id`);
+
+--
+-- Chỉ mục cho bảng `scientist_offer_role`
+--
+ALTER TABLE `scientist_offer_role`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `scientist_offer_role_scientist_id_foreign` (`scientist_id`),
+  ADD KEY `scientist_offer_role_offer_id_foreign` (`offer_id`),
+  ADD KEY `scientist_offer_role_role_id_foreign` (`role_id`);
 
 --
 -- Chỉ mục cho bảng `scientist_topic_role`
@@ -1382,7 +1441,7 @@ ALTER TABLE `councils`
 -- AUTO_INCREMENT cho bảng `curriculums`
 --
 ALTER TABLE `curriculums`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT cho bảng `degrees`
@@ -1412,13 +1471,13 @@ ALTER TABLE `lvtopics`
 -- AUTO_INCREMENT cho bảng `magazines`
 --
 ALTER TABLE `magazines`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT cho bảng `money`
@@ -1430,7 +1489,7 @@ ALTER TABLE `money`
 -- AUTO_INCREMENT cho bảng `offers`
 --
 ALTER TABLE `offers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `offices`
@@ -1490,25 +1549,31 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT cho bảng `scientists`
 --
 ALTER TABLE `scientists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT cho bảng `scientist_curriculum_role`
 --
 ALTER TABLE `scientist_curriculum_role`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT cho bảng `scientist_magazine_role`
 --
 ALTER TABLE `scientist_magazine_role`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+
+--
+-- AUTO_INCREMENT cho bảng `scientist_offer_role`
+--
+ALTER TABLE `scientist_offer_role`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `scientist_topic_role`
 --
 ALTER TABLE `scientist_topic_role`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT cho bảng `scores`
@@ -1538,7 +1603,7 @@ ALTER TABLE `suggestions`
 -- AUTO_INCREMENT cho bảng `topics`
 --
 ALTER TABLE `topics`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT cho bảng `tpcouncils`
@@ -1556,7 +1621,7 @@ ALTER TABLE `trainings`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -1592,8 +1657,7 @@ ALTER TABLE `magazines`
 -- Các ràng buộc cho bảng `offers`
 --
 ALTER TABLE `offers`
-  ADD CONSTRAINT `offers_propose_id_foreign` FOREIGN KEY (`propose_id`) REFERENCES `proposes` (`id`),
-  ADD CONSTRAINT `offers_suggestion_id_foreign` FOREIGN KEY (`suggestion_id`) REFERENCES `suggestions` (`id`);
+  ADD CONSTRAINT `offers_propose_id_foreign` FOREIGN KEY (`propose_id`) REFERENCES `proposes` (`id`);
 
 --
 -- Các ràng buộc cho bảng `profiles`
@@ -1613,7 +1677,8 @@ ALTER TABLE `projects`
 --
 ALTER TABLE `scientists`
   ADD CONSTRAINT `scientists_degree_id_foreign` FOREIGN KEY (`degree_id`) REFERENCES `degrees` (`id`),
-  ADD CONSTRAINT `scientists_office_id_foreign` FOREIGN KEY (`office_id`) REFERENCES `offices` (`id`);
+  ADD CONSTRAINT `scientists_office_id_foreign` FOREIGN KEY (`office_id`) REFERENCES `offices` (`id`),
+  ADD CONSTRAINT `scientists_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `scientist_curriculum_role`
@@ -1630,6 +1695,14 @@ ALTER TABLE `scientist_magazine_role`
   ADD CONSTRAINT `scientist_magazine_role_magazine_id_foreign` FOREIGN KEY (`magazine_id`) REFERENCES `magazines` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `scientist_magazine_role_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `scientist_magazine_role_scientist_id_foreign` FOREIGN KEY (`scientist_id`) REFERENCES `scientists` (`id`) ON DELETE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `scientist_offer_role`
+--
+ALTER TABLE `scientist_offer_role`
+  ADD CONSTRAINT `scientist_offer_role_offer_id_foreign` FOREIGN KEY (`offer_id`) REFERENCES `offers` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `scientist_offer_role_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `scientist_offer_role_scientist_id_foreign` FOREIGN KEY (`scientist_id`) REFERENCES `scientists` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `scientist_topic_role`

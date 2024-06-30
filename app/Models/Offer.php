@@ -9,7 +9,8 @@ class Offer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['proposer', 'year', 'offer_name', 'propose_id', 'suggestion_id', 'note'];
+    protected $fillable = [ 'year', 'offer_name', 'propose_id', 'note', 
+    'status',];
 
     
 
@@ -18,8 +19,10 @@ class Offer extends Model
         return $this->belongsTo(Propose::class);
     }
 
-    public function suggestion()
+    public function scientists()
     {
-        return $this->belongsTo(Suggestion::class);
+        return $this->belongsToMany(Scientist::class, 'scientist_offer_role')
+                    ->withPivot('role_id')
+                    ->withTimestamps();
     }
 }

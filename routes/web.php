@@ -19,7 +19,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ReportController;
 
 
-use App\Exports\MagazinesArticlesExport;
+
 use Maatwebsite\Excel\Facades\Excel;
 
 use App\Http\Controllers\CouncilController;
@@ -135,6 +135,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
   Route::delete('/offer/{id}', [OfferController::class, 'destroy'])->name('offer.destroy');
   Route::resource('offer', OfferController::class);
 
+
+
+
   Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
   Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
   Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
@@ -198,7 +201,9 @@ Route::middleware(['auth', 'user'])->group(function () {
   Route::post('/user/curriculums', [UserController::class, 'storeCurriculum'])->name('user.curriculums.store'); //thêm mới của user curriculum
   Route::delete('/user/curriculums/{curriculum}', [UserController::class, 'destroyCurriculum'])->name('user.curriculums.destroy'); // xóa của user Curriculum
 
-
+  
+  Route::get('/offers', [UserController::class, 'offers'])->name('user.offers.index'); // Thêm route này
+  Route::post('/user/offers', [UserController::class, 'storeOffer'])->name('user.offers.store');
 
 
 });

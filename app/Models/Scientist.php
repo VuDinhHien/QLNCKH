@@ -41,4 +41,11 @@ class Scientist extends Model
             ->withPivot('role_id')
             ->withTimestamps();
     }
+
+    public function offers()
+    {
+        return $this->belongsToMany(Offer::class, 'scientist_offer_role')
+            ->withPivot('role_id')
+            ->withTimestamps();
+    }
 }

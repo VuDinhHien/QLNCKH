@@ -2,7 +2,7 @@
 
 @section('main')
 
-@section('title', 'Dashboard') 
+@section('title', 'Dashboard')
 
 
 <nav aria-label="breadcrumb">
@@ -99,22 +99,16 @@
                         Không có tệp
                     @endif
                 </td>
-
                 <td>
                     <div class="action" style="display: flex">
                         <div>
-                            <div>
-                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                data-target="#editModal" data-target="#editModal" data-topic-id="{{ $topic->id }}"
-                                data-topic-name="{{ $topic->topic_name }}"
-                                data-lvtopic-id="{{ $topic->lvtopic_id }}" data-result="{{ $topic->result }}"
-                                data-start-date="{{ $topic->start_date }}"
-                                data-end-date="{{ $topic->end_date }}"
-                                data-scientists='@json($topic->scientists)'>
+                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                data-target="#editModal" data-topic-id="{{ $topic->id }}"
+                                data-topic-name="{{ $topic->topic_name }}" data-lvtopic-id="{{ $topic->lvtopic_id }}"
+                                data-result="{{ $topic->result }}" data-start-date="{{ $topic->start_date }}"
+                                data-end-date="{{ $topic->end_date }}" data-scientists='@json($topic->scientists)'>
                                 <i class="fa fa-edit"></i>
                             </button>
-                            </div>
-                            
                         </div>
                         <div style="margin-left:10px">
                             <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal"
@@ -128,7 +122,6 @@
         @endforeach
     </tbody>
 </table>
-
 
 
 

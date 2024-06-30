@@ -15,6 +15,7 @@ use App\Models\Office;
 use App\Models\Paper;
 use App\Models\Role;
 use App\Models\Training;
+use App\Models\Offer;
 
 class UserController extends Controller
 {
@@ -413,5 +414,43 @@ class UserController extends Controller
     {
         $curriculum->delete();
         return redirect()->back()->with('success', 'giáo trình/sách tham khảo đã được xóa thành công!');
+    }
+
+    public function offers()
+    {
+        // Lấy tất cả các đề xuất của user hiện tại
+        $offers = Offer::where('user_id', Auth::id())->get();
+        $papers = Paper::all();
+        $roles = Role::all();
+        $scientists = Scientist::all();
+
+        return view('user.offers.index', compact('offers'));
+        
+            
+    }
+
+    public function storeOffer(Request $request)
+    {
+        $request->validate([
+            'proposer' => 'required|string|max:255',
+            'year' => 'required|integer',
+            'offer_name' => 'required|string|max:255',
+            'propose_id' => 'required|exists:proposes,id',
+            'suggestion_id' => 'required|exists:suggestions,id',
+            'note' => 'nullable|string',
+        ]);
+
+        Offer::create([
+            'proposer' => $request->proposer,
+            'year' => $request->year,
+            'offer_name' => $request->offer_name,
+            'propose_id' => $request->propose_id,
+            'suggestion_id' => $request->suggestion_id,
+            'note' => $request->note,
+            'user_id' => Auth::id(),
+            'status' => 'pending',
+        ]);
+
+        return redirect()->route('offers.index')->with('success', 'Đề xuất đã được thêm!');
     }
 }
