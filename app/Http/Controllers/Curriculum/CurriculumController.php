@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Curriculum;
+use App\Models\File;
 use App\Models\Scientist;
 use App\Models\Training;
 use App\Models\Role;
@@ -22,7 +23,7 @@ class CurriculumController extends Controller
         //
 
 
-        $curriculums = Curriculum::with(['scientists', 'scientists.curriculums', 'book', 'training'])->paginate(100);
+        $curriculums = Curriculum::with(['scientists', 'scientists.curriculums', 'book', 'training', 'files'])->paginate(100);
         $scientists = Scientist::all();
         $roles = Role::all();
         $books = Book::all();
@@ -72,19 +73,17 @@ class CurriculumController extends Controller
         return redirect()->route('curriculum.index')->with('success', 'Thêm giáo trình/sách tham khảo thành công');
     }
 
-    public function download(Curriculum $curriculum)
+    public function download($fileId)
     {
-        if ($curriculum->file) {
-            $filePath = storage_path('app/public/uploads/curriculums/' . $curriculum->file);
+        $file = File::findOrFail($fileId);
 
-            if (file_exists($filePath)) {
-                return response()->download($filePath, $curriculum->file);
-            } else {
-                return redirect()->back()->with('error', 'File not found.');
-            }
+        $filePath = public_path('uploads/curriculums/' . $file->file_path);
+
+        if (file_exists($filePath)) {
+            return response()->download($filePath, $file->original_name);
+        } else {
+            return redirect()->back()->with('error', 'File not found.');
         }
-
-        return redirect()->back()->with('error', 'File not found.');
     }
 
 

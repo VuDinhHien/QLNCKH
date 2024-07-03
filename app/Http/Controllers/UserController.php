@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Curriculum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 use App\Models\Scientist;
 use App\Models\Topic;
 use App\Models\Degree;
@@ -16,7 +17,8 @@ use App\Models\Paper;
 use App\Models\Role;
 use App\Models\Training;
 use App\Models\Offer;
-
+use App\Models\File;
+use App\Models\User;
 class UserController extends Controller
 {
     public function login()
@@ -67,32 +69,31 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $scientist = Scientist::where('profile_name', $user->name)->first();
-
+    
         if ($scientist) {
             return view('user.profile.show', compact('scientist'));
         } else {
             return redirect()->route('user.dashboard')->with('no', 'Không tìm thấy thông tin nhà khoa học');
         }
     }
-
+    
     public function editProfile()
     {
         $user = Auth::user();
         $scientist = Scientist::where('profile_name', $user->name)->first();
         $degrees = Degree::all();
         $offices = Office::all(); // Lấy tất cả các bằng cấp
-
+    
         if ($scientist) {
             return view('user.profile.update', compact('scientist', 'degrees', 'offices'));
         } else {
             return redirect()->route('user.dashboard')->with('no', 'Không tìm thấy thông tin nhà khoa học');
         }
     }
-
+    
     public function updateProfile(Request $request)
     {
         $request->validate([
-            'profile_id' => 'required|string|max:255',
             'profile_name' => 'required',
             'birthday' => 'required|date',
             'gender' => 'required',
@@ -104,12 +105,19 @@ class UserController extends Controller
             'office_id' => 'required|exists:offices,id',
             'address_office' => 'required',
         ]);
-
+    
         $user = Auth::user();
         $scientist = Scientist::where('profile_name', $user->name)->first();
-
+    
         if ($scientist) {
-            $scientist->update($request->only('profile_id', 'profile_name', 'birthday', 'gender', 'birth_place', 'telephone', 'email', 'degree_id', 'research_major', 'office_id', 'address_office'));
+            $scientist->update($request->only('profile_name', 'birthday', 'gender', 'birth_place', 'telephone', 'email', 'degree_id', 'research_major', 'office_id', 'address_office'));
+    
+            // Cập nhật tên người dùng trong bảng users nếu tên profile_name thay đổi
+            if ($user->name !== $request->input('profile_name')) {
+                $user->name = $request->input('profile_name');
+                $user->save();
+            }
+    
             return redirect()->route('user.profile.show')->with('ok', 'Cập nhật thông tin thành công');
         } else {
             return redirect()->route('user.dashboard')->with('no', 'Không tìm thấy thông tin nhà khoa học');
@@ -136,50 +144,41 @@ class UserController extends Controller
     }
 
     public function storeProject(Request $request)
-   {
-    // Log dữ liệu request để kiểm tra
-   
+    {
+        // Log dữ liệu request để kiểm tra
 
-    $request->validate([
-        'topic_name' => 'required|string|max:255',
-        'lvtopic_id' => 'required|exists:lvtopics,id',
-        'result' => 'required|string',
-        'start_date' => 'required|date',
-        'end_date' => 'required|date',
-        'scientists.*.id' => 'required|exists:scientists,id',
-        'scientists.*.role_id' => 'required|exists:roles,id',
-        'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048', // Kiểm tra file upload
-    ]);
 
-   
+        $request->validate([
+            'topic_name' => 'required|string|max:255',
+            'lvtopic_id' => 'required|exists:lvtopics,id',
+            'result' => 'required|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'scientists.*.id' => 'required|exists:scientists,id',
+            'scientists.*.role_id' => 'required|exists:roles,id',
 
-    $topic = new Topic();
-    $topic->topic_name = $request->input('topic_name');
-    $topic->lvtopic_id = $request->input('lvtopic_id');
-    $topic->result = $request->input('result');
-    $topic->start_date = $request->input('start_date');
-    $topic->end_date = $request->input('end_date');
+        ]);
 
-    if ($request->hasFile('file')) {
-        $file = $request->file('file');
-        $originalFileName = $file->getClientOriginalName();
-        $filePath = $file->storeAs('uploads/topics', $originalFileName, 'public');
-        $topic->file = $originalFileName; // Lưu đường dẫn đầy đủ vào cơ sở dữ liệu
+
+
+        $topic = new Topic();
+        $topic->topic_name = $request->input('topic_name');
+        $topic->lvtopic_id = $request->input('lvtopic_id');
+        $topic->result = $request->input('result');
+        $topic->start_date = $request->input('start_date');
+        $topic->end_date = $request->input('end_date');
+
+        $topic->save();
+
+
+        foreach ($request->input('scientists') as $scientist) {
+            $topic->scientists()->attach($scientist['id'], ['role_id' => $scientist['role_id']]);
+        }
+
+
+
+        return redirect()->back()->with('success', 'Đề tài mới đã được thêm thành công!');
     }
-
-    
-
-    $topic->save();
-
-
-    foreach ($request->input('scientists') as $scientist) {
-        $topic->scientists()->attach($scientist['id'], ['role_id' => $scientist['role_id']]);
-    }
-
-
-
-    return redirect()->back()->with('success', 'Đề tài mới đã được thêm thành công!');
-  }
 
 
     public function update(Request $request, Topic $topic)
@@ -191,17 +190,28 @@ class UserController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'role_id' => 'required|exists:roles,id',
-            'file' => 'nullable|mimes:doc,docx,pdf|max:2048', // Kiểm tra định dạng và kích thước file
+            'files.*' => 'nullable|mimes:doc,docx,pdf|max:2048', // Kiểm tra định dạng và kích thước file
         ]);
 
         // Xử lý file upload
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $filename = $file->getClientOriginalName(); // Lấy tên gốc của tệp
-            $file->move(public_path('uploads/topics'), $filename);
-            $topic->file = $filename;
-        }
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $originalName = $file->getClientOriginalName(); // Lấy tên gốc của tệp
+                $file->move(public_path('uploads/topics'), $filename);
 
+                File::create([
+                    'user_id' => Auth::id(),
+                    'file_path' => $filename,
+                    'original_name' => $originalName, // Lưu tên gốc của tệp
+                    'model_id' => $topic->id,
+                    'model_type' => Topic::class,
+                    'file_type' => $file->getClientOriginalExtension(),
+                    'related_id' => $topic->id, // Thêm trường related_id
+                    'related_type' => 'App\Models\Topic',
+                ]);
+            }
+        }
 
 
         $topic->update([
@@ -224,6 +234,33 @@ class UserController extends Controller
     {
         $topic->delete();
         return redirect()->back()->with('success', 'Đề tài đã được xóa thành công!');
+    }
+
+    public function downloadFile_topic(File $file)
+    {
+        $filePath = public_path('uploads/topics/' . $file->file_path);
+        if (file_exists($filePath)) {
+            return response()->download($filePath, $file->original_name);
+        } else {
+            return redirect()->back()->with('error', 'Tệp không tồn tại.');
+        }
+    }
+
+    public function destroyFile_topic(File $file)
+    {
+        try {
+            // Xóa tệp khỏi thư mục
+            $filePath = public_path('uploads/topics/' . $file->file_path);
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            // Xóa tệp khỏi cơ sở dữ liệu
+            $file->delete();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
 
     public function magazines()
@@ -252,7 +289,7 @@ class UserController extends Controller
             'year' => 'required|integer',
             'journal' => 'required|string|max:255',
             'paper_id' => 'required|integer',
-            'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048', // Kiểm tra file upload
+
         ]);
 
         $magazine = new Magazine();
@@ -261,13 +298,7 @@ class UserController extends Controller
         $magazine->journal = $request->input('journal');
         $magazine->paper_id = $request->input('paper_id');
 
-        // Xử lý file upload nếu có
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $originalFileName = $file->getClientOriginalName();
-            $filePath = $file->storeAs('uploads/magazines', $originalFileName, 'public');
-            $magazine->file_path = $originalFileName; // Lưu tên file vào cơ sở dữ liệu
-        }
+
         $magazine->save();
 
         foreach ($request->input('scientists') as $scientist) {
@@ -284,15 +315,27 @@ class UserController extends Controller
             'journal' => 'required|string',
             'paper_id' => 'required|exists:papers,id',
             'role_id' => 'required|exists:roles,id',
-            'file' => 'nullable|mimes:doc,docx,pdf|max:2048', // Kiểm tra định dạng và kích thước file
+            'files.*' => 'nullable|mimes:doc,docx,pdf|max:2048', // Kiểm tra định dạng và kích thước file
         ]);
 
         // Xử lý file upload
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $filename = $file->getClientOriginalName(); // Lấy tên gốc của tệp
-            $file->move(public_path('uploads/magazines'), $filename);
-            $magazine->file_path = $filename;
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $originalName = $file->getClientOriginalName(); // Lấy tên gốc của tệp
+                $file->move(public_path('uploads/magazines'), $filename);
+
+                File::create([
+                    'user_id' => Auth::id(),
+                    'file_path' => $filename,
+                    'original_name' => $originalName, // Lưu tên gốc của tệp
+                    'model_id' => $magazine->id,
+                    'model_type' => Magazine::class,
+                    'file_type' => $file->getClientOriginalExtension(),
+                    'related_id' => $magazine->id, // Thêm trường related_id
+                    'related_type' => 'App\Models\Magazine',
+                ]);
+            }
         }
 
         $magazine->update([
@@ -309,11 +352,37 @@ class UserController extends Controller
 
         return redirect()->route('user.magazines.index')->with('success', 'Bài báo đã được cập nhật thành công.');
     }
-
     public function destroyMagazine(Magazine $magazine)
     {
         $magazine->delete();
-        return redirect()->back()->with('success', 'Đề tài đã được xóa thành công!');
+        return redirect()->back()->with('success', 'Bài báo đã được xóa thành công!');
+    }
+    // Method trong UserController
+    public function downloadFile(File $file)
+    {
+        $filePath = public_path('uploads/magazines/' . $file->file_path);
+        if (file_exists($filePath)) {
+            return response()->download($filePath, $file->original_name);
+        } else {
+            return redirect()->back()->with('error', 'Tệp không tồn tại.');
+        }
+    }
+
+    public function destroyFile(File $file)
+    {
+        try {
+            // Xóa tệp khỏi thư mục
+            $filePath = public_path('uploads/magazines/' . $file->file_path);
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            // Xóa tệp khỏi cơ sở dữ liệu
+            $file->delete();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
 
     public function curriculums()
@@ -345,8 +414,11 @@ class UserController extends Controller
             'publisher' => 'required|string',
             'book_id' => 'required|exists:books,id',
             'training_id' => 'required|exists:trainings,id',
-            'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048', // Kiểm tra file upload
+            
+            
         ]);
+
+        
 
         $curriculum = new Curriculum();
         $curriculum->name = $request->input('name');
@@ -355,13 +427,6 @@ class UserController extends Controller
         $curriculum->book_id = $request->input('book_id');
         $curriculum->training_id = $request->input('training_id');
 
-        // Xử lý file upload nếu có
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $originalFileName = $file->getClientOriginalName();
-            $filePath = $file->storeAs('uploads/curriculums', $originalFileName, 'public');
-            $curriculum->file = $originalFileName; // Lưu tên file vào cơ sở dữ liệu
-        }
 
         $curriculum->save();
 
@@ -381,15 +446,27 @@ class UserController extends Controller
             'book_id' => 'required|exists:books,id',
             'training_id' => 'required|exists:trainings,id',
             'role_id' => 'required|exists:roles,id',
-            'file' => 'nullable|mimes:doc,docx,pdf|max:2048', // Kiểm tra định dạng và kích thước file
+            'files.*' => 'nullable|mimes:doc,docx,pdf|max:2048',// Kiểm tra định dạng và kích thước file
         ]);
 
         // Xử lý file upload
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $filename = $file->getClientOriginalName(); // Lấy tên gốc của tệp
-            $file->move(public_path('uploads/curriculums'), $filename);
-            $curriculum->file = $filename;
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $originalName = $file->getClientOriginalName(); // Lấy tên gốc của tệp
+                $file->move(public_path('uploads/curriculums'), $filename);
+
+                File::create([
+                    'user_id' => Auth::id(),
+                    'file_path' => $filename,
+                    'original_name' => $originalName, // Lưu tên gốc của tệp
+                    'model_id' => $curriculum->id,
+                    'model_type' => Magazine::class,
+                    'file_type' => $file->getClientOriginalExtension(),
+                    'related_id' => $curriculum->id, // Thêm trường related_id
+                    'related_type' => 'App\Models\Curriculum',
+                ]);
+            }
         }
 
         $curriculum->update([
@@ -416,6 +493,34 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'giáo trình/sách tham khảo đã được xóa thành công!');
     }
 
+    public function downloadFile_curriculum(File $file)
+    {
+        $filePath = public_path('uploads/curriculums/' . $file->file_path);
+        if (file_exists($filePath)) {
+            return response()->download($filePath, $file->original_name);
+        } else {
+            return redirect()->back()->with('error', 'Tệp không tồn tại.');
+        }
+    }
+
+    public function destroyFile_curriculum(File $file)
+    {
+        try {
+            // Xóa tệp khỏi thư mục
+            $filePath = public_path('uploads/curriculums/' . $file->file_path);
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            // Xóa tệp khỏi cơ sở dữ liệu
+            $file->delete();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
     public function offers()
     {
         // Lấy tất cả các đề xuất của user hiện tại
@@ -425,8 +530,6 @@ class UserController extends Controller
         $scientists = Scientist::all();
 
         return view('user.offers.index', compact('offers'));
-        
-            
     }
 
     public function storeOffer(Request $request)

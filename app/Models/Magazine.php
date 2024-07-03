@@ -9,7 +9,7 @@ class Magazine extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['magazine_name', 'year', 'journal', 'paper_id', 'file_path'];
+    protected $fillable = ['magazine_name', 'year', 'journal', 'paper_id'];
 
     public function paper()
     {
@@ -21,5 +21,10 @@ class Magazine extends Model
         return $this->belongsToMany(Scientist::class, 'scientist_magazine_role')
                     ->withPivot('role_id')
                     ->withTimestamps();
+    }
+
+    public function files()
+    {
+        return $this->morphMany(File::class, 'related');
     }
 }

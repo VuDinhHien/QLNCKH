@@ -70,7 +70,7 @@
                                 data-name="{{ $curriculum->name }}" data-year="{{ $curriculum->year }}"
                                 data-publisher="{{ $curriculum->publisher }}"
                                 data-book-id="{{ $curriculum->book->id }}"
-                                data-training-id="{{ $curriculum->training->id }}" data-file="{{ $curriculum->file }}"
+                                data-training-id="{{ $curriculum->training->id }}" data-files="{{ json_encode($curriculum->files) }}"
                                 data-role-id="{{ $curriculum->pivot->role_id }}">
                                 <i class="fas fa-edit"></i>
                             </button>
@@ -135,10 +135,6 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label for="file">Tải tài liệu</label>
-                        <input type="file" class="form-control" id="file" name="file">
-                    </div>
 
                     <div class="form-group">
                         <label for="profile_id">Cán bộ tham gia</label>
@@ -240,11 +236,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="edit_file">Tệp tài liệu</label>
-                        <input type="file" class="form-control" id="edit_file" name="file">
-                        <p id="current_file"></p>
-                        <a href="#" id="download_file" target="_blank" style="display: none;">Tải tệp hiện
-                            tại</a>
+                        <label for="edit_files">Tệp tài liệu</label>
+                        <input type="file" class="form-control" id="edit_files" name="files[]" multiple>
+                        <div id="current_files"></div>
                     </div>
                 </form>
             </div>
@@ -344,9 +338,9 @@
             var bookId = $(this).data('book-id');
             var trainingId = $(this).data('training-id');
             var roleId = $(this).data('role-id');
-            var file = $(this).data('file'); // Lấy đường dẫn file từ data-file
+            var files = $(this).data('files'); // Mảng các tệp
 
-            console.log("File path: " + file); // Kiểm tra xem có lấy được đường dẫn file chưa
+           
 
             $('#edit_name').val(name);
             $('#edit_year').val(year);
@@ -355,13 +349,17 @@
             $('#edit_training_id').val(trainingId);
             $('#edit_role_id').val(roleId);
 
-            if (file) {
-                $('#current_file').text("Tệp hiện tại: " + file);
-                $('#download_file').attr('href', '/uploads/magazines/' + file).show();
-            } else {
-                $('#current_file').text("Không có tệp");
-                $('#download_file').hide();
-            }
+            // Hiển thị các tệp hiện tại
+            var filesHtml = '';
+            files.forEach(function(file) {
+                filesHtml += `
+           <div>
+            <p>${file.original_name}</p> <!-- Hiển thị tên tệp gốc -->
+            <a href="/user/curriculum/download/${file.id}" class="btn btn-info btn-sm">Tải</a>
+            <button type="button" class="btn btn-danger btn-sm delete-file-button" data-file-id="${file.id}">Xóa</button>
+           </div>`;
+            });
+            $('#current_files').html(filesHtml);
 
             var action = "{{ route('user.curriculum.updateCurriculum', ['curriculum' => ':id']) }}";
             action = action.replace(':id', curriculumId);
@@ -377,6 +375,28 @@
             var action = "{{ route('user.curriculums.destroy', ['curriculum' => ':id']) }}";
             action = action.replace(':id', curriculumId);
             $('#deleteForm').attr('action', action);
+        });
+
+        // Xử lý nút xóa tệp
+        $(document).on('click', '.delete-file-button', function() {
+            var fileId = $(this).data('file-id');
+            var button = $(this);
+
+            $.ajax({
+                url: '/user/curriculum/' + fileId,
+                type: 'DELETE',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr(
+                        'content') // Lấy token CSRF từ meta tag
+                },
+                success: function(response) {
+                    if (response.success) {
+                        button.closest('div').remove();
+                    } else {
+                        alert('Xóa tệp thất bại');
+                    }
+                }
+            });
         });
 
         // Tự động ẩn thông báo sau 2 giây

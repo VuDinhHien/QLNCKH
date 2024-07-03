@@ -171,13 +171,27 @@
             </a>
         </div>
         <div class="col-md-3">
-            <a href="{{ route('projects.progress-report') }}" class="dashboard-card-link">
+            <a href="{{ route('report.index') }}" class="dashboard-card-link">
                 <div class="dashboard-card">
                     <div class="card-header">
                         <i class="fa-solid fa-building-columns"></i>
                     </div>
                     <div class="card-body text-center">
                         Báo cáo thống kê
+                    </div>
+                </div>
+
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="{{ route('projects.progress-report') }}" class="dashboard-card-link">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <div class="card-body text-center">
+                        Báo cáo tiến độ
                     </div>
                 </div>
 

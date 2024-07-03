@@ -4,6 +4,7 @@
 <head>
     <base href="/">
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@yield('title')</title>
     <!-- Tell the browser to be responsive to screen width -->
@@ -346,18 +347,7 @@
             }, 2000); // 3 giây
         });
 
-        $('#myTable tbody').on('click', 'tr', function() {
-            var currentPageIndex = table.page.info().page; // Lấy số trang hiện tại
-            localStorage.setItem('currentPageIndex', currentPageIndex); // Lưu vào localStorage
-        });
-
-        $('#updateButton').click(function() {
-            // Xử lý cập nhật dữ liệu ở đây
-
-            // Sau khi hoàn thành, khôi phục lại trang
-            var currentPageIndex = localStorage.getItem('currentPageIndex');
-            table.page(currentPageIndex).draw('page'); // Quay lại trang trước đó
-        });
+        
     </script>
 
 

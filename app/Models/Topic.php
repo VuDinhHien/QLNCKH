@@ -9,7 +9,7 @@ class Topic extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['topic_name', 'lvtopic_id', 'result', 'start_date', 'end_date','file'];
+    protected $fillable = ['topic_name', 'lvtopic_id', 'result', 'start_date', 'end_date'];
 
 
 
@@ -23,5 +23,10 @@ class Topic extends Model
     public function lvtopic()
     {
         return $this->belongsTo(Lvtopic::class, 'lvtopic_id');
+    }
+
+    public function files()
+    {
+        return $this->morphMany(File::class, 'related');
     }
 }

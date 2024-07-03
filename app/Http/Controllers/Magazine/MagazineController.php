@@ -10,6 +10,7 @@ use App\Models\Paper;
 use App\Models\Role;
 use App\Models\Scientist;
 use App\Exports\MagazinesArticlesExport;
+use App\Models\File;
 use Illuminate\Http\Request;
 
 class MagazineController extends Controller
@@ -20,7 +21,7 @@ class MagazineController extends Controller
     public function index()
     {
 
-        $magazines = Magazine::with(['scientists', 'scientists.magazines', 'paper'])->paginate(100);
+        $magazines = Magazine::with(['scientists', 'scientists.magazines', 'paper','files'])->paginate(100);
         $scientists = Scientist::all();
         $roles = Role::all();
         $papers = Paper::all();
@@ -70,14 +71,18 @@ class MagazineController extends Controller
          return redirect()->route('magazine.index')->with('success', 'Thêm bài báo thành công');
      }
 
-    public function download(Magazine $magazine)
-    {
-        if ($magazine->file_path) {
-            return response()->download(storage_path('app/public/uploads/magazines/' . $magazine->file_path));
-        }
-
-        return redirect()->back()->with('error', 'File not found.');
-    }
+     public function download($fileId)
+     {
+         $file = File::findOrFail($fileId);
+ 
+         $filePath = public_path('uploads/magazines/' . $file->file_path);
+ 
+         if (file_exists($filePath)) {
+             return response()->download($filePath, $file->original_name);
+         } else {
+             return redirect()->back()->with('error', 'File not found.');
+         }
+     }
     /**
      * Display the specified resource.
      */

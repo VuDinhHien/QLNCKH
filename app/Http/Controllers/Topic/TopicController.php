@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Topic;
 
 use App\Exports\TopicsExport;
 use App\Http\Controllers\Controller;
-
-
+use App\Models\File;
 use Maatwebsite\Excel\Facades\Excel;
 
 use App\Models\Lvtopic;
@@ -22,7 +21,7 @@ class TopicController extends Controller
     public function index()
     {
         
-        $topics = Topic::with(['scientists', 'scientists.topics', 'lvtopic'])->paginate(100);
+        $topics = Topic::with(['scientists', 'scientists.topics', 'lvtopic', 'files'])->paginate(100);
         $scientists = Scientist::all();
         $roles = Role::all();
         $lvtopics = Lvtopic::all();
@@ -75,19 +74,17 @@ class TopicController extends Controller
         return redirect()->route('topic.index')->with('success', 'Thêm đề tài thành công');
     }
 
-    public function download(Topic $topic)
+    public function download($fileId)
     {
-        if ($topic->file) {
-            $filePath = storage_path('app/public/uploads/topics/' . $topic->file);
+        $file = File::findOrFail($fileId);
 
-            if (file_exists($filePath)) {
-                return response()->download($filePath, $topic->file);
-            } else {
-                return redirect()->back()->with('error', 'File not found.');
-            }
+        $filePath = public_path('uploads/topics/' . $file->file_path);
+
+        if (file_exists($filePath)) {
+            return response()->download($filePath, $file->original_name);
+        } else {
+            return redirect()->back()->with('error', 'File not found.');
         }
-
-        return redirect()->back()->with('error', 'File not found.');
     }
 
 

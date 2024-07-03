@@ -88,11 +88,11 @@
                     @endforeach
                 </td>
                 <td>
-                    @if ($magazine->file_path)
-                        <a href="{{ route('magazine.download', $magazine->id) }}" target="_blank">Xem tệp</a>
-                    @else
-                        Không có tệp
-                    @endif
+                    @foreach ($magazine->files as $file)
+                        <div>
+                            <a href="{{ route('magazine.download', $file->id) }}" class="btn btn-link" target="_blank">{{ $file->original_name }}</a>
+                        </div>
+                    @endforeach
                 </td>
                 <td>
                     <div class="action" style="display: flex">

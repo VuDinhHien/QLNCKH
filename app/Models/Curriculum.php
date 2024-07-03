@@ -11,7 +11,7 @@ class Curriculum extends Model
 
     protected $table = 'curriculums'; // Chỉ định tên bảng
 
-    protected $fillable = ['name', 'year', 'publisher', 'book_id', 'training_id', 'file'];
+    protected $fillable = ['name', 'year', 'publisher', 'book_id', 'training_id'];
 
    
 
@@ -31,5 +31,9 @@ class Curriculum extends Model
         return $this->belongsToMany(Scientist::class, 'scientist_curriculum_role')
                     ->withPivot('role_id')
                     ->withTimestamps();
+    }
+    public function files()
+    {
+        return $this->morphMany(File::class, 'related');
     }
 }

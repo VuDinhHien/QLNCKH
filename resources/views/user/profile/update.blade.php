@@ -12,7 +12,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="profile_id">Mã cán bộ<span class="text-danger">*</label>
-                <input type="text" class="form-control" name="profile_id" value="{{ $scientist->profile_id }}" placeholder="Input field" required>
+                <input type="text" class="form-control" name="profile_id" value="{{ $scientist->profile_id }}" placeholder="Input field" readonly>
             </div>
         </div>
         <div class="col-md-3">

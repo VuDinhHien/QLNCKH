@@ -70,7 +70,7 @@ class PapersExport implements FromArray, WithTitle, WithHeadings, WithStyles, Wi
             ],
         ]);
 
-        $sheet->getStyle('A8:D8')->applyFromArray([
+        $sheet->getStyle('A7:D7')->applyFromArray([
             'fill' => [
                 'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
                 'color' => ['argb' => 'FFFF00'],
@@ -80,7 +80,7 @@ class PapersExport implements FromArray, WithTitle, WithHeadings, WithStyles, Wi
             ],
         ]);
 
-        $sheet->getStyle('A14:D14')->applyFromArray([
+        $sheet->getStyle('A12:D12')->applyFromArray([
             'fill' => [
                 'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
                 'color' => ['argb' => 'FFFF00'],
@@ -90,7 +90,7 @@ class PapersExport implements FromArray, WithTitle, WithHeadings, WithStyles, Wi
             ],
         ]);
 
-        $sheet->getStyle('A19:D19')->applyFromArray([
+        $sheet->getStyle('A16:D16')->applyFromArray([
             'fill' => [
                 'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
                 'color' => ['argb' => 'FFFF00'],
@@ -99,6 +99,27 @@ class PapersExport implements FromArray, WithTitle, WithHeadings, WithStyles, Wi
                 'bold' => true,
             ],
         ]);
+
+        $sheet->getStyle('A20:D20')->applyFromArray([
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'color' => ['argb' => 'FFFF00'],
+            ],
+            'font' => [
+                'bold' => true,
+            ],
+        ]);
+
+        $sheet->getStyle('A24:D24')->applyFromArray([
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'color' => ['argb' => 'FFFF00'],
+            ],
+            'font' => [
+                'bold' => true,
+            ],
+        ]);
+
 
         return [];
     }

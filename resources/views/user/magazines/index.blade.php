@@ -34,7 +34,9 @@
             <th>Năm công bố</th>
             <th>Tên tạp chí</th>
             <th>Loại bài báo</th>
+
             <th>Vai trò</th>
+
             <th>Thao tác</th>
 
         </tr>
@@ -47,6 +49,7 @@
                 <td>{{ $magazine->year }}</td>
                 <td>{{ $magazine->journal }}</td>
                 <td>{{ $magazine->paper->paper_name }}</td>
+
                 <td>
                     @foreach ($magazine->scientists as $sci)
                         @if ($sci->id == $scientist->id)
@@ -66,7 +69,7 @@
                                         data-magazine-name="{{ $magazine->magazine_name }}"
                                         data-year="{{ $magazine->year }}" data-journal="{{ $magazine->journal }}"
                                         data-paper-id="{{ $magazine->paper->id }}"
-                                        data-file="{{ $magazine->file_path }}"
+                                        data-files="{{ json_encode($magazine->files) }}"
                                         data-role-id="{{ $magazine->pivot->role_id }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
@@ -122,10 +125,9 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="file">Tải tài liệu</label>
-                        <input type="file" class="form-control" id="file" name="file">
-                    </div>
+
+
+
                     <div class="form-group">
                         <label for="profile_id">Cán bộ tham gia</label>
                         <div id="create-authors-container">
@@ -170,6 +172,7 @@
 
 
 <!-- Modal edit-->
+<!-- Modal edit-->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -213,11 +216,9 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="edit_file">Tệp tài liệu</label>
-                        <input type="file" class="form-control" id="edit_file" name="file">
-                        <p id="current_file"></p>
-                        <a href="#" id="download_file" target="_blank" style="display: none;">Tải tệp hiện
-                            tại</a>
+                        <label for="edit_files">Tệp tài liệu</label>
+                        <input type="file" class="form-control" id="edit_files" name="files[]" multiple>
+                        <div id="current_files"></div>
                     </div>
                 </form>
             </div>
@@ -228,6 +229,7 @@
         </div>
     </div>
 </div>
+
 
 
 
@@ -308,38 +310,62 @@
         });
 
 
+        // Khi bấm vào nút chỉnh sửa
         $('.edit-button').click(function() {
             var magazineId = $(this).data('magazine-id');
             var magazineName = $(this).data('magazine-name');
             var year = $(this).data('year');
             var journal = $(this).data('journal');
             var paperId = $(this).data('paper-id');
-            var roleId = $(this).data('role-id');
-            var file = $(this).data('file'); // Lấy đường dẫn file từ data-file
-
-            console.log("File path: " + file); // Kiểm tra xem có lấy được đường dẫn file chưa
+            var files = $(this).data('files'); // Mảng các tệp
 
             $('#edit_magazine_name').val(magazineName);
             $('#edit_year').val(year);
             $('#edit_journal').val(journal);
             $('#edit_paper_id').val(paperId);
-            $('#edit_role_id').val(roleId);
 
-            if (file) {
-                $('#current_file').text("Tệp hiện tại: " + file);
-                $('#download_file').attr('href', '/uploads/magazines/' + file).show();
-            } else {
-                $('#current_file').text("Không có tệp");
-                $('#download_file').hide();
-            }
+            // Hiển thị các tệp hiện tại
+            var filesHtml = '';
+            files.forEach(function(file) {
+                filesHtml += `
+           <div>
+            <p>${file.original_name}</p> <!-- Hiển thị tên tệp gốc -->
+            <a href="/user/magazine/download/${file.id}" class="btn btn-info btn-sm">Tải</a>
+            <button type="button" class="btn btn-danger btn-sm delete-file-button" data-file-id="${file.id}">Xóa</button>
+           </div>`;
+            });
+            $('#current_files').html(filesHtml);
 
             var action = "{{ route('user.magazine.updateMagazine', ['magazine' => ':id']) }}";
             action = action.replace(':id', magazineId);
             $('#editForm').attr('action', action);
         });
 
+        // Khi bấm nút cập nhật
         $('#updateButton').click(function() {
             $('#editForm').submit();
+        });
+
+        // Xử lý nút xóa tệp
+        $(document).on('click', '.delete-file-button', function() {
+            var fileId = $(this).data('file-id');
+            var button = $(this);
+
+            $.ajax({
+                url: '/user/magazine/' + fileId,
+                type: 'DELETE',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr(
+                        'content') // Lấy token CSRF từ meta tag
+                },
+                success: function(response) {
+                    if (response.success) {
+                        button.closest('div').remove();
+                    } else {
+                        alert('Xóa tệp thất bại');
+                    }
+                }
+            });
         });
         $('[data-target="#deleteModal"]').click(function() {
             var topicId = $(this).data('magazine-id');

@@ -95,14 +95,12 @@
                 </td>
 
                 <td>
-                    @if ($curriculum->file)
-                        <a href="{{ route('curriculum.download', $curriculum->id) }}" target="_blank">Xem tệp</a>
-                    @else
-                        Không có tệp
-                    @endif
+                    @foreach ($curriculum->files as $file)
+                        <div>
+                            <a href="{{ route('curriculum.download', $file->id) }}" class="btn btn-link" target="_blank">{{ $file->original_name }}</a>
+                        </div>
+                    @endforeach
                 </td>
-                
-                
 
                 <td>
                     <div class="action" style="display: flex">
