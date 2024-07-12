@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Magazine;
+use App\Models\Topic;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -10,16 +10,17 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class PapersExport implements FromArray, WithTitle, WithHeadings, WithStyles, WithColumnWidths
+class LvtopicExport implements FromArray, WithTitle, WithHeadings, WithStyles, WithColumnWidths
 {
-    protected $magazines;
+    protected $topics;
     protected $headerPositions = [];
 
     public function __construct()
     {
-        $this->magazines = Magazine::with(['paper', 'scientists' => function($query) {
+        // Lấy tất cả các đề tài cùng với cấp đề tài và danh sách các nhà khoa học
+        $this->topics = Topic::with(['lvtopic', 'scientists' => function($query) {
             $query->withPivot('role_id');
-        }])->get()->groupBy('paper_id');
+        }])->get()->groupBy('lvtopic_id');
     }
 
     public function array(): array
@@ -27,30 +28,35 @@ class PapersExport implements FromArray, WithTitle, WithHeadings, WithStyles, Wi
         $data = [];
         $counter = 1;
         $rowIndex = 1;
-        
-        foreach ($this->magazines as $paperId => $magazineGroup) {
+
+        // Thêm dòng tiêu đề chính
+        $data[] = ['Thống kê danh sách đề tài theo cấp', '', '', '', ''];
+        $this->headerPositions[] = $rowIndex; // Lưu vị trí của dòng tiêu đề chính
+        $rowIndex++;
+
+        foreach ($this->topics as $lvtopicId => $topicGroup) {
             // Header row
             $rowHeader = [
-                $this->intToRoman($counter) . ' ' . $magazineGroup->first()->paper->paper_name, '', '', ''
+                $this->intToRoman($counter) . ' ' . $topicGroup->first()->lvtopic->lvtopic_name, '', '', '', ''
             ];
             $data[] = $rowHeader;
             $rowIndex++;
 
             // Column titles row
-            $data[] = ['Tên bài báo', 'Năm', 'Loại bài báo', 'Tên cán bộ và vai trò'];
+            $data[] = ['Tên đề tài', 'Năm', 'Ngày bắt đầu', 'Ngày kết thúc', 'Tên cán bộ và vai trò'];
             $this->headerPositions[] = $rowIndex; // Lưu vị trí của tiêu đề
             $rowIndex++;
-            
-            foreach ($magazineGroup as $magazine) {
-                $scientists = implode(', ', $magazine->scientists->map(function ($scientist) {
+
+            foreach ($topicGroup as $topic) {
+                $scientists = implode(', ', $topic->scientists->map(function ($scientist) {
                     return $scientist->profile_name . ' (' . \App\Models\Role::find($scientist->pivot->role_id)->role_name . ')';
                 })->toArray());
-                $data[] = [$magazine->magazine_name, $magazine->year, $magazine->journal, $scientists];
+                $data[] = [$topic->topic_name, $topic->year, $topic->start_date, $topic->end_date, $scientists];
                 $rowIndex++;
             }
 
             // Add an empty row
-            $data[] = ['', '', '', ''];
+            $data[] = ['', '', '', '', ''];
             $rowIndex++;
             $counter++;
         }
@@ -59,7 +65,7 @@ class PapersExport implements FromArray, WithTitle, WithHeadings, WithStyles, Wi
 
     public function title(): string
     {
-        return 'Magazines by Paper';
+        return 'Topics by Level';
     }
 
     public function headings(): array
@@ -74,7 +80,7 @@ class PapersExport implements FromArray, WithTitle, WithHeadings, WithStyles, Wi
 
         // Áp dụng style cho các tiêu đề
         foreach ($this->headerPositions as $headerPosition) {
-            $sheet->getStyle("A{$headerPosition}:D{$headerPosition}")->applyFromArray([
+            $sheet->getStyle("A{$headerPosition}:E{$headerPosition}")->applyFromArray([
                 'fill' => [
                     'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
                     'color' => ['argb' => 'FFFF00'],
@@ -91,10 +97,11 @@ class PapersExport implements FromArray, WithTitle, WithHeadings, WithStyles, Wi
     public function columnWidths(): array
     {
         return [
-            'A' => 40,  // Tên bài báo
+            'A' => 40,  // Tên đề tài
             'B' => 15,  // Năm
-            'C' => 20,  // Loại bài báo
-            'D' => 50,  // Tên cán bộ và vai trò
+            'C' => 20,  // Ngày bắt đầu
+            'D' => 20,  // Ngày kết thúc
+            'E' => 50,  // Tên cán bộ và vai trò
         ];
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+use App\Exports\LvcouncilExport;
+use App\Exports\LvtopicExport;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -135,6 +137,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
   Route::delete('/offer/{id}', [OfferController::class, 'destroy'])->name('offer.destroy');
   Route::resource('offer', OfferController::class);
 
+  Route::post('/offers/{offer}/approve', [OfferController::class, 'approve'])->name('offers.approve');
+
 
 
 
@@ -169,6 +173,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
   Route::get('/export-papers', function () {
     return Excel::download(new PapersExport, 'papers_by_magazine.xlsx');
   })->name('report.export.papers');
+
+
+  Route::get('/export-lvtopics', function () {
+    return Excel::download(new LvtopicExport, 'Danh sách đề tài theo cấp.xlsx');
+  })->name('report.export.lvtopics');
 });
 
 
@@ -210,9 +219,10 @@ Route::middleware(['auth', 'user'])->group(function () {
 
   Route::get('/user/curriculum/download/{file}', [UserController::class, 'downloadFile_curriculum'])->name('user.curriculum.download');
   
-  Route::get('/offers', [UserController::class, 'offers'])->name('user.offers.index'); // Thêm route này
+  Route::get('/offers', [UserController::class, 'offers'])->name('user.offers.index');
   Route::post('/user/offers', [UserController::class, 'storeOffer'])->name('user.offers.store');
-
+  Route::delete('/user/offers/{offer}', [UserController::class, 'destroyOffer'])->name('user.offers.destroy'); // xóa của user Curriculum
+  Route::put('/user/offers/{offer}', [UserController::class, 'updateOffer'])->name('user.offer.updateOffer');
 
 });
 

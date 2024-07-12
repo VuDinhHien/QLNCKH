@@ -191,7 +191,7 @@
                         <i class="fa-solid fa-building-columns"></i>
                     </div>
                     <div class="card-body text-center">
-                        Báo cáo tiến độ
+                        Thống kê tiến độ
                     </div>
                 </div>
 

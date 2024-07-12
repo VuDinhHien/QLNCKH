@@ -36,7 +36,7 @@ class CouncilController extends Controller
         //
         $request->validate([
             'position_name'          =>  'required',
-            'only_position'         =>  'required',
+           
             
         ]);
 
@@ -45,7 +45,7 @@ class CouncilController extends Controller
         $council = new Council;
 
         $council->position_name = $request->position_name;
-        $council->only_position = $request->only_position;
+       
        
    
 
@@ -81,7 +81,7 @@ class CouncilController extends Controller
         
         $request->validate([
             'position_name'          =>  'required',
-            'only_position'         =>  'required',
+           
             
         ]);
 
@@ -90,7 +90,7 @@ class CouncilController extends Controller
         $council = Council::find($request->hidden_id);
 
         $council->position_name = $request->position_name;
-        $council->only_position = $request->only_position;
+       
        
    
 

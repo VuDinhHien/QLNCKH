@@ -18,6 +18,7 @@ use App\Models\Role;
 use App\Models\Training;
 use App\Models\Offer;
 use App\Models\File;
+use App\Models\Propose;
 use App\Models\User;
 class UserController extends Controller
 {
@@ -523,37 +524,87 @@ class UserController extends Controller
 
     public function offers()
     {
-        // Lấy tất cả các đề xuất của user hiện tại
-        $offers = Offer::where('user_id', Auth::id())->get();
-        $papers = Paper::all();
-        $roles = Role::all();
-        $scientists = Scientist::all();
+        $user = Auth::user();
+        $scientist = Scientist::where('profile_name', $user->name)->first();
 
-        return view('user.offers.index', compact('offers'));
+        if ($scientist) {
+            $offers = $scientist->offers()->with(['propose', 'scientists' => function ($query) {
+                $query->withPivot('role_id');
+            }])->get();
+            $proposes = Propose::all();
+            $roles = Role::all();
+            $scientists = Scientist::all();
+
+            return view('user.offers.index', compact('offers', 'proposes', 'roles', 'scientists', 'scientist'));
+        } else {
+            return redirect()->route('user.dashboard')->with('no', 'Không tìm thấy thông tin nhà khoa học');
+        }
+        
+
     }
 
     public function storeOffer(Request $request)
     {
+       
         $request->validate([
-            'proposer' => 'required|string|max:255',
             'year' => 'required|integer',
             'offer_name' => 'required|string|max:255',
             'propose_id' => 'required|exists:proposes,id',
-            'suggestion_id' => 'required|exists:suggestions,id',
             'note' => 'nullable|string',
         ]);
 
-        Offer::create([
-            'proposer' => $request->proposer,
-            'year' => $request->year,
-            'offer_name' => $request->offer_name,
-            'propose_id' => $request->propose_id,
-            'suggestion_id' => $request->suggestion_id,
-            'note' => $request->note,
-            'user_id' => Auth::id(),
-            'status' => 'pending',
+        $offer = new Offer();
+        $offer->offer_name = $request->input('offer_name');
+        $offer->year = $request->input('year');
+        $offer->note = $request->input('note');
+        $offer->propose_id = $request->input('propose_id');
+
+
+        $offer->save();
+
+        foreach ($request->input('scientists') as $scientist) {
+            $offer->scientists()->attach($scientist['id'], ['role_id' => $scientist['role_id']]);
+        }
+        return redirect()->route('user.offers.index')->with('success','Đề xuất đã được thêm thành công');
+    }
+
+    public function updateOffer(Request $request, Offer $offer)
+    {
+        $request->validate([
+            'year' => 'required|integer',
+            'offer_name' => 'required|string|max:255',
+            'propose_id' => 'required|exists:proposes,id',
+            'note' => 'nullable|string',
+            'role_id' => 'required|exists:roles,id',
+          
         ]);
 
-        return redirect()->route('offers.index')->with('success', 'Đề xuất đã được thêm!');
+       
+        $offer->update([
+            'offer_name' => $request->offer_name,
+            'year' => $request->year,
+            
+            'note' => $request->note,
+            'propose_id' => $request->propose_id,
+           
+
+
+        ]);
+        // Cập nhật vai trò của người dùng trong bài báo
+        $user = Auth::user();
+        $scientist = Scientist::where('profile_name', $user->name)->first();
+        $offer->scientists()->updateExistingPivot($scientist->id, ['role_id' => $request->role_id]);
+
+        return redirect()->route('user.offers.index')->with('success', 'Đề xuất đã được cập nhật thành công.');
     }
+
+
+
+    public function destroyOffer(Offer $offer)
+    {
+        $offer->delete();
+        return redirect()->back()->with('success','Xóa đề xuất thành công');
+    }
+
+
 }

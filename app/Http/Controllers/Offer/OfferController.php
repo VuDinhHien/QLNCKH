@@ -17,18 +17,17 @@ class OfferController extends Controller
      */
     public function index()
     {
-        //
+        // Lấy danh sách các đề xuất chưa được duyệt
+        $offers = Offer::with(['scientists', 'scientists.offers', 'propose'])
+            ->where('status', '!=', 'approved')
+            ->paginate(100);
 
-
-        $offers = Offer::with(['scientists', 'scientists.offers', 'propose'])->paginate(100);
         $scientists = Scientist::all();
         $roles = Role::all();
-
         $proposes = Propose::all();
 
         return view('offer.index', compact('offers', 'scientists', 'roles', 'proposes'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -91,7 +90,7 @@ class OfferController extends Controller
         $validatedData = $request->validate([
             'offer_name' => 'required|string|max:255',
             'year' => 'required|integer|min:1900|max:' . date('Y'),
-          
+
             'propose_id'     =>  'required|exists:proposes,id',
 
             'scientists' => 'required|array',
@@ -110,7 +109,7 @@ class OfferController extends Controller
             'propose_id'  => $validatedData['propose_id'],
         ]);
 
-      
+
         $scientistsSyncData = [];
         foreach ($validatedData['scientists'] as $scientist) {
             $scientistsSyncData[$scientist['id']] = ['role_id' => $scientist['role_id']];
@@ -133,5 +132,26 @@ class OfferController extends Controller
         return redirect()->route('offer.index')->with('success', 'Xóa đề xuất thành công.');
     }
 
-    
+    public function approve(Offer $offer)
+    {
+        // Tạo topic từ offer
+        $topic = Topic::create([
+            'topic_name' => $offer->offer_name,
+            'lvtopic_id' => $offer->propose_id,
+            'result' => null,  // Đặt giá trị null cho result
+            'start_date' => now(),  // Bạn có thể điều chỉnh ngày bắt đầu tùy theo logic của bạn
+            'end_date' => now()->addYear(),  // Bạn có thể điều chỉnh ngày kết thúc tùy theo logic của bạn
+        ]);
+
+        // Sao chép các nhà khoa học và vai trò từ offer sang topic
+        $scientistsWithRoles = $offer->scientists()->withPivot('role_id')->get();
+        foreach ($scientistsWithRoles as $scientist) {
+            $topic->scientists()->attach($scientist->id, ['role_id' => $scientist->pivot->role_id]);
+        }
+
+        // Cập nhật status của offer
+        $offer->update(['status' => 'đã duyệt']);
+
+        return redirect()->back()->with('success', 'Đề xuất đã được duyệt và chuyển vào danh sách đề tài.');
+    }
 }

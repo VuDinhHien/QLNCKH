@@ -230,7 +230,7 @@
                     </li>
                     <li>
                         <a href="{{ route('projects.progress-report') }}">
-                            <i class="fa fa-solid fa-pager"></i> <span>Báo cáo tiến độ</span>
+                            <i class="fa fa-solid fa-pager"></i> <span>Thống kê tiến độ</span>
                         </a>
                     </li>
 

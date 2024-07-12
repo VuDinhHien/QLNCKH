@@ -180,6 +180,13 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="{{ route('user.offers.index') }}">
+                            <i class="fa fa-solid fa-book"></i> <span>Đề xuất đề tài</span>
+
+                        </a>
+                    </li>
+
 
                     <li>
                         <a href="{{ route('user.projects.index') }}">
@@ -200,6 +207,8 @@
 
                         </a>
                     </li>
+
+                   
 
                   
 

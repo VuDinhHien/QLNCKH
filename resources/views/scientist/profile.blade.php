@@ -24,7 +24,7 @@
         color: rgb(0, 55, 255);
         justify-content: space-between;
         font-weight: bolder;
-
+        font-size: 18px; /* Tăng cỡ chữ */
     }
 
     .navbar-default .navbar-nav>li>a:hover,
@@ -39,6 +39,20 @@
         background-color: transparent;
         /* Để không thay đổi màu nền khi được chọn */
     }
+
+    .navbar-nav {
+        float: none;
+        margin: 0 auto;
+        display: table;
+        
+        width: 100%;
+    }
+
+    .navbar-nav > li {
+        display: table-cell;
+        text-align: center;
+        float: none;
+    }
 </style>
 
 <nav class="navbar navbar-default">
@@ -52,30 +66,23 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-collapse-1">
             <ul class="nav navbar-nav">
-
-                <li class="active"><a href="{{ route('scientist.profile', ['scientist' => $scientist->id]) }}">Lý lịch
+                <li class="active"><a href="{{ route('scientist.profile', ['scientist' => $scientist->id]) }}">Lý lịch
                         <span class="sr-only">(current)</span></a></li>
                 <li><a href="{{ route('scientist.topics', ['scientist' => $scientist->id]) }}">Đề tài/Đề án</a></li>
-
-                <li><a href="#">Bài tham luận</a></li>
-                <li><a href="{{ route('scientist.curriculums', ['scientist' => $scientist->id]) }}">Sách tham
-                        khảo/Giáo trình</a></li>
-                <li><a href="{{ route('scientist.magazines', ['scientist' => $scientist->id]) }}">Bài báo</a></li>
-                <li><a href="#">Công trình áp dụng</a></li>
-                <li><a href="#">Giải thưởng</a></li>
-                <li><a href="#">Thành tựu</a></li>
+                <li><a href="{{ route('scientist.curriculums', ['scientist' => $scientist->id]) }}">Sách tham khảo/Giáo trình</a></li>
+                <li><a href="{{ route('scientist.magazines', ['scientist' => $scientist->id]) }}">Bài báo</a></li>
             </ul>
-
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <div class="row">
     <form class="align-items-center" method="post" action="{{ route('scientist.store', $scientist->id) }}"

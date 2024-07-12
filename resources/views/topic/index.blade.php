@@ -153,6 +153,7 @@
                     <div class="form-group">
                         <label for="result">Kết quả nghiệm thu</label>
                         <select name="result" id="result" class="form-control">
+                            <option>Chọn kết quả</option>
                             <option value="Khá">Khá</option>
                             <option value="Giỏi">Giỏi</option>
                             <option value="Xuất sắc">Xuất sắc</option>
@@ -176,6 +177,7 @@
                                 <div class="form-group row">
                                     <div class="col-xs-5">
                                         <select class="form-control" name="scientists[0][id]" required>
+                                            <option value="">-Chọn nhà khoa học-</option>
                                             @foreach ($scientists as $scientist)
                                                 <option value="{{ $scientist->id }}">{{ $scientist->profile_name }}
                                                 </option>
@@ -184,6 +186,7 @@
                                     </div>
                                     <div class="col-xs-5">
                                         <select class="form-control" name="scientists[0][role_id]" required>
+                                            <option value="">-Chọn vai trò-</option>
                                             @foreach ($roles as $role)
                                                 <option value="{{ $role->id }}">{{ $role->role_name }}</option>
                                             @endforeach

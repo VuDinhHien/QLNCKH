@@ -12,7 +12,10 @@ class Offer extends Model
     protected $fillable = [ 'year', 'offer_name', 'propose_id', 'note', 
     'status',];
 
-    
+    public function topic()
+{
+    return $this->hasOne(Topic::class);
+}
 
     public function propose()
     {

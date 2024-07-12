@@ -32,6 +32,16 @@
             </td>
         </tr>
 
+        <tr>
+            <td>Thống kê theo các cấp đề tài</td>
+            <td>
+                <a href="{{ route('report.export.lvtopics') }}" class="btn btn-sm btn-success">
+                    <i class="fa-sharp fa-solid fa-download" style="margin-right: 5px;"></i>
+                
+                </a>
+            </td>
+        </tr>
+
        
     </tbody>
 </table>

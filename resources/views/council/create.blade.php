@@ -12,24 +12,13 @@
 
             <form class="align-items:center" method="post" action="{{ route('council.store') }}" enctype="multipart/form-data" >
                 @csrf
-                <div class="form-group">
-                    <label for="itemName">Mã chức vụ</label>
-                    <input type="text" class="form-control" name="id" placeholder="Input field" required>
-                </div>
+               
                 <div class="form-group">
                     <label for="itemDescription">Tên chức vụ</label>
                     <input type="text" class="form-control" name="position_name" placeholder="Input field" required>
                 </div>
                 
-                <div class="form-group">
-                    <label for="">Chức vụ duy nhất</label>
-
-                    <select class="form-control" name="only_position" required>
-                        <option value="">Select category</option>
-                        <option value="Có">Có</option>
-                        <option value="Không">Không</option>
-                    </select>
-                </div>
+                
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Thêm</button>
                 </div>

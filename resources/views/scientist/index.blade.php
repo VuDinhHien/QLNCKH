@@ -8,7 +8,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"><i class="fa-solid fa-house-chimney"></i> Trang
                 chủ</a></li>
-        <li class="breadcrumb-item active" aria-current="page">  nhà khoa học</li>
+        <li class="breadcrumb-item active" aria-current="page">Nhà khoa học</li>
     </ol>
 </nav>
 

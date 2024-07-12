@@ -78,6 +78,20 @@
 
             </a>
         </div>
+
+        <div class="col-md-3">
+            <a href="{{ route('user.offers.index') }}" class="dashboard-card-link">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <div class="card-body text-center">
+                        Đề xuất đề tài
+                    </div>
+                </div>
+
+            </a>
+        </div>
         
         <div class="col-md-3">
             <a href="{{ route('user.projects.index') }}" class="dashboard-card-link">

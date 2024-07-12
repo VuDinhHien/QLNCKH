@@ -153,10 +153,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label for="file">Tệp đính kèm</label>
-                        <input type="file" class="form-control" id="file" name="file">
-                    </div>
+                   
 
                     <div class="form-group">
                         <label for="profile_id">Cán bộ tham gia</label>
@@ -165,6 +162,7 @@
                                 <div class="form-group row">
                                     <div class="col-xs-5">
                                         <select class="form-control" name="scientists[0][id]" required>
+                                            <option value="">-Chọn nhà khoa học-</option>
                                             @foreach ($scientists as $scientist)
                                                 <option value="{{ $scientist->id }}">{{ $scientist->profile_name }}
                                                 </option>
@@ -173,6 +171,7 @@
                                     </div>
                                     <div class="col-xs-5">
                                         <select class="form-control" name="scientists[0][role_id]" required>
+                                            <option value="">---Chọn vai trò---</option>
                                             @foreach ($roles as $role)
                                                 <option value="{{ $role->id }}">{{ $role->role_name }}</option>
                                             @endforeach

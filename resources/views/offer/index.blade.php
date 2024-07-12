@@ -92,6 +92,14 @@
 
                 <td>
                     <div class="action" style="display: flex">
+                        <form action="{{ route('offers.approve', $offer) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-success" style="margin-right: 5px" 
+                                @if ($offer->status == 'đã duyệt') disabled @endif>
+                                <i class="fa fa-check"></i>
+                            </button>
+                        </form>
+
                         <div>
                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                 data-target="#editModal" data-offer-id="{{ $offer->id }}"
@@ -108,7 +116,8 @@
                             </button>
 
                         </div>
-                        
+
+
                     </div>
                 </td>
 
@@ -162,6 +171,7 @@
                                 <div class="form-group row">
                                     <div class="col-xs-5">
                                         <select class="form-control" name="scientists[0][id]" required>
+                                            <option value="">-Chọn nhà khoa học-</option>
                                             @foreach ($scientists as $scientist)
                                                 <option value="{{ $scientist->id }}">{{ $scientist->profile_name }}
                                                 </option>
@@ -170,6 +180,7 @@
                                     </div>
                                     <div class="col-xs-5">
                                         <select class="form-control" name="scientists[0][role_id]" required>
+                                            <option value="">-Chọn vai trò-</option>
                                             @foreach ($roles as $role)
                                                 <option value="{{ $role->id }}">{{ $role->role_name }}</option>
                                             @endforeach
@@ -377,31 +388,31 @@
 
 <script>
     $(document).ready(function() {
-    // Thêm sự kiện click cho nút mở modal
-    $('[data-target="#editModal"]').click(function() {
-        var button = $(this);
-        var offerId = button.data('offer-id');
-        var offerName = button.data('offer-name');
-        var year = button.data('year');
-        var note = button.data('note');
-        var proposeId = button.data('propose-id');
-        var scientists = button.data('scientists');
+        // Thêm sự kiện click cho nút mở modal
+        $('[data-target="#editModal"]').click(function() {
+            var button = $(this);
+            var offerId = button.data('offer-id');
+            var offerName = button.data('offer-name');
+            var year = button.data('year');
+            var note = button.data('note');
+            var proposeId = button.data('propose-id');
+            var scientists = button.data('scientists');
 
-        // Kiểm tra giá trị scientists
-        console.log(scientists);
+            // Kiểm tra giá trị scientists
+            console.log(scientists);
 
-        // Cập nhật giá trị vào form
-        $('#edit_offer_name').val(offerName);
-        $('#edit_year').val(year);
-        $('#edit_note').val(note);
-        $('#edit_propose_id').val(proposeId);
+            // Cập nhật giá trị vào form
+            $('#edit_offer_name').val(offerName);
+            $('#edit_year').val(year);
+            $('#edit_note').val(note);
+            $('#edit_propose_id').val(proposeId);
 
-        // Clear previous authors
-        $('#edit-authors-container').empty();
+            // Clear previous authors
+            $('#edit-authors-container').empty();
 
-        // Populate authors
-        scientists.forEach((scientist, index) => {
-            var authorGroup = `
+            // Populate authors
+            scientists.forEach((scientist, index) => {
+                var authorGroup = `
                 <div class="author-group">
                     <select class="form-control" name="scientists[${index}][id]" required>
                         @foreach ($scientists as $s)
@@ -420,24 +431,24 @@
                     <button type="button" class="btn btn-danger remove-author">Xóa</button>
                 </div>
             `;
-            $('#edit-authors-container').append(authorGroup);
+                $('#edit-authors-container').append(authorGroup);
+            });
+
+            // Cập nhật action của form
+            var action = "{{ route('offer.update', ['offer' => ':id']) }}";
+            action = action.replace(':id', offerId);
+            $('#editForm').attr('action', action);
         });
 
-        // Cập nhật action của form
-        var action = "{{ route('offer.update', ['offer' => ':id']) }}";
-        action = action.replace(':id', offerId);
-        $('#editForm').attr('action', action);
-    });
+        // Thêm sự kiện click cho nút cập nhật
+        $('#updateButton').click(function() {
+            $('#editForm').submit();
+        });
 
-    // Thêm sự kiện click cho nút cập nhật
-    $('#updateButton').click(function() {
-        $('#editForm').submit();
-    });
-
-    // Thêm sự kiện click cho nút thêm tác giả
-    $('#add-edit-author').click(function() {
-        var index = $('.author-group').length;
-        var authorGroup = `
+        // Thêm sự kiện click cho nút thêm tác giả
+        $('#add-edit-author').click(function() {
+            var index = $('.author-group').length;
+            var authorGroup = `
             <div class="author-group">
                 <select class="form-control" name="scientists[${index}][id]" required>
                     @foreach ($scientists as $scientist)
@@ -452,42 +463,41 @@
                 <button type="button" class="btn btn-danger remove-author">Xóa</button>
             </div>
         `;
-        $('#edit-authors-container').append(authorGroup);
-    });
+            $('#edit-authors-container').append(authorGroup);
+        });
 
-    // Thêm sự kiện click cho nút xóa tác giả
-    $(document).on('click', '.remove-author', function() {
-        $(this).closest('.author-group').remove();
+        // Thêm sự kiện click cho nút xóa tác giả
+        $(document).on('click', '.remove-author', function() {
+            $(this).closest('.author-group').remove();
+        });
     });
-});
-
 </script>
 
 
 <script>
-   $(document).ready(function() {
-    $('.approve-offer').click(function() {
-        var offerId = $(this).data('offer-id');
+    $(document).ready(function() {
+        $('.approve-offer').click(function() {
+            var offerId = $(this).data('offer-id');
 
-        $.ajax({
-            url: '/offer/approve/' + offerId,
-            method: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                if (response.success) {
-                    window.location.href = '/topics';
-                } else {
+            $.ajax({
+                url: '/offer/approve/' + offerId,
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        window.location.href = '/topics';
+                    } else {
+                        alert('Có lỗi xảy ra. Vui lòng thử lại.');
+                    }
+                },
+                error: function() {
                     alert('Có lỗi xảy ra. Vui lòng thử lại.');
                 }
-            },
-            error: function() {
-                alert('Có lỗi xảy ra. Vui lòng thử lại.');
-            }
+            });
         });
     });
-});
 </script>
 
 

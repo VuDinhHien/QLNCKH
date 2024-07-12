@@ -11,7 +11,10 @@ class Topic extends Model
 
     protected $fillable = ['topic_name', 'lvtopic_id', 'result', 'start_date', 'end_date'];
 
-
+    public function offer()
+    {
+        return $this->belongsTo(Offer::class);
+    }
 
     public function scientists()
     {
