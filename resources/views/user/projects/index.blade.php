@@ -10,6 +10,30 @@
         {{ Session::get('success') }}
     </div>
 @endif
+
+<style>
+    .d-flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .mr-2 {
+        margin-right: 0.5rem;
+    }
+
+    .mb-2 {
+        margin-bottom: 0.5rem;
+    }
+
+    .mb-0 {
+        margin-bottom: 0;
+    }
+
+    .ml-auto {
+        margin-left: auto;
+    }
+</style>
 <h2 style="text-align:center; font-weight:bold">Danh sách đề tài của {{ $scientist->profile_name }}</h2>
 
 <div class="text-right mb-3">
@@ -324,11 +348,13 @@
             var filesHtml = '';
             files.forEach(function(file) {
                 filesHtml += `
-           <div>
-            <p>${file.original_name}</p> <!-- Hiển thị tên tệp gốc -->
-            <a href="/user/topic/download/${file.id}" class="btn btn-info btn-sm">Tải</a>
-            <button type="button" class="btn btn-danger btn-sm delete-file-button" data-file-id="${file.id}">Xóa</button>
-           </div>`;
+          <div class="d-flex align-items-center mb-2">
+            <p class="mb-0 mr-2">${file.original_name}</p>
+            <div class="ml-auto">
+                <a href="/user/topic/download/${file.id}" class="btn btn-info btn-sm mr-2">Tải</a>
+                <button type="button" class="btn btn-danger btn-sm delete-file-button" data-file-id="${file.id}">Xóa</button>
+            </div>
+        </div>`;
             });
             $('#current_files').html(filesHtml);
 

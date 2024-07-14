@@ -191,7 +191,7 @@ class UserController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'role_id' => 'required|exists:roles,id',
-            'files.*' => 'nullable|mimes:doc,docx,pdf|max:2048', // Kiểm tra định dạng và kích thước file
+           'files.*' => 'nullable|mimes:doc,docx,pdf,xls,xlsx,jpeg,jpg,png|max:2048'
         ]);
 
         // Xử lý file upload
@@ -316,7 +316,7 @@ class UserController extends Controller
             'journal' => 'required|string',
             'paper_id' => 'required|exists:papers,id',
             'role_id' => 'required|exists:roles,id',
-            'files.*' => 'nullable|mimes:doc,docx,pdf|max:2048', // Kiểm tra định dạng và kích thước file
+           'files.*' => 'nullable|mimes:doc,docx,pdf,xls,xlsx,jpeg,jpg,png|max:2048'
         ]);
 
         // Xử lý file upload
@@ -447,7 +447,7 @@ class UserController extends Controller
             'book_id' => 'required|exists:books,id',
             'training_id' => 'required|exists:trainings,id',
             'role_id' => 'required|exists:roles,id',
-            'files.*' => 'nullable|mimes:doc,docx,pdf|max:2048',// Kiểm tra định dạng và kích thước file
+           'files.*' => 'nullable|mimes:doc,docx,pdf,xls,xlsx,jpeg,jpg,png|max:2048'
         ]);
 
         // Xử lý file upload

@@ -155,7 +155,7 @@
                         <select name="result" id="result" class="form-control">
                             <option>Chọn kết quả</option>
                             <option value="Khá">Khá</option>
-                            <option value="Giỏi">Giỏi</option>
+                          
                             <option value="Xuất sắc">Xuất sắc</option>
                         </select>
                     </div>
@@ -367,7 +367,7 @@
                         <label for="result">Kết quả nghiệm thu</label>
                         <select name="result" id="result" class="form-control">
                             <option value="Khá">Khá</option>
-                            <option value="Giỏi">Giỏi</option>
+
                             <option value="Xuất sắc">Xuất sắc</option>
                         </select>
                     </div>
