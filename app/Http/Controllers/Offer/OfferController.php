@@ -134,37 +134,24 @@ class OfferController extends Controller
 
     public function approve(Offer $offer)
     {
-         // Mảng ánh xạ giữa propose_id và lvtopic_id
-    $mapping = [
-        4 => 3, // Propose_id 4 tương ứng với lvtopic_id 3
-        // Thêm các ánh xạ khác nếu cần
-    ];
+        // Tạo topic từ offer
+        $topic = Topic::create([
+            'topic_name' => $offer->offer_name,
+            'lvtopic_id' => $offer->propose_id,
+            'result' => null,  // Đặt giá trị null cho result
+            'start_date' => now(),  // Bạn có thể điều chỉnh ngày bắt đầu tùy theo logic của bạn
+            'end_date' => now()->addYear(),  // Bạn có thể điều chỉnh ngày kết thúc tùy theo logic của bạn
+        ]);
 
-    // Lấy lvtopic_id tương ứng từ mapping
-    $lvtopic_id = $mapping[$offer->propose_id] ?? null;
+        // Sao chép các nhà khoa học và vai trò từ offer sang topic
+        $scientistsWithRoles = $offer->scientists()->withPivot('role_id')->get();
+        foreach ($scientistsWithRoles as $scientist) {
+            $topic->scientists()->attach($scientist->id, ['role_id' => $scientist->pivot->role_id]);
+        }
 
-    if ($lvtopic_id === null) {
-        return redirect()->back()->with('error', 'Không tìm thấy Lvtopic tương ứng với đề xuất này.');
-    }
+        // Cập nhật status của offer
+        $offer->update(['status' => 'đã duyệt']);
 
-    // Tạo topic từ offer
-    $topic = Topic::create([
-        'topic_name' => $offer->offer_name,
-        'lvtopic_id' => $lvtopic_id,  // Sử dụng id của lvtopic từ mảng ánh xạ
-        'result' => null,  // Đặt giá trị null cho result
-        'start_date' => now(),  // Bạn có thể điều chỉnh ngày bắt đầu tùy theo logic của bạn
-        'end_date' => now()->addYear(),  // Bạn có thể điều chỉnh ngày kết thúc tùy theo logic của bạn
-    ]);
-
-    // Sao chép các nhà khoa học và vai trò từ offer sang topic
-    $scientistsWithRoles = $offer->scientists()->withPivot('role_id')->get();
-    foreach ($scientistsWithRoles as $scientist) {
-        $topic->scientists()->attach($scientist->id, ['role_id' => $scientist->pivot->role_id]);
-    }
-
-    // Cập nhật status của offer
-    $offer->update(['status' => 'đã duyệt']);
-
-    return redirect()->back()->with('success', 'Đề xuất đã được duyệt và chuyển vào danh sách đề tài.');
+        return redirect()->back()->with('success', 'Đề xuất đã được duyệt và chuyển vào danh sách đề tài.');
     }
 }

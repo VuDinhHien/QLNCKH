@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 14, 2024 lúc 05:17 PM
+-- Thời gian đã tạo: Th7 15, 2024 lúc 05:56 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -360,11 +360,11 @@ INSERT INTO `lvtopics` (`id`, `lvtopic_name`, `category`, `created_at`, `updated
 (1, 'Đề tài cấp bộ', 'Đề tài', '2024-05-07 09:23:27', '2024-05-07 09:23:27'),
 (2, 'Đề tài cấp tỉnh thành phố', 'Đề tài', '2024-05-07 09:31:01', '2024-05-16 08:55:58'),
 (3, 'Đề tài cấp cơ sở phân cấp', 'Đề tài', '2024-05-07 09:31:20', '2024-05-07 09:31:20'),
-(4, 'Đề tài cấp cơ sở tự chủ', 'Đề tài', '2024-05-07 09:32:01', '2024-05-07 09:32:01'),
 (5, 'Đề án cấp cơ sở', 'Đề án', '2024-05-07 09:32:35', '2024-05-07 09:32:35'),
 (7, 'Đề tài cấp nhà nước', 'Đề tài', '2024-05-26 02:42:23', '2024-05-26 02:42:23'),
 (8, 'Đề tài cấp quỹ Nafosted', 'Đề tài', '2024-05-26 02:42:47', '2024-05-26 02:42:47'),
-(9, 'Đề tài liên kết địa phương cấp huyện', 'Đề tài', '2024-05-26 02:43:17', '2024-05-26 02:43:17');
+(9, 'Đề tài liên kết địa phương cấp huyện', 'Đề tài', '2024-05-26 02:43:17', '2024-05-26 02:43:17'),
+(10, 'Đề tài cấp cơ sở', 'Đề tài', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -527,12 +527,8 @@ CREATE TABLE `offers` (
 --
 
 INSERT INTO `offers` (`id`, `year`, `offer_name`, `propose_id`, `note`, `status`, `created_at`, `updated_at`) VALUES
-(6, 2024, 'Nhân tố ảnh hưởng đến hiệu quả kinh doanh của các ngân hàng thương mại cổ phần Việt Nam', 4, NULL, 'đã duyệt', '2024-07-05 09:24:56', '2024-07-13 21:23:30'),
-(10, 2024, 'demo đề xuấtqqqqqqqqq', 4, NULL, 'approved', '2024-07-05 18:44:32', '2024-07-05 20:22:51'),
-(17, 2024, 'Vận dụng kinh nghiệmqq', 4, NULL, 'đã duyệt', '2024-07-13 21:44:56', '2024-07-14 02:11:45'),
-(18, 2024, 'Phân tích các nhân tố ảnh hưởng đến hiệu quả kinh doanh của các ngân hàng thương mại cổ phần Việt Namđ', 4, NULL, 'đã duyệt', '2024-07-13 21:46:34', '2024-07-13 21:46:42'),
-(20, 2024, 'ádfasdfasdfadfasf', 4, NULL, 'đã duyệt', '2024-07-14 06:08:00', '2024-07-14 06:08:33'),
-(21, 2024, 'demo đề xuất11', 4, NULL, 'chờ duyệt', '2024-07-14 06:20:17', '2024-07-14 06:20:17');
+(22, 2024, 'Hệ thống dự báo năng lực học tập và hỗ trợ sinh viên lựa chọn môn học', 10, NULL, 'chờ duyệt', '2024-07-15 08:31:40', '2024-07-15 08:50:49'),
+(23, 2024, 'Nghiên cứu xây dựng mô hình quản lý và chia sẻ thông tin phục vụ công tác cố vấn học tập', 10, NULL, 'đã duyệt', '2024-07-15 08:40:22', '2024-07-15 08:51:34');
 
 -- --------------------------------------------------------
 
@@ -679,13 +675,14 @@ CREATE TABLE `proposes` (
 --
 
 INSERT INTO `proposes` (`id`, `propose_name`, `created_at`, `updated_at`) VALUES
-(1, 'Hội thảo liên kết', '2024-05-08 09:20:05', '2024-05-08 09:20:05'),
-(2, 'Hội thảo cấp cơ sở', '2024-05-08 09:20:45', '2024-05-08 09:20:45'),
-(3, 'Hội thảo cấp tỉnh', '2024-05-08 09:20:57', '2024-05-08 09:20:57'),
-(4, 'Đề tài cấp cơ sở phân cấp', '2024-05-08 09:21:13', '2024-05-08 09:21:13'),
-(6, 'Hội thảo cấp Bộ', '2024-05-13 20:11:29', '2024-05-13 20:11:29'),
-(7, 'Đề tài cấp cơ sở tự chủ', '2024-05-13 20:12:15', '2024-05-13 20:12:15'),
-(8, 'Hội thảo cấp quốc gia', '2024-05-13 20:12:49', '2024-05-13 20:12:49');
+(1, 'Đề tài cấp bộ', NULL, NULL),
+(2, 'Đề tài cấp tỉnh thành phố', NULL, NULL),
+(3, 'Đề tài cấp cơ sở phân cấp', NULL, NULL),
+(5, 'Đề án cấp cơ sở', NULL, NULL),
+(7, 'Đề tài cấp nhà nước', NULL, NULL),
+(8, 'Đề tài cấp quỹ Nafosted', NULL, NULL),
+(9, 'Đề tài liên kết địa phương cấp huyện ', NULL, NULL),
+(10, 'Đề tài cấp cơ sở', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -764,14 +761,12 @@ CREATE TABLE `scientists` (
 INSERT INTO `scientists` (`id`, `user_id`, `profile_id`, `profile_name`, `birthday`, `gender`, `birth_place`, `address`, `office_phone`, `house_phone`, `telephone`, `email`, `degree_id`, `investiture`, `scientific_title`, `research_major`, `research_title`, `research_position`, `office_id`, `address_office`, `created_at`, `updated_at`) VALUES
 (1, NULL, '6912', 'Biện Thị Hoàng Ngọc', '1998-03-04', 'Nữ', 'Hà Nội', NULL, NULL, NULL, '0314748364', 'bthn@gmail.com', 2, NULL, NULL, 'Lịch Sử Việt Nam', NULL, NULL, 3, 'Hà Nội', NULL, '2024-07-14 03:03:57'),
 (16, 14, '1276', 'Bùi Lê Ngọc', '1990-12-09', 'Nữ', 'Hà Nội', NULL, NULL, NULL, '0223456789', 'blngoc1234@gmail.com', 2, NULL, NULL, NULL, NULL, NULL, 4, 'Hà Nội', '2024-06-25 09:08:58', '2024-07-14 03:04:10'),
-(18, 9, '12012226', 'hien vu123', '1990-12-02', 'Nam', 'fasdfasdfasdf', NULL, NULL, NULL, '01234567', 'vudinhhien689@gmail.com', 3, NULL, NULL, NULL, NULL, NULL, 4, 'sdfg', '2024-06-25 10:15:36', '2024-06-30 07:40:58'),
 (19, 18, '9163', 'Bùi Quang Thuấn', '1991-12-12', 'Nam', 'Nam Định', NULL, NULL, NULL, '0922668511', 'bqt@gmail.com', 2, NULL, NULL, NULL, NULL, NULL, 5, 'Hà Nội', '2024-06-26 02:01:05', '2024-07-14 03:04:31'),
 (22, 21, '2024.6', 'Hoàng Ngọc Linh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'hnl@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-26 02:57:37', '2024-06-26 02:57:37'),
 (23, 22, '6685', 'Cao Quang Đạt', '1991-01-12', 'Nam', 'Nam Định', NULL, NULL, NULL, '0912668540', 'cqd@gmail.com', 2, NULL, NULL, NULL, NULL, NULL, 2, 'Hà Nội', '2024-06-26 02:58:35', '2024-07-14 03:05:30'),
 (24, 23, '9885', 'Bùi Minh Hải', '2000-01-23', 'Nam', 'Bắc Giang', NULL, NULL, NULL, '0912668540', 'bmh@gmail.com', 2, NULL, NULL, NULL, NULL, NULL, 3, 'Hà Nội', '2024-06-26 02:59:40', '2024-07-14 03:04:22'),
 (25, 24, '2024.9', 'Vũ Minh Thắng', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'vmt@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-26 03:00:19', '2024-06-26 03:00:19'),
-(29, 28, '6321', 'Hien Vu Dinh1', '2015-01-02', 'Nữ', 'Nam Định', NULL, NULL, NULL, '0912668541', 'vudinhhienf3@gmail.com', 2, NULL, NULL, NULL, NULL, NULL, 3, 'Hà Nội', '2024-06-30 09:24:35', '2024-07-14 06:15:53'),
-(31, 28, '4569', 'Hien Vu Dinh1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'vudinhhienf@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-07-14 02:15:14', '2024-07-14 02:15:14');
+(29, 28, '6321', 'Hien Vu Dinh1', '2015-01-02', 'Nữ', 'Nam Định', NULL, NULL, NULL, '0912668541', 'vudinhhienf3@gmail.com', 2, NULL, NULL, NULL, NULL, NULL, 3, 'Hà Nội', '2024-06-30 09:24:35', '2024-07-14 06:15:53');
 
 -- --------------------------------------------------------
 
@@ -850,12 +845,8 @@ CREATE TABLE `scientist_offer_role` (
 --
 
 INSERT INTO `scientist_offer_role` (`id`, `scientist_id`, `offer_id`, `role_id`, `created_at`, `updated_at`) VALUES
-(7, 29, 6, 1, '2024-07-05 09:25:04', '2024-07-11 20:55:18'),
-(12, 23, 10, 6, '2024-07-05 18:44:32', '2024-07-05 20:22:08'),
-(19, 16, 17, 2, '2024-07-13 21:44:56', '2024-07-14 02:11:43'),
-(20, 16, 18, 4, '2024-07-13 21:46:34', '2024-07-13 21:46:34'),
-(22, 29, 20, 6, '2024-07-14 06:08:00', '2024-07-14 06:08:00'),
-(23, 29, 21, 6, '2024-07-14 06:20:17', '2024-07-14 06:20:17');
+(24, 1, 22, 1, '2024-07-15 08:31:40', '2024-07-15 08:50:49'),
+(25, 1, 23, 4, '2024-07-15 08:40:22', '2024-07-15 08:51:07');
 
 -- --------------------------------------------------------
 
@@ -879,10 +870,11 @@ CREATE TABLE `scientist_topic_role` (
 INSERT INTO `scientist_topic_role` (`id`, `scientist_id`, `topic_id`, `role_id`, `created_at`, `updated_at`) VALUES
 (81, 29, 40, 2, '2024-07-14 02:25:31', '2024-07-14 02:25:31'),
 (82, 1, 40, 6, '2024-07-14 02:25:31', '2024-07-14 02:25:31'),
-(84, 16, 55, 2, '2024-07-14 02:31:30', '2024-07-14 02:31:30'),
 (87, 23, 38, 6, '2024-07-14 02:31:53', '2024-07-14 02:31:53'),
 (88, 29, 39, 6, '2024-07-14 02:32:00', '2024-07-14 02:32:00'),
-(89, 29, 57, 6, '2024-07-14 06:08:33', '2024-07-14 08:15:40');
+(94, 29, 57, 6, '2024-07-15 08:48:33', '2024-07-15 08:48:33'),
+(95, 16, 55, 2, '2024-07-15 08:49:47', '2024-07-15 08:49:47'),
+(96, 1, 61, 4, '2024-07-15 08:51:34', '2024-07-15 08:51:34');
 
 -- --------------------------------------------------------
 
@@ -1005,8 +997,9 @@ INSERT INTO `topics` (`id`, `topic_name`, `result`, `lvtopic_id`, `start_date`, 
 (38, 'Giải pháp nâng cao hiệu quả công tác xây dựng cấp xã đạt chuẩn tiếp cận pháp luật tại tỉnh Nam Định1', 'Khá', 3, '2024-01-01', '2024-07-01', '2024-06-30 06:59:20', '2024-07-14 02:31:52'),
 (39, 'Ứng dụng công nghệ bảo đảm an ninh, an toàn mạng và bí mật thông tin ở mức cao để phát triển bộ giải pháp an toàn an ninh mạng LAN cho cơ quan nhà nước và doanh nghiệp', 'Xuất sắc', 7, '2024-01-02', '2024-08-04', '2024-07-02 02:21:18', '2024-07-14 02:32:00'),
 (40, 'Nghiên cứu và phát triển các mô hình, giải pháp hướng đến xây dựng máy tìm kiếm thực thể tiếng Việt', '', 3, '2024-01-01', '2024-08-03', '2024-07-02 02:27:56', '2024-07-14 02:25:31'),
-(55, 'Vận dụng kinh nghiệmqq', 'Khá', 3, '2024-07-14', '2025-07-14', '2024-07-14 02:11:45', '2024-07-14 02:31:30'),
-(57, 'ádfasdfasdfadfasf', 'Khá', 3, '2024-07-14', '2025-07-14', '2024-07-14 06:08:33', '2024-07-14 06:09:55');
+(55, 'Xây dựng mô hình ứng dụng công nghệ thông tin phục vụ phát triển nông nghiệp và công nghiệp nông thôn', 'Xuất sắc', 3, '2024-07-14', '2025-07-14', '2024-07-14 02:11:45', '2024-07-15 08:49:47'),
+(57, 'Nghiên cứu xây dựng hệ thống phần mềm truyền dữ liệu và hiển thị từ xa trên hệ thống mạng không dây và di động', 'Khá', 3, '2024-07-14', '2025-07-14', '2024-07-14 06:08:33', '2024-07-15 08:48:33'),
+(61, 'Nghiên cứu xây dựng mô hình quản lý và chia sẻ thông tin phục vụ công tác cố vấn học tập', NULL, 10, '2024-07-15', '2025-07-15', '2024-07-15 08:51:34', '2024-07-15 08:51:34');
 
 -- --------------------------------------------------------
 
@@ -1444,7 +1437,7 @@ ALTER TABLE `lvcouncils`
 -- AUTO_INCREMENT cho bảng `lvtopics`
 --
 ALTER TABLE `lvtopics`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT cho bảng `magazines`
@@ -1468,7 +1461,7 @@ ALTER TABLE `money`
 -- AUTO_INCREMENT cho bảng `offers`
 --
 ALTER TABLE `offers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT cho bảng `offices`
@@ -1504,7 +1497,7 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT cho bảng `proposes`
 --
 ALTER TABLE `proposes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT cho bảng `researchers`
@@ -1540,13 +1533,13 @@ ALTER TABLE `scientist_magazine_role`
 -- AUTO_INCREMENT cho bảng `scientist_offer_role`
 --
 ALTER TABLE `scientist_offer_role`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT cho bảng `scientist_topic_role`
 --
 ALTER TABLE `scientist_topic_role`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT cho bảng `scores`
@@ -1576,7 +1569,7 @@ ALTER TABLE `suggestions`
 -- AUTO_INCREMENT cho bảng `topics`
 --
 ALTER TABLE `topics`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT cho bảng `tpcouncils`
