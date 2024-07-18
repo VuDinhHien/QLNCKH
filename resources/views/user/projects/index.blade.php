@@ -36,9 +36,8 @@
 </style>
 <h2 style="text-align:center; font-weight:bold">Danh sách đề tài của {{ $scientist->profile_name }}</h2>
 
-<div class="text-right mb-3">
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal">Thêm mới</button>
-</div>
+
+
 
 <table class="table table-hover table-bordered mt-3" id="myTable">
     <thead>
@@ -99,92 +98,7 @@
     </tbody>
 </table>
 
-<!-- Modal create-->
-<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header btn-success">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="createModalLabel">Thêm mới</h4>
-            </div>
-            <div class="modal-body">
-                <form id="createForm" action="{{ route('user.projects.store') }}" method="POST"
-                    enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group">
-                        <label for="topic_name">Tên đề tài</label>
-                        <input type="text" class="form-control" id="topic_name" name="topic_name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="lvtopic_id">Cấp đề tài/đề án</label>
-                        <select class="form-control" name="lvtopic_id" required>
-                            @foreach ($lvtopics as $lvtopic)
-                                <option value="{{ $lvtopic->id }}">{{ $lvtopic->lvtopic_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <!-- Hộp Chọn -->
-                    <div class="form-group">
-                        <label for="result">Kết quả nghiệm thu</label>
-                        <select name="result" id="result" class="form-control">
-                            <option value="Khá">Khá</option>
-                            <option value="Giỏi">Giỏi</option>
-                            <option value="Xuất sắc">Xuất sắc</option>
-                        </select>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="start_date">Ngày bắt đầu</label>
-                        <input type="date" class="form-control" id="start_date" name="start_date" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="end_date">Ngày kết thúc</label>
-                        <input type="date" class="form-control" id="end_date" name="end_date" required>
-                    </div>
-
-                   
-
-                    <div class="form-group">
-                        <label for="profile_id">Cán bộ tham gia</label>
-                        <div id="create-authors-container">
-                            <div class="author-group">
-                                <div class="form-group row">
-                                    <div class="col-xs-5">
-                                        <select class="form-control" name="scientists[0][id]" required>
-                                            <option value="">---Chọn nhà khoa học---</option>
-                                            @foreach ($scientists as $scientist)
-                                                <option value="{{ $scientist->id }}">{{ $scientist->profile_name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-xs-5">
-                                        <select class="form-control" name="scientists[0][role_id]" required>
-                                            <option value="">---Chọn vai trò---</option>
-                                            @foreach ($roles as $role)
-                                                <option value="{{ $role->id }}">{{ $role->role_name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-xs-2">
-                                        <button type="button" class="btn btn-danger remove-author">Xóa</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-primary" id="create-add-author">Thêm tác giả</button>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" id="createSaveButton">Lưu</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 
@@ -217,7 +131,7 @@
                         <label for="result">Kết quả nghiệm thu</label>
                         <select name="result" id="result" class="form-control">
                             <option value="Khá">Khá</option>
-                            <option value="Giỏi">Giỏi</option>
+                            <option value="Chưa nghiệm thu">Chưa nghiệm thu</option>
                             <option value="Xuất sắc">Xuất sắc</option>
                         </select>
                     </div>

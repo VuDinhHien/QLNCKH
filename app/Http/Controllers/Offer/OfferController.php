@@ -138,9 +138,9 @@ class OfferController extends Controller
         $topic = Topic::create([
             'topic_name' => $offer->offer_name,
             'lvtopic_id' => $offer->propose_id,
-            'result' => null,  // Đặt giá trị null cho result
+            'result' => 'Chưa nghiệm thu',  // Đặt giá trị null cho result
             'start_date' => now(),  // Bạn có thể điều chỉnh ngày bắt đầu tùy theo logic của bạn
-            'end_date' => now()->addYear(),  // Bạn có thể điều chỉnh ngày kết thúc tùy theo logic của bạn
+            'end_date' => now()->addMonths(6),  // Bạn có thể điều chỉnh ngày kết thúc tùy theo logic của bạn
         ]);
 
         // Sao chép các nhà khoa học và vai trò từ offer sang topic

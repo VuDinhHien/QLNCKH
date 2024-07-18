@@ -367,7 +367,7 @@
                         <label for="result">Kết quả nghiệm thu</label>
                         <select name="result" id="result" class="form-control">
                             <option value="Khá">Khá</option>
-
+                            <option value="Chưa nghiệm thu">Chưa nghiệm thu</option>
                             <option value="Xuất sắc">Xuất sắc</option>
                         </select>
                     </div>
